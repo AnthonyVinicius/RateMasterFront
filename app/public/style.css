@@ -1,0 +1,28 @@
+/* Customização da paleta de cores */
+:root {
+    --fundo-principal: #F5F5F5;
+    --titulo-cabecalho: #2C3E50;
+    --texto: #7F8C8D;
+    --botoes-acao: #E74C3C;
+    --bordas-cards: #BDC3C7;
+    --icones-interativos: #3498DB;
+  }
+  
+  /* Estilo personalizado para o site */
+  .hero {
+    background-color: var(--titulo-cabecalho);
+    color: white;
+  }
+  
+  .hero h1 {
+    font-size: 3em;
+  }
+  
+  .hero p {
+    font-size: 1.25em;
+  }
+  
+  footer {
+    background-color: var(--titulo-cabecalho);
+  }
+  

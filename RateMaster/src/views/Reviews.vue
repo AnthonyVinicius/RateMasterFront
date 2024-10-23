@@ -1,5 +1,6 @@
 <script>
 
+import ProductReview from '@/components/ProductReview.vue';
 import Navbar from '../components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
@@ -7,20 +8,25 @@ export default{
   name: 'Reviews',
   components:{
     Navbar,
-    Footer
+    Footer,
+    ProductReview
   }
 }
 
 </script>
 
 <template>
-  <div class="reviews">
+  <div class="reviews"> 
     <Navbar />
-    <h1>This is an Reviews page</h1>
+    <h1>Product Reviews</h1>
+    <br>
+      <ProductReview></ProductReview>
     <Footer />
   </div>
 </template>
 
 <style>
-
+h1{
+  text-align: center;
+}
 </style>

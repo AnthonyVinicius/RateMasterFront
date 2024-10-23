@@ -15,4 +15,7 @@
     justify-content: center;
     height: 56px;
    }
+   footer p{
+    color: white;
+   }
 </style>

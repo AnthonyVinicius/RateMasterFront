@@ -1,15 +1,15 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-
+import Button from './Button.vue';
 
 </script>
 
 <template>
 <nav class="navbar navbar-expand-lg">
-  <RouterLink to="/">
-    <img src="../assets/Logo.png" alt="Logo">
-  </RouterLink>
   <div class="container-fluid">
+    <RouterLink to="/">
+      <img src="../assets/Logo.png" alt="Logo">
+    </RouterLink>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,7 +38,7 @@ import { RouterLink } from 'vue-router';
 
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline" type="submit">Search</button>
+        <Button text = "Search"/>
       </form>
 
     </div>
@@ -57,18 +57,6 @@ import { RouterLink } from 'vue-router';
 }
 
 .navbar a:hover {
-  transform: scale(1.1);
-}
-
-button {
-  background-color: #E74C3C;
-  color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-  color: white;
-  background-color: #E74C3C;
   transform: scale(1.1);
 }
 

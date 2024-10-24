@@ -1,21 +1,15 @@
+<script setup>
+
+</script>
+
 <template>
-<footer>
-    <p>©{{ new Date().getFullYear() }} Ratemaster. All rights reserved.</p>
+<footer class="container-fluid text-center m-0 p-2 bg-color">
+    <p class="lead text-white">©{{ new Date().getFullYear() }} Ratemaster. All rights reserved.</p>
 </footer>
 </template>
 
 <style scoped>
-   footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+   .bg-color{
     background-color: #2C3E50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 56px;
-   }
-   footer p{
-    color: white;
    }
 </style>

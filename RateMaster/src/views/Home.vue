@@ -46,4 +46,7 @@ import Footer from '@/components/Footer.vue';
 .text-color {
     color: #2C3E50;
 }
+img{
+    width: 100%;
+}
 </style>

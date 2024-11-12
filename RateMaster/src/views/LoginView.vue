@@ -1,22 +1,12 @@
-<script>
-
-import Footer from '@/components/Footer.vue';
-import Navbar from '@/components/Navbar.vue';
-import Button from '@/components/Button.vue';
-
-export default {
-  name: 'Reviews',
-  components: {
-    Navbar,
-    Button,
-    Footer
-  }
-}
+<script setup>
+import TheFooter from '@/components/TheFooter.vue';
+import TheNavbar from '@/components/TheNavbar.vue';
+import NavButton from '@/components/NavButton.vue';
 </script>
 
 <template>
   <div class="login">
-    <Navbar />
+    <TheNavbar />
     <section class="vh-100 login-section">
       <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -43,7 +33,7 @@ export default {
                         <label class="form-label" for="form2Example27">Password</label>
                       </div>
                       <div class="pt-1 mb-4">
-                        <Button text="Login" class="button" />
+                        <NavButton text="Login" class="button" />
                       </div>
                       <a class="small text-muted" href="#!">Forgot password?</a>
                       <p class="mb-5 pb-lg-2 no-account">Don't have an account? <a href="#!">Register here</a></p>
@@ -59,7 +49,7 @@ export default {
       </div>
     </section>
 
-    <Footer />
+    <TheFooter/>
   </div>
 </template>
 

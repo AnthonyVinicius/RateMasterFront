@@ -1,27 +1,16 @@
-<script>
-
+<script setup>
 import ProductReview from '@/components/ProductReview.vue';
-import Navbar from '../components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
-
-export default{
-  name: 'Reviews',
-  components:{
-    Navbar,
-    Footer,
-    ProductReview
-  }
-}
-
+import TheNavbar from '../components/TheNavbar.vue';
+import TheFooter from '@/components/TheFooter.vue';
 </script>
 
 <template>
   <div class="reviews"> 
-    <Navbar />
+    <TheNavbar />
     <h1>Product Reviews</h1>
     <br>
       <ProductReview></ProductReview>
-    <Footer />
+    <TheFooter />
   </div>
 </template>
 

@@ -1,13 +1,14 @@
 <script setup>
 
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
+import TheNavbar from '@/components/TheNavbar.vue';
+import TheFooter from '@/components/TheFooter.vue';
 
 </script>
 
 
+
 <template>
-    <Navbar />
+    <TheNavbar />
     <div class="container-fluid m-0 p-0">
         <img src="../assets/Home.png" alt="Picture">
     </div>
@@ -34,7 +35,7 @@ import Footer from '@/components/Footer.vue';
         </section>
     </div>
 
-    <Footer />
+    <TheFooter />
 
 </template>
 

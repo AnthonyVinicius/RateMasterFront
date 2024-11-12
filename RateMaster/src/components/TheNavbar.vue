@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-+
+
 
 </script>
 
@@ -39,7 +39,7 @@ import { RouterLink } from 'vue-router';
 
         <form class="d-flex" role="search">
           <input class="form-control me-2 b" type="search" placeholder="Search" aria-label="Search">
-          <Button text="Search" class="button" />
+          <NavButton text="Search" class="button" />
         </form>
 
       </div>

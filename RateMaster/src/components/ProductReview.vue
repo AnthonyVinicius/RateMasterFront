@@ -9,7 +9,7 @@
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and 
                 scrambled it to make a type specimen book.</p>
             <div class="rating">
-                <span class="star">★</span> 4,5/5
+                <span class="star">★</span> 4,6/5
             </div>
         </div>
     </div>

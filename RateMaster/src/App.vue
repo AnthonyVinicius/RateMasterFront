@@ -4,6 +4,7 @@ import {RouterView} from 'vue-router'
 
 <template>
   <div>
+    <link rel="shortcut icon" href="/RateMaster/src/assets/favicon.ico">
     <RouterView />
   </div>
 

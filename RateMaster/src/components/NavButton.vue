@@ -25,7 +25,8 @@ button {
 
 button:hover {
   color: white;
-  background-color: #E74C3C;
+  background-color: #393f81;
   transform: scale(1.1);
 }
+
 </style>

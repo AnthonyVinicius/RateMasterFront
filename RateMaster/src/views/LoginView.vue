@@ -5,7 +5,6 @@ import NavButton from '@/components/NavButton.vue';
 </script>
 
 <template>
-  <div class="login">
     <TheNavbar />
     <section class="vh-100 login-section">
       <div class="container py-5 h-100">
@@ -13,54 +12,55 @@ import NavButton from '@/components/NavButton.vue';
           <div class="col col-xl-10">
             <div class="card login-card">
               <div class="row g-0">
+
+              <!-- Imagem -->
                 <div class="col-md-6 col-lg-5 d-none d-md-block">
-                  <img
-                    src="../assets/Login.jpg"
-                    alt="login form"
-                    class="img-fluid login-image"
-                  />
+                  <img src="../assets/Login.jpg" alt="login form" class="img-fluid login-image" />
                 </div>
+
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                   <div class="card-body p-4 p-lg-5 text-black">
+
                     <form>
+                    <!-- RateMaster -->
                       <div class="d-flex align-items-center mb-3 pb-1">
-                        <i class="fas fa-cubes fa-2x me-3 logo-icon"></i>
-                        <span class="h1 fw-bold mb-0">RateMaster</span>
+                        <h1 class="h1 fw-bold mb-0">RateMaster</h1>
                       </div>
-                      <h5 class="fw-normal mb-3 pb-3 login-header">
-                        Sign into your account
-                      </h5>
-                      <div class="form-outline mb-4">
-                        <input
-                          type="email"
-                          id="email"
-                          class="form-control form-control-lg"
-                          placeholder="Enter your email"
-                          required
-                        />
-                        <label class="form-label" for="email">Email address</label>
+
+                    <!-- Sign In -->
+                      <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
+                      
+                      <div>
+                    <!-- Email -->
+                        <div class="form-outline">
+                          <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your email" required />
+                        </div>
+                        
+                    <!-- Password -->
+                        <div class="form-outline">
+                          <input type="password" id="password" class="form-control form-control-lg" placeholder="Enter your password" required />
                       </div>
-                      <div class="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="password"
-                          class="form-control form-control-lg"
-                          placeholder="Enter your password"
-                          required
-                        />
-                        <label class="form-label" for="password">Password</label>
+                      
+                    <!-- Forgot Password & Remember Me-->
+                        <div class="d-flex justify-content-between align-items-center m-3">
+                          <RouterLink class="small text-muted" to="/forgot-password">Forgot password?</RouterLink>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">Remember Me</label>
+                          </div>
+                        </div>
                       </div>
-                      <div class="pt-1 mb-4">
-                        <NavButton text="Login" class="button" />
-                      </div>
-                      <RouterLink class="small text-muted" to="/forgot-password">Forgot password?</RouterLink>
-                      <p class="mb-5 pb-lg-2 no-account">
-                        Don't have an account?
-                        <RouterLink to="/register" class="link-primary">Register here</RouterLink>
-                      </p>
+
+
+                      <NavButton text="Sign In" class="button" />
+
+                      <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account?<RouterLink to="/register" class="link-primary">Register here</RouterLink></p>
+
                       <RouterLink to="/terms" class="small text-muted">Terms of use</RouterLink>
+
                       <RouterLink to="/privacy" class="small text-muted"> Privacy policy</RouterLink>
                     </form>
+
                   </div>
                 </div>
               </div>
@@ -70,20 +70,15 @@ import NavButton from '@/components/NavButton.vue';
       </div>
     </section>
     <TheFooter />
-  </div>
 </template>
 
 
 
 <style scoped>
-.login-section {
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
+.login-section{
+  background-color:#f5f5f5;;
+}
 .login-card {
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -94,10 +89,6 @@ import NavButton from '@/components/NavButton.vue';
   height: 100%;
   object-fit: cover;
   border-radius: 1rem 0 0 1rem;
-}
-
-.logo-icon {
-  color: #ff6219;
 }
 
 .login-header {
@@ -115,14 +106,7 @@ import NavButton from '@/components/NavButton.vue';
   text-decoration: underline;
 }
 
-button,
-a {
-  transition: all 0.3s ease-in-out;
-}
-
-button:hover,
-a:hover {
-  transform: scale(1.05);
+.button{
+  width: 100%;
 }
 </style>
-

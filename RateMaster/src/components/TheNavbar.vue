@@ -25,7 +25,7 @@ import NavButton from './NavButton.vue';
             <RouterLink class="nav-link" to="/login">Login</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/register">Register Product</RouterLink>
+            <RouterLink class="nav-link" to="/registerProduct">Register Product</RouterLink>
           </li>
         </ul>
         <form class="d-flex search-form" role="search">

@@ -6,55 +6,56 @@ import NavButton from '@/components/NavButton.vue';
 
 <template>
     <TheNavbar />
-    <section class="vh-100 login-section">
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col col-xl-10">
+    <section class="login-section">
+      <div class="container py-5">
             <div class="card login-card">
               <div class="row g-0">
 
               <!-- Imagem -->
-                <div class="col-md-6 col-lg-5 d-none d-md-block">
-                  <img src="../assets/Login.jpg" alt="login form" class="img-fluid login-image" />
+                <div class="col-md-6 col-lg-6 d-none d-md-block">
+                  <img src="../assets/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
                 </div>
 
-                <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                  <div class="card-body p-4 p-lg-5 text-black">
+                <div class="col-md-6 col-lg-6 d-flex">
+                  <div class="card-body p-4 p-lg-5">
 
                     <form>
                     <!-- RateMaster -->
-                      <div class="d-flex align-items-center mb-3 pb-1">
-                        <h1 class="h1 fw-bold mb-0">RateMaster</h1>
+                      <div class="mb-2 pb-1">
+                        <h1 class="h1 fw-bold login-title">RateMaster</h1>
                       </div>
 
                     <!-- Sign In -->
                       <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
                       
                       <div>
-                    <!-- Email -->
+                    
                         <div class="form-outline">
                           <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your email" required />
                         </div>
                         
-                    <!-- Password -->
+                    
                         <div class="form-outline">
                           <input type="password" id="password" class="form-control form-control-lg" placeholder="Enter your password" required />
-                      </div>
+                        </div>
                       
-                    <!-- Forgot Password & Remember Me-->
-                        <div class="d-flex justify-content-between align-items-center m-3">
-                          <RouterLink class="small text-muted" to="/forgot-password">Forgot password?</RouterLink>
+                    
+                        <div class="d-flex justify-content-between m-3">
+                          
                           <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                             <label class="form-check-label" for="flexCheckChecked">Remember Me</label>
                           </div>
+
+                          <RouterLink to="/forgot-password">Forgot password?</RouterLink>
+
                         </div>
                       </div>
 
 
                       <NavButton text="Sign In" class="button" />
 
-                      <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account?<RouterLink to="/register" class="link-primary">Register here</RouterLink></p>
+                      <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account? <RouterLink to="/registerUser">Register here</RouterLink></p>
 
                       <RouterLink to="/terms" class="small text-muted">Terms of use</RouterLink>
 
@@ -66,8 +67,6 @@ import NavButton from '@/components/NavButton.vue';
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </section>
     <TheFooter />
 </template>
@@ -80,7 +79,6 @@ import NavButton from '@/components/NavButton.vue';
   background-color:#f5f5f5;;
 }
 .login-card {
-  border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -88,7 +86,6 @@ import NavButton from '@/components/NavButton.vue';
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem 0 0 1rem;
 }
 
 .login-header {
@@ -96,12 +93,12 @@ import NavButton from '@/components/NavButton.vue';
   color: #333;
 }
 
-.no-account a {
-  color: #393f81;
+ a {
+  color: #E74C3C;
   text-decoration: none;
 }
 
-.no-account a:hover {
+ a:hover {
   color: #1e90ff;
   text-decoration: underline;
 }
@@ -109,4 +106,9 @@ import NavButton from '@/components/NavButton.vue';
 .button{
   width: 100%;
 }
+
+button:hover {
+  transform: scale(1.01);
+}
+
 </style>

@@ -2,74 +2,81 @@
 
 import TheNavbar from '@/components/TheNavbar.vue';
 import TheFooter from '@/components/TheFooter.vue';
+import ReviewHomePage from '@/components/ReviewHomePage.vue';
 
 </script>
 
 
 
 <template>
-    
+
     <TheNavbar />
     <div class="container-fluid p-0">
         <img src="../assets/Home.png" alt="Picture">
     </div>
 
     <div class="container-fluid  p-5">
-        <section class="text-box text-center">
+        <div class="text-box text-center">
             <h1 class="display-4 text-color">Welcome to RateMaster</h1>
             <p class="lead text-color">Discover the best products and share your reviews.</p>
-        </section>
+        </div>
 
-        <section>
-            <div class="container text-center p-3">
-                <div class="row g-4">
-                    <div class="col-3 ">
-                        <div class="container bg-box rounded-4">
-                            <i class="bi bi-box icon-box"></i>
-                            <h5 class="text-white pt-4">Custom solutions tailored to your specific needs.</h5>
-                            <p class="lead text-white pt-4 pb-5">We offer a range of products that simplify performance evaluation.</p>                           
-                        </div>
-                    </div>
-                    <div class="col-3 ">
-                        <div class="container bg-box rounded-4">
-                            <i class="bi bi-box icon-box"></i>
-                            <h5 class="text-white pt-4">Custom solutions tailored to your specific needs.</h5>
-                            <p class="lead text-white pt-4 pb-5">We offer a range of products that simplify performance evaluation.</p>                           
-                        </div>
-                    </div>
-                    <div class="col-3 ">
-                        <div class="container bg-box rounded-4">
-                            <i class="bi bi-box icon-box"></i>
-                            <h5 class="text-white pt-4">Custom solutions tailored to your specific needs.</h5>
-                            <p class="lead text-white pt-4 pb-5">We offer a range of products that simplify performance evaluation.</p>                           
-                        </div>
-                    </div>
-                    <div class="col-3 ">
-                        <div class="container bg-box rounded-4">
-                            <i class="bi bi-box icon-box"></i>
-                            <h5 class="text-white pt-4">Custom solutions tailored to your specific needs.</h5>
-                            <p class="lead text-white pt-4 pb-5">We offer a range of products that simplify performance evaluation.</p>                           
-                        </div>
-                    </div>
+
+        <div class="container text-center p-3">
+            <div class="row g-4">
+                <div class="col">
+                    <ReviewHomePage text="Custom solutions designed to meet your specific needs."
+                        comment="We offer a range of products that simplify performance evaluation." />
+                </div>
+                <div class="col">
+                    <ReviewHomePage text="Our services ensure quality and efficiency in every project."
+                        comment="We are committed to delivering results that exceed your expectations." />
+                </div>
+                <div class="col">
+                    <ReviewHomePage text="The technology that transforms the way you evaluate products."
+                        comment="Innovation and convenience are the pillars of our solutions." />
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
+
     <div class="container-fluid p-5 bg-box">
-        <section class="text-box text-center">
+        <div class="text-box text-center">
             <h1 class="display-4 text-white">Evaluate with confidence.</h1>
             <p class="lead text-white">Discover detailed and unbiased reviews to help you make informed purchasing
                 decisions.</p>
-        </section>
+        </div>
     </div>
 
+
+
+    <div class="container text-center p-3">
+        <div class="row g-4">
+            <div class="col">
+                <ReviewHomePage text="Custom solutions designed to meet your specific needs."
+                    comment="We offer a range of products that simplify performance evaluation." />
+            </div>
+            <div class="col">
+                <ReviewHomePage text="Our services ensure quality and efficiency in every project."
+                    comment="We are committed to delivering results that exceed your expectations." />
+            </div>
+            <div class="col">
+                <ReviewHomePage text="The technology that transforms the way you evaluate products."
+                    comment="Innovation and convenience are the pillars of our solutions." />
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="container-fluid p-5 bg-box">
-        <section class="text-box">
+        <div class="text-box">
             <h1 class="display-4 text-white">Contact Us.</h1>
             <p class="lead text-white">Discover how our platform can help you.</p>
-        </section>
+        </div>
     </div>
+
 
     <TheFooter />
 
@@ -80,7 +87,7 @@ import TheFooter from '@/components/TheFooter.vue';
     background-color: #2C3E50;
 }
 
-.icon-box{
+.icon-box {
     display: inline-block;
     color: #E74C3C;
     padding-top: 20px;
@@ -90,7 +97,8 @@ import TheFooter from '@/components/TheFooter.vue';
 .text-color {
     color: #2C3E50;
 }
-img{
+
+img {
     width: 100%;
 }
 </style>

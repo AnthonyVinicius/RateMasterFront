@@ -9,7 +9,7 @@ import TheFooter from '@/components/TheFooter.vue';
     <TheNavbar />
     <h1>Product Details</h1>
     <br>
-      <ProductDetail></ProductDetail>
+      <ProductDetail />
     <TheFooter />
   </div>
 </template>

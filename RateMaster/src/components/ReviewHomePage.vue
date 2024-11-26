@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-    <div class="container bg-box rounded-4">
+    <div class="container box rounded-4">
         <i class="bi bi-box icon-box"></i>
         <h5 class="text-white pt-4">{{text}}</h5>
         <p class="lead text-white pt-4 pb-5">{{comment}}</p>
@@ -23,8 +23,10 @@ export default {
 </template>
 
 <style scoped>
-.bg-box {
+.box {
     background-color: #2C3E50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .icon-box{

@@ -12,8 +12,11 @@
       
       <div class="filter-section">
         <h4>Rating</h4>
-        <label><input type="checkbox" v-model="filters.rating" value="4+"> 4+ Stars</label>
-        <label><input type="checkbox" v-model="filters.rating" value="3+"> 3+ Stars</label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="5+"> ★★★★★</label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="4+"> ★★★★</label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="3+"> ★★★ </label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="2+"> ★★ </label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="1+"> ★ </label>
       </div>
     </aside>
 
@@ -52,14 +55,14 @@ const products = ref([
     name: 'Product 1',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     rating: 4.6,
-    image: '../src/assets/product-image.png'
+    image: '../assets/img/product-image.png'
   },
   {
     id: 2,
     name: 'Product 2',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     rating: 4.8,
-    image: '../src/assets/product-image.png'
+    image: '../assets/img/product-image.png'
   },
 ]);
 

@@ -7,13 +7,13 @@ import NavButton from '@/components/NavButton.vue';
 <template>
     <TheNavbar />
     <section class="login-section">
-      <div class="container py-5">
+      <div class="container">
             <div class="card login-card">
               <div class="row g-0">
 
               <!-- Imagem -->
                 <div class="col-md-6 col-lg-6 d-none d-md-block">
-                  <img src="../assets/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
+                  <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
                 </div>
 
                 <div class="col-md-6 col-lg-6 d-flex">
@@ -75,8 +75,12 @@ import NavButton from '@/components/NavButton.vue';
 
 <style scoped>
 
+.container{
+  padding: 100px;
+}
+
 .login-section{
-  background-color:#f5f5f5;;
+  background-color:#f5f5f5;
 }
 .login-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

@@ -15,13 +15,13 @@ import NavButton from '@/components/NavButton.vue';
 
     <TheNavbar />
     <div class="container-fluid p-0">
-        <img class="header-img" src="../assets/Home.png" alt="Picture">
+        <img class="header-img" src="../assets/img/Home.png" alt="Picture">
     </div>
 
-    <div class="container-fluid  p-5">
+    <div class="container-fluid  white-comment-container">
         <div class="text-box text-center">
             <h1 class="display-4 text-color">Welcome to RateMaster</h1>
-            <p class="lead text-color">Discover the best products and share your reviews.</p>
+            <p class="lead text-color pb-3">Discover the best products and share your reviews.</p>
         </div>
 
 
@@ -44,7 +44,7 @@ import NavButton from '@/components/NavButton.vue';
     </div>
 
 
-    <div class="container-fluid p-5 bg-box">
+    <div class="container-fluid colored-comment-container">
         <div class="text-box text-center p-5">
             <h1 class="display-4 text-white text-start pt-5">Evaluate with confidence.</h1>
             <p class="lead text-white text-start pb-5">Discover detailed and unbiased reviews to help you make informed purchasing
@@ -53,8 +53,8 @@ import NavButton from '@/components/NavButton.vue';
     </div>
 
 
-
-    <div class="container text-center p-3 mb-5">
+<div class="container">
+    <div class="container text-center white-comment-container">
         <div class="row g-4 pt-5 ">
             <div class="col">
                 <UserReview
@@ -82,32 +82,40 @@ import NavButton from '@/components/NavButton.vue';
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 d-none d-md-block">
-                        <img src="../assets/placeholder.png" alt="product-image" class="img-fluid product-image" />
+                        <img src="../assets/img/placeholder.png" alt="product-image" class="img-fluid product-image" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <div class="container-fluid p-5 bg-box">
-        <div class="text-box">
-            <h1 class="display-4 text-white text-start">Contact Us.</h1>
-            <p class="lead text-white">Discover how our platform can help you.</p>
+</div>
+<div class="container-fluid colored-comment-container">
+        <div class="text-box text-center p-5">
+            <h1 class="display-4 text-white text-start ">Contact Us.</h1>
+            <p class="lead text-white text-start">Discover how our platform can help you.</p>
         </div>
     </div>
-
     <TheFooter />
 
 </template>
 
 <style scoped>
-.bg-box {
+
+.colored-comment-container {
+    padding-top: 100px;
+    padding-bottom: 100px;
     background-color: #2C3E50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.white-comment-container{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    
 }
 
 .header-img {
     width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 </style>

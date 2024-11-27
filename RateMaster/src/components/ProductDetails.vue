@@ -122,7 +122,10 @@ const submitReview = () => {
 </script>
 
 <style scoped>
+
+
 .product-details {
+  background-color: #f5f5f5;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;

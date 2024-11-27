@@ -7,10 +7,10 @@ import NavButton from './NavButton.vue';
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <RouterLink to="/">
-        <img src="../assets/img/Logo.png" alt="Logo">
+        <img src="../assets/img/Logo.png" alt="Logo" class="logo">
       </RouterLink>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon "></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -31,6 +31,14 @@ import NavButton from './NavButton.vue';
         <form class="d-flex search-form" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <NavButton text="Search" class="button" />
+          
+          <div v-if="true">
+            
+            <RouterLink to="/profile" class="profile-link">
+              <img src="../assets/img/ProfileIcon.png" alt="Profile" class="profile-image" />
+            </RouterLink>
+          </div>
+          
         </form>
       </div>
     </div>
@@ -43,26 +51,41 @@ import NavButton from './NavButton.vue';
   padding: 10px 20px;
 }
 
-.navbar a {
+.nav-link{
   color: white;
   font-size: 16px;
-  padding: 8px 12px; 
+  padding: 8px 12px;
+  margin: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.navbar a:hover {
+.nav-link:hover {
   background-color: #34495E; 
+  color: white;
   border-radius: 5px;
   transform: scale(1.1);
 }
 
-.navbar img {
+.logo {
   width: 80px;
-  margin-left: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
+.profile-image {
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-
+.profile-image:hover{
+  transform: scale(1.1);
+}
 </style>
 
 

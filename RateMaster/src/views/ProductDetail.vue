@@ -5,8 +5,8 @@ import TheFooter from '@/components/TheFooter.vue';
 </script>
 
 <template>
+  <TheNavbar />
   <div class="reviews"> 
-    <TheNavbar />
     <h1>Product Details</h1>
     <br>
       <ProductDetail />

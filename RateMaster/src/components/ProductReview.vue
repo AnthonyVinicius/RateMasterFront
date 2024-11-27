@@ -12,11 +12,11 @@
       
       <div class="filter-section">
         <h4>Rating</h4>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="5+"> ★★★★★</label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="4+"> ★★★★</label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="3+"> ★★★ </label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="2+"> ★★ </label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="1+"> ★ </label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="5"> ★★★★★</label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="4"> ★★★★</label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="3"> ★★★ </label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="2"> ★★ </label>
+        <label class="star"><input type="checkbox" v-model="filters.rating" value="1"> ★ </label>
       </div>
     </aside>
 

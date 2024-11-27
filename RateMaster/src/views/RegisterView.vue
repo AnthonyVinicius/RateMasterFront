@@ -3,14 +3,148 @@ import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      productName: '',
+      description: '',
+      price: '',
+      type: 'product',
+      image: null,
+    };
+  },
+  methods: {
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.image = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    formatPrice(event) {
+      // Format the price as R$ and ensure the correct decimal placement
+      let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+      if (value.length > 2) {
+        value = value.slice(0, value.length - 2) + ',' + value.slice(value.length - 2);
+      }
+      this.price = value ? 'R$ ' + value : '';
+    },
+    submitForm() {
+      // Logic to submit form data, e.g., to an API or service
+      const productData = {
+        productName: this.productName,
+        description: this.description,
+        price: this.price,
+        type: this.type,
+        image: this.image,
+      };
+      console.log('Form submitted:', productData);
+    },
+  },
+};
+</script>
+
 <template>
-  <div class="register">
-    <TheNavbar />
-    <h1>This is an Register page</h1>
-    <TheFooter />
+  <TheNavbar />
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Image Upload Section -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Upload Image</h5>
+            <input type="file" @change="handleImageUpload" class="form-control" />
+            <div v-if="image" class="mt-3">
+              <img :src="image" alt="Product Preview" class="img-fluid" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Register Product</h5>
+            <form @submit.prevent="submitForm">
+              <!-- Product Name Field -->
+              <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input
+                  v-model="productName"
+                  type="text"
+                  class="form-control"
+                  id="productName"
+                  placeholder="Enter the Product Name"
+                  required
+                />
+              </div>
+
+              <!-- Description Field -->
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input
+                  v-model="description"
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  placeholder="Enter the Description"
+                  required
+                />
+              </div>
+
+              <!-- Price Field -->
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input
+                  v-model="price"
+                  type="text"
+                  class="form-control"
+                  id="price"
+                  placeholder="R$ 0,00"
+                  required
+                  @input="formatPrice"
+                />
+              </div>
+
+              <!-- Type Field -->
+              <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <select v-model="type" class="form-select" id="type" required>
+                  <option value="product">Product</option>
+                  <option value="service">Service</option>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-danger w-100">Finish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <TheFooter />
 </template>
 
-<style>
 
+<style scoped>
+.card {
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+img {
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
 </style>

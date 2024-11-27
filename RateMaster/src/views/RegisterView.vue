@@ -1,6 +1,7 @@
 <script setup>
 import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
+import NavButton from '@/components/NavButton.vue';
 </script>
 
 <script>
@@ -49,8 +50,10 @@ export default {
 </script>
 
 <template>
+  <div class="page-container">
+
   <TheNavbar />
-  <div class="container mt-5">
+  <main class="content container mt-5">
     <div class="row">
       <!-- Image Upload Section -->
       <div class="col-md-6">
@@ -121,14 +124,17 @@ export default {
               </div>
 
               <!-- Submit Button -->
-              <button type="submit" class="btn btn-danger w-100">Finish</button>
+              <NavButton text="Finish" class="button container-fluid" />
             </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
+
   <TheFooter />
+
+</div>
 </template>
 
 
@@ -146,5 +152,9 @@ img {
   max-height: 200px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+button:hover {
+  transform: scale(1.01);
 }
 </style>

@@ -5,137 +5,144 @@ import NavButton from '@/components/NavButton.vue';
 </script>
 
 <template>
+  <div class="page-container">
+
     <TheNavbar />
-    <section class="login-section" v-if="true">
+
+    <main class="content" v-if="true">
       <div class="container">
-            <div class="card login-card">
-              <div class="row g-0">
+        <div class="card login-card">
+          <div class="row g-0">
 
-              <!-- Imagem -->
-                <div class="col-md-6 col-lg-6 d-none d-md-block">
-                  <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
-                </div>
+            <!-- Imagem -->
+            <div class="col-md-6 col-lg-6 d-none d-md-block">
+              <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
+            </div>
 
-                <div class="col-md-6 col-lg-6 d-flex">
-                  <div class="card-body p-4 p-lg-5">
+            <div class="col-md-6 col-lg-6 d-flex">
+              <div class="card-body p-4 p-lg-5">
 
-                    <form>
-                    <!-- RateMaster -->
-                      <div class="mb-2 pb-1">
-                        <h1 class="h1 fw-bold login-title">RateMaster</h1>
-                      </div>
-
-                    <!-- Sign In -->
-                      <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
-                      
-                      <div>
-                    
-                        <div class="form-outline">
-                          <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your email" required />
-                        </div>
-                        
-                    
-                        <div class="form-outline">
-                          <input type="password" id="password" class="form-control form-control-lg" placeholder="Enter your password" required />
-                        </div>
-                      
-                    
-                        <div class="d-flex justify-content-between m-3">
-                          
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">Remember Me</label>
-                          </div>
-
-                          <RouterLink to="/forgot-password">Forgot password?</RouterLink>
-
-                        </div>
-                      </div>
-
-
-                      <NavButton text="Sign In" class="button" />
-
-                      <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account? <RouterLink to="/registerUser">Register here</RouterLink></p>
-
-                      <RouterLink to="/terms" class="small text-muted">Terms of use</RouterLink>
-
-                      <RouterLink to="/privacy" class="small text-muted"> Privacy policy</RouterLink>
-                    </form>
-
+                <form>
+                  <!-- RateMaster -->
+                  <div class="mb-2 pb-1">
+                    <h1 class="h1 fw-bold login-title">RateMaster</h1>
                   </div>
-                </div>
+
+                  <!-- Sign In -->
+                  <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
+
+                  <div>
+
+                    <div class="form-outline">
+                      <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your email"
+                        required />
+                    </div>
+
+
+                    <div class="form-outline">
+                      <input type="password" id="password" class="form-control form-control-lg"
+                        placeholder="Enter your password" required />
+                    </div>
+
+
+                    <div class="d-flex justify-content-between m-3">
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">Remember Me</label>
+                      </div>
+
+                      <RouterLink to="/forgot-password">Forgot password?</RouterLink>
+
+                    </div>
+                  </div>
+
+
+                  <NavButton text="Sign In" class="button" />
+
+                  <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account? <RouterLink to="/registerUser">
+                      Register here</RouterLink>
+                  </p>
+
+                  <RouterLink to="/terms" class="small text-muted">Terms of use</RouterLink>
+
+                  <RouterLink to="/privacy" class="small text-muted"> Privacy policy</RouterLink>
+                </form>
+
               </div>
             </div>
           </div>
-    </section>
+        </div>
+      </div>
+    </main>
 
 
 
 
-    <section v-if="false">
+    <main class="content" v-if="false">
       <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
-                <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registeration</span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button>Sign Up</button>
-            </form>
+          <form>
+            <h1>Create Account</h1>
+            <div class="social-icons">
+              <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registeration</span>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button>Sign Up</button>
+          </form>
         </div>
         <div class="form-container sign-in">
-            <form>
-                <h1>Sign In</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
-                <button>Sign In</button>
-            </form>
+          <form>
+            <h1>Sign In</h1>
+            <div class="social-icons">
+              <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email password</span>
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <a href="#">Forget Your Password?</a>
+            <button>Sign In</button>
+          </form>
         </div>
         <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Welcome Back!</h1>
-                    <p>Enter your personal details to use all of site features</p>
-                    <button class="hidden" id="login">Sign In</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Register with your personal details to use all of site features</p>
-                    <button class="hidden" id="register">Sign Up</button>
-                </div>
+          <div class="toggle">
+            <div class="toggle-panel toggle-left">
+              <h1>Welcome Back!</h1>
+              <p>Enter your personal details to use all of site features</p>
+              <button class="hidden" id="login">Sign In</button>
             </div>
+            <div class="toggle-panel toggle-right">
+              <h1>Hello, Friend!</h1>
+              <p>Register with your personal details to use all of site features</p>
+              <button class="hidden" id="register">Sign Up</button>
+            </div>
+          </div>
         </div>
-    </div>
-    </section>
+      </div>
+    </main>
+
     <TheFooter />
+
+  </div>
+
 </template>
 
 
 
 <style scoped>
-
-.container{
+.container {
   padding: 100px;
 }
 
-.login-section{
-  background-color:#f5f5f5;
-}
 .login-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -151,17 +158,17 @@ import NavButton from '@/components/NavButton.vue';
   color: #333;
 }
 
- a {
+a {
   color: #E74C3C;
   text-decoration: none;
 }
 
- a:hover {
+a:hover {
   color: #1e90ff;
   text-decoration: underline;
 }
 
-.button{
+.button {
   width: 100%;
 }
 

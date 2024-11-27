@@ -1,10 +1,13 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import NavButton from './NavButton.vue';
+
+const logado = true;
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg"
+  >
     <div class="container-fluid">
       <RouterLink to="/">
         <img src="../assets/img/Logo.png" alt="Logo" class="logo">
@@ -22,24 +25,27 @@ import NavButton from './NavButton.vue';
             <RouterLink class="nav-link" to="/reviews">Reviews</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/login">Login</RouterLink>
+            <RouterLink class="nav-link" to="/login" v-if="!logado">Login</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/registerProduct">Register Product</RouterLink>
+            <RouterLink class="nav-link" to="/registerProduct" v-if="logado">Register Product</RouterLink>
           </li>
         </ul>
-        <form class="d-flex search-form" role="search">
+        <form class="d-flex search-form" role="search" v-if="false">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <NavButton text="Search" class="button" />
+        </form>
           
-          <div v-if="true">
-            
+          <NavButton text="Sign Up" class="button" v-if="!logado"/>
+          <NavButton text="Login" class="button" v-if="!logado"/>
+          
+
+          <div v-if="logado">
             <RouterLink to="/profile" class="profile-link">
-              <img src="../assets/img/ProfileIcon.png" alt="Profile" class="profile-image" />
+              <i class="bi bi-person-circle profile-icon"></i>
             </RouterLink>
           </div>
           
-        </form>
       </div>
     </div>
   </nav>
@@ -72,19 +78,8 @@ import NavButton from './NavButton.vue';
   margin-right: 20px;
 }
 
-.profile-image {
-  width: 50px;
-  height: 50px;
-  margin-left: 20px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.profile-image:hover{
-  transform: scale(1.1);
+.profile-icon{
+  font-size: 50px;
 }
 </style>
 

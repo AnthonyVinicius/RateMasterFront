@@ -83,7 +83,7 @@ const goToDetails = (productId) => {
 .filters {
   width: 250px;
   flex-shrink: 0;
-  background-color: #f5f5f5;
+  background-color: white;
   padding: 1.5rem;
   border-radius: 8px;
   height: fit-content;
@@ -113,7 +113,7 @@ const goToDetails = (productId) => {
 .product-review {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;

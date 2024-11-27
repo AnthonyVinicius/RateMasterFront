@@ -43,7 +43,7 @@
                 placeholder="Write your review here..."
               ></textarea>
             </div>
-
+            <!-- NavButton text="Submit Review" class="button container-fluid" /    MUDAR O BOTÃO PARA DEIXAR PADRONIZADO -->
             <button type="submit" class="submit-button">Submit Review</button>
           </form>
 
@@ -125,7 +125,6 @@ const submitReview = () => {
 
 
 .product-details {
-  background-color: #f5f5f5;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;

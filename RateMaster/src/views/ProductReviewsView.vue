@@ -5,21 +5,17 @@ import TheFooter from '@/components/TheFooter.vue';
 </script>
 
 <template>
+  <div class="page-container">
+
   <TheNavbar />
-  <div class="product-detail">
-  <h1>Product Reviews</h1>
-  <br>
-  <ProductReview />
-</div>
+
+  <main class="content">
+    <h1 class="text-center">Product Reviews</h1>
+    <br>
+    <ProductReview />
+  </main>
+
   <TheFooter />
+</div>
 
 </template>
-
-<style scoped>
-.product-detail{
-background-color: #f5f5f5;
-}
-h1 {
-  text-align: center;
-}
-</style>

@@ -67,7 +67,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
@@ -103,7 +103,7 @@ onMounted(() => {
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     rating: 4.6,
-    image: "../src/assets/product-image.png",
+    image: '../assets/img/product-image.png'
   };
 });
 

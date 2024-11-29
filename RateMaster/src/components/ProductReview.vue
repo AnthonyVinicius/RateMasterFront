@@ -55,14 +55,14 @@ const products = ref([
     name: 'Product 1',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     rating: 4.6,
-    image: '../assets/img/product-image.png'
+    image: 'src/assets/img/product-image.png'
   },
   {
     id: 2,
     name: 'Product 2',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     rating: 4.8,
-    image: '../assets/img/product-image.png'
+    image: 'src/assets/img/product-image.png'
   },
 ]);
 

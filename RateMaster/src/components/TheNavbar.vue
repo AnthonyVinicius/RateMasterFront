@@ -1,18 +1,20 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
 import NavButton from './NavButton.vue';
 
 const logado = true;
+const showDropdown = ref(false);
+ 
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg"
-  >
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <RouterLink to="/">
         <img src="../assets/img/Logo.png" alt="Logo" class="logo">
       </RouterLink>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon "></span>
       </button>
 
@@ -31,21 +33,28 @@ const logado = true;
             <RouterLink class="nav-link" to="/registerProduct" v-if="logado">Register Product</RouterLink>
           </li>
         </ul>
-        <form class="d-flex search-form" role="search" v-if="false">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <NavButton text="Search" class="button" />
-        </form>
-          
-          <NavButton text="Sign Up" class="button" v-if="!logado"/>
-          <NavButton text="Login" class="button" v-if="!logado"/>
-          
 
-          <div v-if="logado">
-            <RouterLink to="/profile" class="profile-link">
+        <div>
+          <RouterLink to="/registerUser">
+            <NavButton text="Sign Up" class="button m-2" v-if="!logado" />
+          </RouterLink>
+          <RouterLink to="/login">
+            <NavButton text="Login" class="button m-2" v-if="!logado" />
+          </RouterLink>
+        </div>
+
+        <div v-if="logado">
+          <!-- Dropdown para o perfil -->
+          <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle profile-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" @click="showDropdown = !showDropdown">
               <i class="bi bi-person-circle profile-icon"></i>
-            </RouterLink>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="profileDropdown" v-show="showDropdown">
+              <li><a class="dropdown-item" href="#" @click="logado = false;">Log out</a></li>
+            </ul>
           </div>
-          
+        </div>
+
       </div>
     </div>
   </nav>
@@ -57,7 +66,7 @@ const logado = true;
   padding: 10px 20px;
 }
 
-.nav-link{
+.nav-link {
   color: white;
   font-size: 16px;
   padding: 8px 12px;
@@ -66,7 +75,7 @@ const logado = true;
 }
 
 .nav-link:hover {
-  background-color: #34495E; 
+  background-color: #34495E;
   color: white;
   border-radius: 5px;
   transform: scale(1.1);
@@ -78,11 +87,20 @@ const logado = true;
   margin-right: 20px;
 }
 
-.profile-icon{
+.profile-icon {
   font-size: 50px;
 }
+
+.dropdown-menu {
+  min-width: 200px;
+}
+
+.dropdown-item {
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
 </style>
-
-
-
-

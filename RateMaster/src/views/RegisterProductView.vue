@@ -27,15 +27,13 @@ export default {
       }
     },
     formatPrice(event) {
-      // Format the price as R$ and ensure the correct decimal placement
-      let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+      let value = event.target.value.replace(/\D/g, ''); 
       if (value.length > 2) {
         value = value.slice(0, value.length - 2) + ',' + value.slice(value.length - 2);
       }
       this.price = value ? 'R$ ' + value : '';
     },
     submitForm() {
-      // Logic to submit form data, e.g., to an API or service
       const productData = {
         productName: this.productName,
         description: this.description,
@@ -55,7 +53,7 @@ export default {
   <TheNavbar />
   <main class="content container mt-5">
     <div class="row">
-      <!-- Image Upload Section -->
+      
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
@@ -68,13 +66,13 @@ export default {
         </div>
       </div>
 
-      <!-- Form Section -->
+      
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Register Product</h5>
             <form @submit.prevent="submitForm">
-              <!-- Product Name Field -->
+              
               <div class="mb-3">
                 <label for="productName" class="form-label">Product Name</label>
                 <input
@@ -87,7 +85,7 @@ export default {
                 />
               </div>
 
-              <!-- Description Field -->
+              
               <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <input
@@ -100,7 +98,7 @@ export default {
                 />
               </div>
 
-              <!-- Price Field -->
+              
               <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
                 <input
@@ -114,7 +112,7 @@ export default {
                 />
               </div>
 
-              <!-- Type Field -->
+              
               <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
                 <select v-model="type" class="form-select" id="type" required>
@@ -123,7 +121,7 @@ export default {
                 </select>
               </div>
 
-              <!-- Submit Button -->
+              
               <NavButton text="Finish" class="button container-fluid" />
             </form>
           </div>

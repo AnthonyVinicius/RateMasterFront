@@ -14,18 +14,16 @@ import NavButton from '@/components/NavButton.vue';
                 <div class="card register-card">
                     <div class="row g-0">
 
-                        <!-- Imagem -->
-
                         <div class="col-md-6 col-lg-6 d-flex">
                             <div class="card-body p-4 p-lg-5">
 
                                 <form>
-                                    <!-- RateMaster -->
+                                    
                                     <div class="mb-2 pb-1">
                                         <h1 class="h1 fw-bold register-title">RateMaster</h1>
                                     </div>
 
-                                    <!-- Sign Up -->
+                                    
                                     <h5 class="fw-normal pb-3 register-header">Create a new account</h5>
 
                                     <div>

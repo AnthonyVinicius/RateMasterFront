@@ -44,7 +44,6 @@ const showDropdown = ref(false);
         </div>
 
         <div v-if="logado">
-          <!-- Dropdown para o perfil -->
           <div class="dropdown">
             <button class="btn btn-link dropdown-toggle profile-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" @click="showDropdown = !showDropdown">
               <i class="bi bi-person-circle profile-icon"></i>

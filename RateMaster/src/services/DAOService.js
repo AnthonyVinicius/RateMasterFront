@@ -1,4 +1,3 @@
-
 import { firestore } from '../firebase';
 import { collection, addDoc, updateDoc, deleteDoc, getDocs, getDoc, doc, query, where } from 'firebase/firestore';
 

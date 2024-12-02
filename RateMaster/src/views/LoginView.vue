@@ -14,7 +14,7 @@ import NavButton from '@/components/NavButton.vue';
         <div class="card login-card">
           <div class="row g-0">
 
-            <!-- Imagem -->
+            
             <div class="col-md-6 col-lg-6 d-none d-md-block">
               <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
             </div>
@@ -23,12 +23,12 @@ import NavButton from '@/components/NavButton.vue';
               <div class="card-body p-4 p-lg-5">
 
                 <form>
-                  <!-- RateMaster -->
+                  
                   <div class="mb-2 pb-1">
                     <h1 class="h1 fw-bold login-title">RateMaster</h1>
                   </div>
 
-                  <!-- Sign In -->
+                  
                   <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
 
                   <div>

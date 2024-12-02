@@ -1,6 +1,5 @@
 <template>
   <div class="shop-container">
-    <!-- Filters Sidebar -->
     <aside class="filters">
       <h3>Filters</h3>
       <div class="filter-section">
@@ -20,7 +19,6 @@
       </div>
     </aside>
 
-    <!-- Products Grid -->
     <div class="products-grid">
       <div v-for="product in products" :key="product.id" class="product-review" @click="goToDetails(product.id)">
         <div class="product-image">

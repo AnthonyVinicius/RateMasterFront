@@ -16,11 +16,9 @@
         </div>
         <p class="description">{{ product.description }}</p>
 
-        <!-- Reviews Section -->
         <div class="reviews-section">
           <h2>Reviews</h2>
 
-          <!-- Add Review Form -->
           <form @submit.prevent="submitReview" class="review-form">
             <div class="form-group">
               <label for="rating">Rating:</label>
@@ -43,11 +41,9 @@
                 placeholder="Write your review here..."
               ></textarea>
             </div>
-            <!-- NavButton text="Submit Review" class="button container-fluid" /    MUDAR O BOTÃO PARA DEIXAR PADRONIZADO -->
             <button type="submit" class="submit-button">Submit Review</button>
           </form>
 
-          <!-- Reviews List -->
           <div class="reviews-list">
             <div v-for="review in reviews" :key="review.id" class="review-item">
               <div class="review-header">
@@ -96,7 +92,6 @@ const newReview = ref({
 });
 
 onMounted(() => {
-  // mock data
   product.value = {
     id: route.params.id,
     name: "Product " + route.params.id,

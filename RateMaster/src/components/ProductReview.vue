@@ -1,16 +1,16 @@
 <template>
   <div class="shop-container">
     <aside class="filters">
-      <h3>Filters</h3>
+      <h3>Filtros</h3>
       <div class="filter-section">
-        <h4>Price Range</h4>
+        <h4>Preço</h4>
         <label><input type="checkbox" v-model="filters.price" value="0-50"> R$0 - R$50</label>
         <label><input type="checkbox" v-model="filters.price" value="51-100"> R$51 - R$100</label>
         <label><input type="checkbox" v-model="filters.price" value="101+"> R$101+</label>
       </div>
       
       <div class="filter-section">
-        <h4>Rating</h4>
+        <h4>Nota</h4>
         <label class="star"><input type="checkbox" v-model="filters.rating" value="5"> ★★★★★</label>
         <label class="star"><input type="checkbox" v-model="filters.rating" value="4"> ★★★★</label>
         <label class="star"><input type="checkbox" v-model="filters.rating" value="3"> ★★★ </label>

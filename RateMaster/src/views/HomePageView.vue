@@ -18,23 +18,23 @@ import NavButton from '@/components/NavButton.vue';
 
             <div class="container-fluid  white-comment-container">
                 <div class="text-box text-center">
-                    <h1 class="display-4 text-color">Welcome to RateMaster</h1>
-                    <p class="lead text-color pb-3">Discover the best products and share your reviews.</p>
+                    <h1 class="display-4 text-color">Bem Vindo à RateMaster</h1>
+                    <p class="lead text-color pb-3">Descubra os melhores produtos e compartilhe suas opniões.</p>
                 </div>
 
                 <div class="container text-center p-3">
                     <div class="row g-4">
                         <div class="col">
-                            <ReviewHomePage text="Custom solutions designed to meet your specific needs."
-                                comment="We offer a range of products that simplify performance evaluation." />
+                            <ReviewHomePage text="Soluções personalizadas desenvolvidas para atender às suas necessidades específicas."
+                                comment="Oferecemos uma gama de produtos que simplificam a avaliação de desempenho." />
                         </div>
                         <div class="col">
-                            <ReviewHomePage text="Our services ensure quality and efficiency in every project."
-                                comment="We are committed to delivering results that exceed your expectations." />
+                            <ReviewHomePage text="Nossos serviços garantem qualidade e eficiência em cada projeto."
+                                comment="Estamos comprometidos em entregar resultados que superem suas expectativas." />
                         </div>
                         <div class="col">
-                            <ReviewHomePage text="The technology that transforms the way you evaluate products."
-                                comment="Innovation and convenience are the pillars of our solutions." />
+                            <ReviewHomePage text="A tecnologia que transforma a maneira como você avalia produtos."
+                                comment="Inovação e conveniência são os pilares das nossas soluções." />
                         </div>
                     </div>
                 </div>
@@ -43,10 +43,8 @@ import NavButton from '@/components/NavButton.vue';
 
             <div class="container-fluid colored-comment-container">
                 <div class="text-box text-center p-5">
-                    <h1 class="display-4 text-white text-start pt-5">Evaluate with confidence.</h1>
-                    <p class="lead text-white text-start pb-5">Discover detailed and unbiased reviews to help you make
-                        informed purchasing
-                        decisions.</p>
+                    <h1 class="display-4 text-white text-start pt-5">Avalie com confiança.</h1>
+                    <p class="lead text-white text-start pb-5">Descubra avaliações detalhadas e imparciais para ajudá-lo a tomar decisões de compra informadas.</p>
                 </div>
             </div>
 
@@ -56,15 +54,15 @@ import NavButton from '@/components/NavButton.vue';
                     <div class="row g-4 pt-5 ">
                         <div class="col">
                             <UserReview
-                                comment="I absolutely loved this product! The quality is outstanding, and it exceeded my expectations. I will definitely recommend it to my friends and family." />
+                                comment="Eu simplesmente amei este produto! A qualidade é excepcional e superou minhas expectativas. Com certeza, vou recomendá-lo aos meus amigos e familiares." />
                         </div>
                         <div class="col">
                             <UserReview
-                                comment="The product is decent for the price, but it didn’t quite meet my expectations. It works, but there’s room for improvement." />
+                                comment="O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas. Funciona, mas há espaço para melhorias." />
                         </div>
                         <div class="col">
                             <UserReview
-                                comment="The customer service was fantastic! They were quick to respond, friendly, and resolved my issue in no time. A+ experience!" />
+                                comment="O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e resolveram meu problema em pouco tempo. Experiência A+!" />
                         </div>
                         <div class="container border border-4 mt-5 p-0 text-start rounded-3">
                             <div class="row g-0">
@@ -72,11 +70,10 @@ import NavButton from '@/components/NavButton.vue';
                                     <div class="card-body p-5 p-lg-5">
                                         <div>
                                             <div class="mb-2 pb-1">
-                                                <h1 class="h1 fw-bold">Discover our amazing products.</h1>
+                                                <h1 class="h1 fw-bold">Descubra nossos produtos incríveis.</h1>
                                             </div>
-                                            <h5 class="fw-normal pb-3">Explore our range of productsand find the perfect
-                                                solution for your needs.</h5>
-                                            <NavButton text="Learn More" class="button" />
+                                            <h5 class="fw-normal pb-3">Explore nossa gama de produtos e encontre a solução perfeita para suas necessidades.</h5>
+                                            <NavButton text="Saiba Mais" class="button" />
                                         </div>
                                     </div>
                                 </div>
@@ -91,8 +88,8 @@ import NavButton from '@/components/NavButton.vue';
             </div>
             <div class="container-fluid colored-comment-container">
                 <div class="text-box text-center p-5">
-                    <h1 class="display-4 text-white text-start ">Contact Us.</h1>
-                    <p class="lead text-white text-start">Discover how our platform can help you.</p>
+                    <h1 class="display-4 text-white text-start ">Entre em contato conosco.</h1>
+                    <p class="lead text-white text-start">Descubra como nossa plataforma pode ajudá-lo.</p>
                 </div>
             </div>
         </main>

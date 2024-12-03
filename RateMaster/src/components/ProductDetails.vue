@@ -1,7 +1,7 @@
 <template>
   <div class="product-details">
     <button class="back-button" @click="router.push('/reviews')">
-      ← Back to Products
+      ← Voltar para os produtos
     </button>
 
     <div class="product-container" v-if="product">
@@ -17,31 +17,31 @@
         <p class="description">{{ product.description }}</p>
 
         <div class="reviews-section">
-          <h2>Reviews</h2>
+          <h2>Avaliação</h2>
 
           <form @submit.prevent="submitReview" class="review-form">
             <div class="form-group">
-              <label for="rating">Rating:</label>
+              <label for="rating">Nota:</label>
               <select v-model="newReview.rating" id="rating" required>
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
+                <option value="5">5 Estrelas</option>
+                <option value="4">4 Estrelas</option>
+                <option value="3">3 Estrelas</option>
+                <option value="2">2 Estrelas</option>
+                <option value="1">1 Estrela</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="comment">Your Review:</label>
+              <label for="comment">Suas Avaliações</label>
               <textarea
                 v-model="newReview.comment"
                 id="comment"
                 rows="4"
                 required
-                placeholder="Write your review here..."
+                placeholder="Escreva sua avaliação aqui"
               ></textarea>
             </div>
-            <button type="submit" class="submit-button">Submit Review</button>
+            <button type="submit" class="submit-button">Enviar Avaliação</button>
           </form>
 
           <div class="reviews-list">

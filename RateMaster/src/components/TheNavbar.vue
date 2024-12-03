@@ -21,25 +21,25 @@ const showDropdown = ref(false);
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav d-flex gap-3 me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
+            <RouterLink class="nav-link" to="/">Ínicio</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/reviews">Reviews</RouterLink>
+            <RouterLink class="nav-link" to="/reviews">Avaliações</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/login" v-if="!logado">Login</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/registerProduct" v-if="logado">Register Product</RouterLink>
+            <RouterLink class="nav-link" to="/registerProduct" v-if="logado">Registrar Produto</RouterLink>
           </li>
         </ul>
 
         <div>
           <RouterLink to="/registerUser">
-            <NavButton text="Sign Up" class="button m-2" v-if="!logado" />
+            <NavButton text="Cadastrar-se" class="button m-2" v-if="!logado" />
           </RouterLink>
           <RouterLink to="/login">
-            <NavButton text="Login" class="button m-2" v-if="!logado" />
+            <NavButton text="Entrar" class="button m-2" v-if="!logado" />
           </RouterLink>
         </div>
 
@@ -49,7 +49,7 @@ const showDropdown = ref(false);
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown" v-show="showDropdown">
-              <li><a class="dropdown-item" href="#" @click="logado = false;">Log out</a></li>
+              <li><a class="dropdown-item" href="#" @click="logado = false;">Sair</a></li>
             </ul>
           </div>
         </div>

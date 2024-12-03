@@ -29,19 +29,19 @@ import NavButton from '@/components/NavButton.vue';
                   </div>
 
                   
-                  <h5 class="fw-normal pb-3 login-header">Sign into your account</h5>
+                  <h5 class="fw-normal pb-3 login-header">Faça login na sua conta.</h5>
 
                   <div>
 
                     <div class="form-outline mb-1">
-                      <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your email"
+                      <input type="email" id="email" class="form-control form-control-lg" placeholder="Digite seu email"
                         required />
                     </div>
 
 
                     <div class="form-outline mb-1">
                       <input type="password" id="password" class="form-control form-control-lg"
-                        placeholder="Enter your password" required />
+                        placeholder="Digite sua senha" required />
                     </div>
 
 
@@ -49,24 +49,24 @@ import NavButton from '@/components/NavButton.vue';
 
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">Remember Me</label>
+                        <label class="form-check-label" for="flexCheckChecked">Lembrar de mim.</label>
                       </div>
 
-                      <RouterLink to="/forgot-password">Forgot password?</RouterLink>
+                      <RouterLink to="/forgot-password">Esqueci a senha</RouterLink>
 
                     </div>
                   </div>
 
 
-                  <NavButton text="Sign In" class="button" />
+                  <NavButton text="Entrar." class="button" />
 
-                  <p class="mb-3 mt-3 pb-lg-2 no-account"> Don't have an account? <RouterLink to="/registerUser">
-                      Register here</RouterLink>
+                  <p class="mb-3 mt-3 pb-lg-2 no-account"> Não possui uma conta? <RouterLink to="/registerUser">
+                    Cadastre-se aqui.</RouterLink>
                   </p>
 
-                  <RouterLink to="/terms" class="small text-muted">Terms of use</RouterLink>
+                  <RouterLink to="/terms" class="small text-muted">Termos de uso</RouterLink>
 
-                  <RouterLink to="/privacy" class="small text-muted"> Privacy policy</RouterLink>
+                  <RouterLink to="/privacy" class="small text-muted"> Politica de Privacidade</RouterLink>
                 </form>
 
               </div>

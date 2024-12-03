@@ -10,7 +10,7 @@ import TheFooter from '@/components/TheFooter.vue';
   <TheNavbar />
 
   <main class="content">
-    <h1 class="text-center">Product Reviews</h1>
+    <h1 class="text-center">Avaliações de Produtos</h1>
     <br>
     <ProductReview />
   </main>

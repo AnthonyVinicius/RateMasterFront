@@ -57,7 +57,7 @@ export default {
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Upload Image</h5>
+            <h5 class="card-title">Anexar imagen</h5>
             <input type="file" @change="handleImageUpload" class="form-control" />
             <div v-if="image" class="mt-3">
               <img :src="image" alt="Product Preview" class="img-fluid" />
@@ -70,37 +70,37 @@ export default {
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Register Product</h5>
+            <h5 class="card-title">Registrar Produto</h5>
             <form @submit.prevent="submitForm">
               
               <div class="mb-3">
-                <label for="productName" class="form-label">Product Name</label>
+                <label for="productName" class="form-label">Nome do produto</label>
                 <input
                   v-model="productName"
                   type="text"
                   class="form-control"
                   id="productName"
-                  placeholder="Enter the Product Name"
+                  placeholder="Digite o nome do produto."
                   required
                 />
               </div>
 
               
               <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
+                <label for="description" class="form-label">Descrição</label>
                 <input
                   v-model="description"
                   type="text"
                   class="form-control"
                   id="description"
-                  placeholder="Enter the Description"
+                  placeholder="Digite a descrição do seu produto"
                   required
                 />
               </div>
 
               
               <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
+                <label for="price" class="form-label">Preço</label>
                 <input
                   v-model="price"
                   type="text"
@@ -114,15 +114,15 @@ export default {
 
               
               <div class="mb-3">
-                <label for="type" class="form-label">Type</label>
+                <label for="type" class="form-label">Tipo</label>
                 <select v-model="type" class="form-select" id="type" required>
-                  <option value="product">Product</option>
-                  <option value="service">Service</option>
+                  <option value="product">Produto</option>
+                  <option value="service">Serviço</option>
                 </select>
               </div>
 
               
-              <NavButton text="Finish" class="button container-fluid" />
+              <NavButton text="Finalizar" class="button container-fluid" />
             </form>
           </div>
         </div>

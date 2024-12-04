@@ -49,9 +49,9 @@ const showDropdown = ref(false);
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown" v-show="showDropdown">
-              <li class="dropdown-item" @click= "logado = false;"> >Sair</li>
+              <li class="dropdown-item" @click= "logado = false;">Sair</li>
             <RouterLink to="/myProducts">
-              <li class="dropdown-item"> Meus Produtos </li>
+              <li class="dropdown-item">Meus Produtos </li>
             </RouterLink>
             </ul>
           </div>

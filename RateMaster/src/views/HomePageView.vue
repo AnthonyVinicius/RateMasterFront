@@ -25,7 +25,8 @@ import NavButton from '@/components/NavButton.vue';
                 <div class="container text-center p-3">
                     <div class="row g-4">
                         <div class="col">
-                            <ReviewHomePage text="Soluções personalizadas desenvolvidas para atender às suas necessidades específicas."
+                            <ReviewHomePage
+                                text="Soluções personalizadas desenvolvidas para atender às suas necessidades específicas."
                                 comment="Oferecemos uma gama de produtos que simplificam a avaliação de desempenho." />
                         </div>
                         <div class="col">
@@ -44,7 +45,8 @@ import NavButton from '@/components/NavButton.vue';
             <div class="container-fluid colored-comment-container">
                 <div class="text-box text-center p-5">
                     <h1 class="display-4 text-white text-start pt-5">Avalie com confiança.</h1>
-                    <p class="lead text-white text-start pb-5">Descubra avaliações detalhadas e imparciais para ajudá-lo a tomar decisões de compra informadas.</p>
+                    <p class="lead text-white text-start pb-5">Descubra avaliações detalhadas e imparciais para ajudá-lo
+                        a tomar decisões de compra informadas.</p>
                 </div>
             </div>
 
@@ -54,15 +56,21 @@ import NavButton from '@/components/NavButton.vue';
                     <div class="row g-4 pt-5 ">
                         <div class="col">
                             <UserReview
-                                comment="Eu simplesmente amei este produto! A qualidade é excepcional e superou minhas expectativas. Com certeza, vou recomendá-lo aos meus amigos e familiares." />
+                                comment="Eu simplesmente amei este produto! Qualidade é excepcional e superou minhas expectativas. Vou recomendá-lo aos meus amigos e familiares."
+                                src="/user1.jpeg"
+                                user="Carol" />
                         </div>
                         <div class="col">
                             <UserReview
-                                comment="O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas. Funciona, mas há espaço para melhorias." />
+                                comment="O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas. Funciona, mas há espaço para melhorias."
+                                src="/user2.jpeg"
+                                user="Maria" />
                         </div>
                         <div class="col">
                             <UserReview
-                                comment="O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e resolveram meu problema em pouco tempo. Experiência A+!" />
+                                comment="O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e resolveram meu problema em pouco tempo. Experiência A+!"
+                                src="/user3.jpeg" 
+                                user="Carlos" />
                         </div>
                         <div class="container border border-4 mt-5 p-0 text-start rounded-3">
                             <div class="row g-0">
@@ -72,7 +80,8 @@ import NavButton from '@/components/NavButton.vue';
                                             <div class="mb-2 pb-1">
                                                 <h1 class="h1 fw-bold">Descubra nossos produtos incríveis.</h1>
                                             </div>
-                                            <h5 class="fw-normal pb-3">Explore nossa gama de produtos e encontre a solução perfeita para suas necessidades.</h5>
+                                            <h5 class="fw-normal pb-3">Explore nossa gama de produtos e encontre a
+                                                solução perfeita para suas necessidades.</h5>
                                             <NavButton text="Saiba Mais" class="button" />
                                         </div>
                                     </div>

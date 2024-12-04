@@ -21,16 +21,16 @@ const showDropdown = ref(false);
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav d-flex gap-3 me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Ínicio</RouterLink>
+            <RouterLink class="nav-link" to="/"><i class="bi bi-house-fill p-2"></i>Ínicio</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/reviews">Avaliações</RouterLink>
+            <RouterLink class="nav-link" to="/reviews"><i class="bi bi-star-fill p-2"></i>Avaliações</RouterLink>
+          </li>
+          <li class="nav-item" v-if="!logado">
+            <RouterLink class="nav-link" to="/login"><i class="bi bi-box-arrow-in-right p-2"></i>Login</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/login" v-if="!logado">Login</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/registerProduct" v-if="logado">Registrar Produto</RouterLink>
+            <RouterLink class="nav-link" to="/registerProduct" v-if="logado"><i class="bi bi-plus-square-fill p-2"></i>Registrar Produto</RouterLink>
           </li>
         </ul>
 

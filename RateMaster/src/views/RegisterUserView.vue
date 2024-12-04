@@ -24,13 +24,13 @@ import NavButton from '@/components/NavButton.vue';
                                     </div>
 
                                     
-                                    <h5 class="fw-normal pb-3 register-header">Create a new account</h5>
+                                    <h5 class="fw-normal pb-3 register-header">Criar uma nova conta</h5>
 
                                     <div>
 
                                         <div class="form-outline mb-1">
                                             <input type="lead text" id="username" class="form-control form-control-lg"
-                                                placeholder="Enter your username" required />
+                                                placeholder="Digite seu nome" required />
                                         </div>
 
                                         <div class="form-outline mb-1">
@@ -40,12 +40,12 @@ import NavButton from '@/components/NavButton.vue';
 
                                         <div class="form-outline mb-1">
                                             <input type="password" id="password" class="form-control form-control-lg"
-                                                placeholder="Enter your password" required />
+                                                placeholder="Dgite sua senha" required />
                                         </div>
 
                                         <div class="form-outline mb-1">
                                             <input type="password" id="confirm-password" class="form-control form-control-lg"
-                                                placeholder="Confirm your password" required />
+                                                placeholder="Confirme sua senha" required />
                                         </div>
 
                                         <div class="d-flex justify-content-between m-3">
@@ -53,19 +53,19 @@ import NavButton from '@/components/NavButton.vue';
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="termsCheck" required>
-                                                <label class="form-check-label" for="termsCheck">I agree to the
-                                                    <RouterLink to="/terms">Terms of use</RouterLink> and
-                                                    <RouterLink to="/privacy">Privacy policy</RouterLink></label>
+                                                <label class="form-check-label" for="termsCheck">Eu concordo com o
+                                                    <RouterLink to="/terms">Termos de uso</RouterLink> e
+                                                    <RouterLink to="/privacy">Política de privacidade.</RouterLink></label>
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <NavButton text="Register" class="button" />
+                                    <NavButton text="Cadastrar-se" class="button" />
 
-                                    <p class="mb-3 mt-3 pb-lg-2 has-account"> Already have an account? <RouterLink
+                                    <p class="mb-3 mt-3 pb-lg-2 has-account"> Já possui uma conta? <RouterLink
                                             to="/login">
-                                            Login here</RouterLink>
+                                            Entrar</RouterLink>
                                     </p>
 
                                 </form>

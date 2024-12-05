@@ -40,7 +40,7 @@ import NavButton from '@/components/NavButton.vue';
 
                                         <div class="form-outline mb-1">
                                             <input type="password" id="password" class="form-control form-control-lg"
-                                                placeholder="Dgite sua senha" required />
+                                                placeholder="Digite sua senha" required />
                                         </div>
 
                                         <div class="form-outline mb-1">

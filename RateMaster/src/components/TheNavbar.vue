@@ -35,12 +35,12 @@ const showDropdown = ref(false);
           </li>
         </ul>
 
-        <div>
+        <div v-if="!logado">
           <RouterLink to="/registerUser">
-            <NavButton text="Cadastrar-se" class="button m-2" v-if="!logado" />
+            <NavButton text="Cadastrar-se" class="button m-2" />
           </RouterLink>
           <RouterLink to="/login">
-            <NavButton text="Entrar" class="button m-2" v-if="!logado" />
+            <NavButton text="Entrar" class="button m-2" />
           </RouterLink>
         </div>
 
@@ -49,8 +49,8 @@ const showDropdown = ref(false);
             <button class="btn btn-link dropdown-toggle profile-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" @click="showDropdown = !showDropdown">
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="profileDropdown" v-show="showDropdown">
-              <li class="dropdown-item" @click= "logado = false;">Sair</li>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Sair</li>
             <RouterLink to="/myProducts">
               <li class="dropdown-item">Meus Produtos </li>
             </RouterLink>

@@ -18,7 +18,7 @@ const product = ref({
 
 const submit = async () => {
   // Verificação de campos obrigatórios
-  if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type || !product.value.image) {
+  if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
   }

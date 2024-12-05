@@ -27,6 +27,7 @@
         <div class="product-info">
           <h2>{{ product.name }}</h2>
           <p>{{ product.description }}</p>
+          <p>{{ product.price }}</p>
           <div class="rating">
             <span class="star">★</span> {{ product.rating }}/5
           </div>
@@ -37,36 +38,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
 
+const daoProducts = new DAOService('products');
 const router = useRouter();
 
+const products = ref([]);
 const filters = ref({
   price: [],
-  rating: []
+//  rating: []
 });
 
-const products = ref([
-  {
-    id: 1,
-    name: 'Product 1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    rating: 4.6,
-    image: 'src/assets/img/product-image.png'
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    rating: 4.8,
-    image: 'src/assets/img/product-image.png'
-  },
-]);
+const fetchProducts = async () => {
+  try {
+    products.value = await daoProducts.getAll();
+    console.log('Produtos carregados:', products.value);
+  } catch (error) {
+    console.error('Erro ao carregar produtos:', error);
+  }
+};
 
 const goToDetails = (productId) => {
-  router.push({ name: 'productDetail', params: { id: productId}})
-}
+  router.push({ name: 'productDetail', params: { id: productId } });
+};
+
+onMounted(() => {
+  fetchProducts();
+});
 </script>
 
 <style scoped>

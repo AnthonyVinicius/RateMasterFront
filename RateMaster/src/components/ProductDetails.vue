@@ -1,7 +1,7 @@
 <template>
   <div class="product-details">
     <button class="back-button" @click="router.push('/reviews')">
-      ← Voltar para os produtos
+      ← Back to Products
     </button>
 
     <div class="product-container" v-if="product">
@@ -16,34 +16,38 @@
         </div>
         <p class="description">{{ product.description }}</p>
 
+        <!-- Reviews Section -->
         <div class="reviews-section">
-          <h2>Avaliação</h2>
+          <h2>Reviews</h2>
 
+          <!-- Add Review Form -->
           <form @submit.prevent="submitReview" class="review-form">
             <div class="form-group">
-              <label for="rating">Nota:</label>
+              <label for="rating">Rating:</label>
               <select v-model="newReview.rating" id="rating" required>
-                <option value="5">5 Estrelas</option>
-                <option value="4">4 Estrelas</option>
-                <option value="3">3 Estrelas</option>
-                <option value="2">2 Estrelas</option>
-                <option value="1">1 Estrela</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="comment">Suas Avaliações</label>
+              <label for="comment">Your Review:</label>
               <textarea
                 v-model="newReview.comment"
                 id="comment"
                 rows="4"
                 required
-                placeholder="Escreva sua avaliação aqui"
+                placeholder="Write your review here..."
               ></textarea>
             </div>
-            <button type="submit" class="submit-button">Enviar Avaliação</button>
+            <!-- NavButton text="Submit Review" class="button container-fluid" /    MUDAR O BOTÃO PARA DEIXAR PADRONIZADO -->
+            <button type="submit" class="submit-button">Submit Review</button>
           </form>
 
+          <!-- Reviews List -->
           <div class="reviews-list">
             <div v-for="review in reviews" :key="review.id" class="review-item">
               <div class="review-header">
@@ -92,6 +96,7 @@ const newReview = ref({
 });
 
 onMounted(() => {
+  // mock data
   product.value = {
     id: route.params.id,
     name: "Product " + route.params.id,

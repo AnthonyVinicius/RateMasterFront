@@ -2,6 +2,7 @@
 import ProductReview from '@/components/ProductReview.vue';
 import TheNavbar from '../components/TheNavbar.vue';
 import TheFooter from '@/components/TheFooter.vue';
+
 </script>
 
 <template>
@@ -14,7 +15,7 @@ import TheFooter from '@/components/TheFooter.vue';
     <br>
     <ProductReview />
   </main>
-
+  
   <TheFooter />
 </div>
 

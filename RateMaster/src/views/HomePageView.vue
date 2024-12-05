@@ -57,50 +57,52 @@ import NavButton from '@/components/NavButton.vue';
                         <div class="col">
                             <UserReview
                                 comment="Eu simplesmente amei este produto! Qualidade é excepcional e superou minhas expectativas. Vou recomendá-lo aos meus amigos e familiares."
-                                src="/user1.jpeg"
-                                user="Carol" />
+                                src="/user1.jpeg" user="Carol" />
                         </div>
                         <div class="col">
                             <UserReview
                                 comment="O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas. Funciona, mas há espaço para melhorias."
-                                src="/user2.jpeg"
-                                user="Maria" />
+                                src="/user2.jpeg" user="Maria" />
                         </div>
                         <div class="col">
                             <UserReview
                                 comment="O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e resolveram meu problema em pouco tempo. Experiência A+!"
-                                src="/user3.jpeg" 
-                                user="Carlos" />
-                        </div>
-                        <div class="container border border-4 mt-5 p-0 text-start rounded-3">
-                            <div class="row g-0">
-                                <div class="col-md-6 col-lg-6 d-flex">
-                                    <div class="card-body p-5 p-lg-5">
-                                        <div>
-                                            <div class="mb-2 pb-1">
-                                                <h1 class="h1 fw-bold">Descubra nossos produtos incríveis.</h1>
-                                            </div>
-                                            <h5 class="fw-normal pb-3">Explore nossa gama de produtos e encontre a
-                                                solução perfeita para suas necessidades.</h5>
-                                            <NavButton text="Saiba Mais" class="button" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 d-none d-md-block">
-                                    <img src="../assets/img/placeholder.png" alt="product-image"
-                                        class="img-fluid product-image" />
-                                </div>
-                            </div>
+                                src="/user3.jpeg" user="Carlos" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container-fluid colored-comment-container">
-                <div class="text-box text-center p-5">
-                    <h1 class="display-4 text-white text-start ">Entre em contato conosco.</h1>
-                    <p class="lead text-white text-start">Descubra como nossa plataforma pode ajudá-lo.</p>
+    <div class="row">
+        <div class="col p-5 d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="display-4 text-white text-start">Entre em contato conosco.</h1>
+                <p class="lead text-white text-start">Descubra como nossa plataforma pode ajudá-lo.</p>
+            </div>
+
+            <div class="row justify-content-center w-100">
+                <div class="col-12 col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <label for="nome" class="form-label text-white">Nome</label>
+                            <input type="text" class="form-control" placeholder="Seu nome">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-white">Email</label>
+                            <input type="email" class="form-control" placeholder="Seu email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label text-white">Mensagem</label>
+                            <input type="mens" class="form-control" placeholder="Escreva sua mensagem">
+                        </div>
+                        <NavButton text="Enviar" class="button mt-2" />
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
         </main>
 
         <TheFooter />
@@ -119,7 +121,14 @@ import NavButton from '@/components/NavButton.vue';
 .white-comment-container {
     padding-top: 100px;
     padding-bottom: 100px;
+}
 
+.button {
+  width: 100%;
+}
+
+button:hover {
+  transform: scale(1.01);
 }
 
 .header-img {

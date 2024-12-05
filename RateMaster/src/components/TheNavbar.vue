@@ -11,8 +11,9 @@ const showDropdown = ref(false);
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <RouterLink to="/">
-        <img src="../assets/img/Logo.png" alt="Logo" class="logo">
+        <img src="../assets/img/Icon.png" alt="Logo" class="logo">
       </RouterLink>
+      <h1 class="fw-medium fs-3 text-white">RateMaster</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon "></span>
@@ -84,7 +85,7 @@ const showDropdown = ref(false);
 }
 
 .logo {
-  width: 80px;
+  width: 50px;
   margin-left: 20px;
   margin-right: 20px;
 }

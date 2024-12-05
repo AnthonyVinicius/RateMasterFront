@@ -16,6 +16,17 @@ const showAll = async () => {
     products.value = await daoProducts.getAll()
 }
 
+const deleteProduct = async (id) => {
+  try{
+    await daoProducts.delete(id)
+    products.value = products.value.filter(product => product.id !== id);
+    alert('Produto removido com sucesso!');
+  } catch (error){
+    console.error(error);
+    alert("Erro ao remover o produto")
+  }
+}
+
 
 </script>
 
@@ -33,6 +44,7 @@ const showAll = async () => {
               <th scope="col">Preço</th>
               <th scope="col">Tipo</th>
               <th scope="col">Descrição</th>
+              <th scope="col">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +58,7 @@ const showAll = async () => {
               <td>R${{ product.price }}</td>
               <td>{{ product.type }}</td>
               <td>{{ product.description }}</td>
+              <td><button @click="deleteProduct(product.id)" type="button" class="btn btn-danger">Remover</button></td>
             </tr>
           </tbody>
         </table>

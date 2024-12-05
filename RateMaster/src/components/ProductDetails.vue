@@ -68,57 +68,35 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted } from 'vue';
+import DAOService from '@/services/DAOService';
+import { useRoute } from 'vue-router';
 
-const router = useRouter();
+const daoProducts = new DAOService('products');
 const route = useRoute();
 
-const product = ref(null);
-const reviews = ref([
-  {
-    id: 1,
-    rating: 5,
-    comment: "Great product! Highly recommended!",
-    date: "2024-03-15",
-  },
-  {
-    id: 2,
-    rating: 4,
-    comment: "Good quality, but a bit pricey.",
-    date: "2024-03-14",
-  },
-]);
+const product  = ref((null));
+const reviews = ref([])
 
-const newReview = ref({
-  rating: 5,
-  comment: "",
-});
+
+const fetchProductDetails = async () => {
+  try {
+    const productId = route.params.id;
+    product.value = await daoProducts.get(productId);
+
+    reviews.value = product.value.reviews || [];
+  } catch (error) {
+    console.error("Erro ao carregar os detalhes do produto:", error);
+  }
+};
+
+/* const goToDetails = (productId) => {
+  router.push({ name: 'productDetail', params: { id: productId } });
+}; */
 
 onMounted(() => {
-  // mock data
-  product.value = {
-    id: route.params.id,
-    name: "Product " + route.params.id,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    rating: 4.6,
-    image: '../assets/img/product-image.png'
-  };
+  fetchProductDetails();
 });
-
-const submitReview = () => {
-  const review = {
-    id: reviews.value.length + 1,
-    rating: Number(newReview.value.rating),
-    comment: newReview.value.comment,
-    date: new Date().toISOString().split("T")[0],
-  };
-
-  reviews.value.unshift(review);
-  newReview.value.comment = "";
-  newReview.value.rating = 5;
-};
 </script>
 
 <style scoped>

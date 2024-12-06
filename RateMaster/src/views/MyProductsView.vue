@@ -3,6 +3,9 @@ import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const daoProducts = new DAOService('products');
 
@@ -26,6 +29,10 @@ const deleteProduct = async (id) => {
     alert("Erro ao remover o produto")
   }
 }
+
+const goToUpdate = (productId) => {
+  router.push({ name: 'updateProducts', params: { id: productId } });
+};
 </script>
 
 <template>
@@ -57,10 +64,8 @@ const deleteProduct = async (id) => {
             <td>
               <button @click="deleteProduct(product.id)" type="button" class="btn btn-danger ms-2 me-2"><i
                   class="bi bi-trash-fill"></i></button>
-                  <RouterLink :to="{ name: 'UpdateProduct', params: { id: product.id } }">
-                <button type="button" class="btn btn-danger ms-2 me-2"><i
-                    class="bi bi-pencil-square"></i></button>
-              </RouterLink>
+              <button @click = "goToUpdate(product.id)"  type="button" class="btn btn-danger ms-2 me-2"><i
+                  class="bi bi-pencil-square"></i></button>
             </td>
           </tr>
         </tbody>
@@ -69,8 +74,3 @@ const deleteProduct = async (id) => {
     <TheFooter />
   </div>
 </template>
-
-<script setup>
-
-
-</script>

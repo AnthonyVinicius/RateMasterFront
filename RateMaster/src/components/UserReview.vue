@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
 
-// Definindo a prop `src` que será passada para o componente
 const props = defineProps({
   comment: {
     type: String,

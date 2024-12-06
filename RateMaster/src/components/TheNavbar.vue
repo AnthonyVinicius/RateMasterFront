@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import NavButton from './NavButton.vue';
+import CustomButton from './CustomButton.vue';
 
 const logado = true;
 const showDropdown = ref(false);
@@ -37,10 +37,10 @@ const showDropdown = ref(false);
 
         <div v-if="!logado">
           <RouterLink to="/registerUser">
-            <NavButton text="Cadastrar-se" class="button m-2" />
+            <CustomButton text="Cadastrar-se" class="button m-2" />
           </RouterLink>
           <RouterLink to="/login">
-            <NavButton text="Entrar" class="button m-2" />
+            <CustomButton text="Entrar" class="button m-2" />
           </RouterLink>
         </div>
 

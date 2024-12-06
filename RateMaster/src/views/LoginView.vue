@@ -1,7 +1,7 @@
 <script setup>
 import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
-import NavButton from '@/components/NavButton.vue';
+import CustomButton from '@/components/CustomButton.vue';
 </script>
 
 <template>
@@ -58,7 +58,7 @@ import NavButton from '@/components/NavButton.vue';
                   </div>
 
 
-                  <NavButton text="Entrar." class="button" />
+                  <CustomButton text="Entrar." class="button" />
 
                   <p class="mb-3 mt-3 pb-lg-2 no-account"> Não possui uma conta? <RouterLink to="/registerUser">
                     Cadastre-se aqui.</RouterLink>

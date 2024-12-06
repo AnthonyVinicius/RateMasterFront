@@ -3,7 +3,7 @@ import TheNavbar from '@/components/TheNavbar.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import ReviewHomePage from '@/components/ReviewHomePage.vue';
 import UserReview from '@/components/UserReview.vue';
-import NavButton from '@/components/NavButton.vue';
+import CustomButton from '@/components/CustomButton.vue';
 </script>
 
 <template>
@@ -95,7 +95,7 @@ import NavButton from '@/components/NavButton.vue';
                             <label for="mensagem" class="form-label text-white">Mensagem</label>
                             <input type="mens" class="form-control" placeholder="Escreva sua mensagem">
                         </div>
-                        <NavButton text="Enviar" class="button mt-2" />
+                        <CustomButton text="Enviar" class="button mt-2" />
                     </form>
                 </div>
             </div>

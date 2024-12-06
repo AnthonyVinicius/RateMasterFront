@@ -41,7 +41,7 @@
                 placeholder="Escreva sua avaliação aqui"
               ></textarea>
             </div>
-            <button type="submit" class="submit-button">Enviar Avaliação</button>
+            <CustomButton text="Enviar Avaliação"/>
           </form>
 
           <div class="reviews-list">
@@ -68,6 +68,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
+import CustomButton from "./CustomButton.vue";
 
 const router = useRouter();
 const route = useRoute();

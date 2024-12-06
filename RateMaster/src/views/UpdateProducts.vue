@@ -7,6 +7,7 @@ import { ref } from 'vue';
 
 const daoProducts = new DAOService('products');
 
+
 const product = ref({
   name: '',
   description: '',
@@ -23,7 +24,7 @@ const submit = async () => {
     return;
   }
 
-  await daoProducts.insert(product.value);
+  await daoProducts.update(product.value);
   alert('Produto cadastrado com sucesso!');
 }
 
@@ -72,7 +73,7 @@ const formatPrice = (event) => {
         <div class="col-md-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Registrar Produto</h5>
+              <h5 class="card-title">Editar Produto</h5>
               <form @submit.prevent="submit">
 
                 <div class="mb-3">

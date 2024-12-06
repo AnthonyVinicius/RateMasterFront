@@ -1,19 +1,18 @@
-<script>
-export default {
-  name: 'NavButton',
-  props: {
-    text: {
-      type: String,
-      required: true
-    }
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+  text: {
+    type: String,
+    required: true
   }
-}
-
+});
 </script>
+
 <template>
-
-    <button class="btn btn-outline" type="submit">{{text}}</button>
-
+  <button class="btn btn-outline" type="submit">
+    <span v-html="text"></span>
+  </button>
 </template>
 
 <style scoped>
@@ -28,5 +27,4 @@ button:hover {
   background-color: #393f81;
   transform: scale(1.1);
 }
-
 </style>

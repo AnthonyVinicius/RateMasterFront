@@ -58,7 +58,7 @@ const goToUpdate = (productId) => {
             </td>
             <td>{{ product.name }}</td>
             <td>{{ product.brand }}</td>
-            <td>R${{ product.price }}</td>
+            <td>{{ product.price }}</td>
             <td>{{ product.type }}</td>
             <td>{{ product.description }}</td>
             <td>

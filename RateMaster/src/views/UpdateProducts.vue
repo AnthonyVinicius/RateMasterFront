@@ -26,7 +26,7 @@ const fetchProduct = async () => {
 
   if (!productId) {
     alert('Produto não encontrado!');
-    router.push({ name: 'listProducts' }); // Redireciona caso o ID não esteja presente
+    router.push({ name: 'listProducts' });
     return;
   }
 
@@ -36,7 +36,7 @@ const fetchProduct = async () => {
   } catch (error) {
     console.error(error);
     alert('Erro ao carregar o produto!');
-    router.push({ name: 'listProducts' }); // Redireciona em caso de erro
+    router.push({ name: 'listProducts' });
   }
 };
 
@@ -47,8 +47,8 @@ const submit = async () => {
     return;
   }
 
-  await daoProducts.update(product.value);
-  alert('Produto cadastrado com sucesso!');
+  await daoProducts.update(product.value.id, product.value);
+  alert('Produto atualizado com sucesso!');
 }
 
 const image = ref('');

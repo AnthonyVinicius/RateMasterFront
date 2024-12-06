@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-  <button class="btn btn-outline" type="submit">
+  <button @click="submit()" class="btn btn-outline" type="submit">
     <span v-html="text"></span>
   </button>
 </template>

@@ -3,7 +3,11 @@ import TheFooter from '@/components/TheFooter.vue';
 import TheNavbar from '@/components/TheNavbar.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
 
 const daoProducts = new DAOService('products');
 
@@ -16,6 +20,25 @@ const product = ref({
   type: '',
   image: null
 });
+
+const fetchProduct = async () => {
+  const productId = route.params.id;
+
+  if (!productId) {
+    alert('Produto não encontrado!');
+    router.push({ name: 'listProducts' }); // Redireciona caso o ID não esteja presente
+    return;
+  }
+
+  try {
+    const fetchedProduct = await daoProducts.get(productId);
+    product.value = { ...fetchedProduct };
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao carregar o produto!');
+    router.push({ name: 'listProducts' }); // Redireciona em caso de erro
+  }
+};
 
 const submit = async () => {
  
@@ -49,6 +72,8 @@ const formatPrice = (event) => {
   }
   product.value.price = value ? 'R$ ' + value : '';
 };
+
+onMounted(fetchProduct)
 </script>
 
 <template>

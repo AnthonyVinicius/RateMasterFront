@@ -41,7 +41,7 @@
                 placeholder="Escreva sua avaliação aqui"
               ></textarea>
             </div>
-            <CustomButton text="Enviar Avaliação"/>
+            <CustomButton> Enviar Avaliação</CustomButton>
           </form>
 
           <div class="reviews-list">

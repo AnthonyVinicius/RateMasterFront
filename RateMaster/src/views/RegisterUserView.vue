@@ -1,15 +1,12 @@
 <script setup>
-import TheFooter from '@/components/TheFooter.vue';
-import TheNavbar from '@/components/TheNavbar.vue';
 import CustomButton from '@/components/CustomButton.vue';
+import BaseLayout from '@/components/BaseLayout.vue';
 </script>
 
 <template>
-    <div class="page-container">
 
-        <TheNavbar />
-
-        <main class="content" v-if="true">
+    <BaseLayout>
+        <div v-if="true">
             <div class="container">
                 <div class="card register-card">
                     <div class="row g-0">
@@ -61,8 +58,7 @@ import CustomButton from '@/components/CustomButton.vue';
                                             </div>
                                         </div>
                                     </div>
-
-                                    <CustomButton text="Cadastrar-se" class="button" />
+                                    <CustomButton class="button"> Cadastrar-se</CustomButton>
                                     <p class="mb-3 mt-3 pb-lg-2 has-account"> Já possui uma conta? <RouterLink to="/login">Entrar</RouterLink></p>
 
                                 </form>
@@ -76,10 +72,9 @@ import CustomButton from '@/components/CustomButton.vue';
                     </div>
                 </div>
             </div>
-        </main>
-        <TheFooter />
 
-    </div>
+        </div>
+    </BaseLayout>
 </template>
 
 <style scoped>

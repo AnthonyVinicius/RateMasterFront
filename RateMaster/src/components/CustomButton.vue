@@ -1,17 +1,10 @@
 <script setup>
-import { defineProps } from 'vue';
 
-defineProps({
-  text: {
-    type: String,
-    required: true
-  }
-});
 </script>
 
 <template>
   <button @click="submit()" class="btn btn-outline" type="submit">
-    <span v-html="text"></span>
+    <slot></slot>
   </button>
 </template>
 

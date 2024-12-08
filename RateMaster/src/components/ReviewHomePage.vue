@@ -1,17 +1,17 @@
-<script>
-export default {
-  name: 'ReviewHomePage',
-  props: {
-    text: {
-      type: String,
-      required: true
-    },
-    comment:{
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  text: {
     type: String,
-      required: true
-    }
+    required: true
+  },
+  comment: {
+    type: String,
+    required: true
   }
-}
+});
+
 </script>
 
 <template>

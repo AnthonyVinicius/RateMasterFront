@@ -1,21 +1,13 @@
 <script setup>
 import ProductDetail from '@/components/ProductDetails.vue';
-import TheNavbar from '../components/TheNavbar.vue';
-import TheFooter from '@/components/TheFooter.vue';
+import BaseLayout from '@/components/BaseLayout.vue';
 </script>
 
 <template>
-  <div class="page-container">
-    <TheNavbar />
-
-    <main class="content">
-      <h1 class="text-center">Detalhes de Produtos</h1>
+  <BaseLayout>
+    <h1 class="text-center">Detalhes de Produtos</h1>
       <br>
       <ProductDetail />
-    </main>
-
-    <TheFooter />
-  </div>
-
+  </BaseLayout>
 </template>
 

@@ -1,16 +1,12 @@
 <script setup>
-import TheFooter from '@/components/TheFooter.vue';
-import TheNavbar from '@/components/TheNavbar.vue';
 import CustomButton from '@/components/CustomButton.vue';
+import BaseLayout from '@/components/BaseLayout.vue';
 </script>
 
 <template>
-  <div class="page-container">
 
-    <TheNavbar />
-
-    <main class="content" v-if="true">
-      <div class="container">
+  <BaseLayout>
+    <div class="container" v-if="true">
         <div class="card login-card">
           <div class="row g-0">
 
@@ -58,8 +54,9 @@ import CustomButton from '@/components/CustomButton.vue';
                   </div>
 
 
-                  <CustomButton text="Entrar." class="button" />
-
+                  <CustomButton class="button"> Entrar </CustomButton>
+                  
+                  
                   <p class="mb-3 mt-3 pb-lg-2 no-account"> Não possui uma conta? <RouterLink to="/registerUser">
                     Cadastre-se aqui.</RouterLink>
                   </p>
@@ -74,11 +71,7 @@ import CustomButton from '@/components/CustomButton.vue';
           </div>
         </div>
       </div>
-    </main>
-    <TheFooter />
-
-  </div>
-
+  </BaseLayout>
 </template>
 
 

@@ -37,10 +37,10 @@ const showDropdown = ref(false);
 
         <div v-if="!logado">
           <RouterLink to="/registerUser">
-            <CustomButton text="Cadastrar-se" class="button m-2" />
+            <CustomButton class="button m-2"> Cadastrar-se</CustomButton>
           </RouterLink>
           <RouterLink to="/login">
-            <CustomButton text="Entrar" class="button m-2" />
+            <CustomButton class="button m-2"> Entrar</CustomButton>
           </RouterLink>
         </div>
 

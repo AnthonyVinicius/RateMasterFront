@@ -1,6 +1,5 @@
 <script setup>
-import TheFooter from '@/components/TheFooter.vue';
-import TheNavbar from '@/components/TheNavbar.vue';
+import BaseLayout from '@/components/BaseLayout.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -36,9 +35,9 @@ const goToUpdate = (productId) => {
 </script>
 
 <template>
-  <div class="page-container">
-    <TheNavbar />
-    <main class="content container-fluid mt-5">
+
+  <BaseLayout>
+    <div class="content container-fluid mt-5">
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
@@ -70,7 +69,10 @@ const goToUpdate = (productId) => {
           </tr>
         </tbody>
       </table>
-    </main>
-    <TheFooter />
-  </div>
+    </div>
+ </BaseLayout>
 </template>
+
+<style scoped>
+
+</style>

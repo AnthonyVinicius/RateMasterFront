@@ -1,10 +1,9 @@
 <script setup>
-import TheFooter from '@/components/TheFooter.vue';
-import TheNavbar from '@/components/TheNavbar.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import BaseLayout from '@/components/BaseLayout.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,7 +40,7 @@ const fetchProduct = async () => {
 };
 
 const submit = async () => {
- 
+
   if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
@@ -77,10 +76,9 @@ onMounted(fetchProduct)
 </script>
 
 <template>
-  <div class="page-container">
 
-    <TheNavbar />
-    <main class="content container mt-5">
+  <BaseLayout>
+    <div class="container mt-5">
       <div class="row">
 
         <div class="col-md-6">
@@ -103,8 +101,8 @@ onMounted(fetchProduct)
 
                 <div class="mb-3">
                   <label for="productName" class="form-label">Nome do produto</label>
-                  <input v-model="product.name" type="text" class="form-control"
-                    placeholder="Digite o nome do produto." required />
+                  <input v-model="product.name" type="text" class="form-control" placeholder="Digite o nome do produto."
+                    required />
                 </div>
 
                 <div class="mb-3">
@@ -134,18 +132,14 @@ onMounted(fetchProduct)
                     <option value="Serviço">Serviço</option>
                   </select>
                 </div>
-
-                <CustomButton text="Finalizar" class="button container-fluid" />
+                <CustomButton class="button container-fluid">Finalizar</CustomButton>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </main>
-
-    <TheFooter />
-
-  </div>
+    </div>
+  </BaseLayout>
 </template>
 
 <style scoped>

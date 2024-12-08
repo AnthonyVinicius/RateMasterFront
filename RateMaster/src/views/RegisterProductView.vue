@@ -1,9 +1,8 @@
 <script setup>
-import TheFooter from '@/components/TheFooter.vue';
-import TheNavbar from '@/components/TheNavbar.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref } from 'vue';
+import BaseLayout from '@/components/BaseLayout.vue';
 
 const daoProducts = new DAOService('products');
 
@@ -17,7 +16,7 @@ const product = ref({
 });
 
 const submit = async () => {
- 
+
   if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
@@ -51,10 +50,9 @@ const formatPrice = (event) => {
 </script>
 
 <template>
-  <div class="page-container">
 
-    <TheNavbar />
-    <main class="content container mt-5">
+  <BaseLayout>
+    <div class="container mt-5">
       <div class="row">
 
         <div class="col-md-6">
@@ -77,8 +75,8 @@ const formatPrice = (event) => {
 
                 <div class="mb-3">
                   <label for="productName" class="form-label">Nome do produto</label>
-                  <input v-model="product.name" type="text" class="form-control"
-                    placeholder="Digite o nome do produto." required />
+                  <input v-model="product.name" type="text" class="form-control" placeholder="Digite o nome do produto."
+                    required />
                 </div>
 
                 <div class="mb-3">
@@ -108,18 +106,15 @@ const formatPrice = (event) => {
                     <option value="Serviço">Serviço</option>
                   </select>
                 </div>
-
-                <CustomButton text="Finalizar" class="button container-fluid" />
+                <CustomButton class="button container-fluid"> Finalizar</CustomButton>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </main>
 
-    <TheFooter />
-
-  </div>
+    </div>
+  </BaseLayout>
 </template>
 
 <style scoped>

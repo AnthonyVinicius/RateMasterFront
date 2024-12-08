@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <button @click="submit()" class="btn btn-outline" type="submit">
+  <button class="btn btn-outline" type="submit">
     <slot></slot>
   </button>
 </template>

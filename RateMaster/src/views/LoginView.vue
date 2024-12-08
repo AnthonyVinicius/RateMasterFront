@@ -30,14 +30,14 @@ import BaseLayout from '@/components/BaseLayout.vue';
                   <div>
 
                     <div class="form-outline mb-1">
-                      <input type="email" id="email" class="form-control form-control-lg" placeholder="Digite seu email"
-                        required />
+                      <input type="email" class="form-control form-control-lg" placeholder="Digite seu email"
+                        required v-model="email" />
                     </div>
 
 
                     <div class="form-outline mb-1">
-                      <input type="password" id="password" class="form-control form-control-lg"
-                        placeholder="Digite sua senha" required />
+                      <input type="password" class="form-control form-control-lg"
+                        placeholder="Digite sua senha" required v-model ="password"/>
                     </div>
 
 

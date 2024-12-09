@@ -9,7 +9,17 @@ const route = useRoute();
 const router = useRouter();
 
 const daoProducts = new DAOService('products');
+const daoBrands = new DAOService('brands');
 
+const brands = ref([]);
+
+const loadBrands = async () => {
+  brands.value = await daoBrands.getAll();
+};
+
+onMounted(() => {
+  loadBrands();
+});
 
 const product = ref({
   name: '',
@@ -119,10 +129,18 @@ onMounted(fetchProduct)
 
                 <div class="mb-3">
                   <label for="brand" class="form-label">Marca</label>
-                  <select v-model="product.brand" class="form-select" required>
-                    <option value="Petinho">Petinho</option>
-                    <option value="Ouro Verde">Ouro Verde</option>
-                  </select>
+                  <div class="d-flex align-items-center">
+                    <select v-model="product.brand" class="form-select me-2" style="flex: 1;" required>
+                      <option v-for="brand in brands" :key="brand.id" :value="brand.name">
+                        {{ brand.name }}
+                      </option>
+                    </select>
+                    <RouterLink to="/brand">
+                      <CustomButton class="btn btn-primary">
+                        <i class="bi bi-plus-square-fill"></i>
+                      </CustomButton>
+                    </RouterLink>
+                  </div>
                 </div>
 
                 <div class="mb-3">

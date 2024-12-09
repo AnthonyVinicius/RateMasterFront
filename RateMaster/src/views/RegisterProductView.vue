@@ -1,10 +1,11 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 
 const daoProducts = new DAOService('products');
+const daoBrands = new DAOService('brands');
 
 const product = ref({
   name: '',
@@ -15,8 +16,17 @@ const product = ref({
   image: null
 });
 
-const submit = async () => {
+const brands = ref([]);
 
+const loadBrands = async () => {
+  brands.value = await daoBrands.getAll();
+};
+
+onMounted(() => {
+  loadBrands();
+});
+
+const submit = async () => {
   if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
@@ -24,17 +34,14 @@ const submit = async () => {
 
   await daoProducts.insert(product.value);
   alert('Produto cadastrado com sucesso!');
-}
-
-const image = ref('');
+};
 
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
-      image.value = reader.result;
-      product.value.image = image.value;
+      product.value.image = reader.result;
     };
     reader.readAsDataURL(file);
   }
@@ -47,10 +54,10 @@ const formatPrice = (event) => {
   }
   product.value.price = value ? 'R$ ' + value : '';
 };
+
 </script>
 
 <template>
-
   <BaseLayout>
     <div class="container mt-5">
       <div class="row">
@@ -60,8 +67,8 @@ const formatPrice = (event) => {
             <div class="card-body">
               <h5 class="card-title">Anexar imagem</h5>
               <input type="file" @change="handleImageUpload" class="form-control" />
-              <div v-if="image" class="mt-3">
-                <img :src="image" alt="Product Preview" class="img-fluid" />
+              <div v-if="product.image" class="mt-3">
+                <img :src="product.image" alt="Product Preview" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -75,28 +82,33 @@ const formatPrice = (event) => {
 
                 <div class="mb-3">
                   <label for="productName" class="form-label">Nome do produto</label>
-                  <input v-model="product.name" type="text" class="form-control" placeholder="Digite o nome do produto."
-                    required />
+                  <input v-model="product.name" type="text" class="form-control" placeholder="Digite o nome do produto." required />
                 </div>
 
                 <div class="mb-3">
                   <label for="description" class="form-label">Descrição</label>
-                  <input v-model="product.description" type="text" class="form-control"
-                    placeholder="Digite a descrição do seu produto" required />
+                  <input v-model="product.description" type="text" class="form-control" placeholder="Digite a descrição do seu produto" required />
                 </div>
 
                 <div class="mb-3">
                   <label for="price" class="form-label">Preço</label>
-                  <input v-model="product.price" type="text" class="form-control" placeholder="R$ 0,00" required
-                    @input="formatPrice" />
+                  <input v-model="product.price" type="text" class="form-control" placeholder="R$ 0,00" required @input="formatPrice" />
                 </div>
 
                 <div class="mb-3">
                   <label for="brand" class="form-label">Marca</label>
-                  <select v-model="product.brand" class="form-select" required>
-                    <option value="Petinho">Petinho</option>
-                    <option value="Ouro Verde">Ouro Verde</option>
-                  </select>
+                  <div class="d-flex align-items-center">
+                    <select v-model="product.brand" class="form-select me-2" style="flex: 1;" required>
+                      <option v-for="brand in brands" :key="brand.id" :value="brand.name">
+                        {{ brand.name }}
+                      </option>
+                    </select>
+                    <RouterLink to="/brand">
+                      <CustomButton class="btn btn-primary">
+                        <i class="bi bi-plus-square-fill"></i>
+                      </CustomButton>
+                    </RouterLink>
+                  </div>
                 </div>
 
                 <div class="mb-3">
@@ -106,16 +118,17 @@ const formatPrice = (event) => {
                     <option value="Serviço">Serviço</option>
                   </select>
                 </div>
-                <CustomButton class="button container-fluid"> Finalizar</CustomButton>
+
+                <CustomButton class="button container-fluid"> Finalizar </CustomButton>
               </form>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </BaseLayout>
 </template>
+
 
 <style scoped>
 .card {

@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-let config = {
+const config = {
     apiKey: "AIzaSyCvF3k4n1-Rfckm6W-t8z6y3HKAwfeOWGQ",
     authDomain: "ratemasterif.firebaseapp.com",
     projectId: "ratemasterif",
@@ -13,4 +14,7 @@ let config = {
 
 const firebaseApp = initializeApp(config);
 
-export const firestore = getFirestore(firebaseApp);
+ const firestore = getFirestore(firebaseApp);
+ const auth = getAuth(firebaseApp);
+
+ export {auth, firestore};

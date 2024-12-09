@@ -1,8 +1,9 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { ref } from "vue";
+import { auth } from '@/firebase'; 
+import { createUserWithEmailAndPassword} from 'firebase/auth';
+import { ref } from 'vue';
 import {useRouter} from 'vue-router';
 
 const router = useRouter();
@@ -11,11 +12,15 @@ const password = ref("");
 const confirmPassword = ref("");
 const showPassword = ref(false);
 
-const register = () => {
-        createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-        .then((data) => {
-            alert("Email cadastrado com sucesso!");
-            router.push('/');
+  const register = async () => {
+    if (password.value !== confirmPassword.value) {
+        alert("As senhas não coincidem. Por favor, verifique.");
+        return;
+     };
+      await createUserWithEmailAndPassword(auth, email.value, password.value)
+     .then((data) => {
+         alert("Email cadastrado com sucesso!");
+         router.push('/');
         })
         .catch((error) => {
             alert(error.message);
@@ -47,12 +52,12 @@ const toggleShowPassword = () => {
                                         </div>
                                         <div class="form-outline mb-2">
                                             <input type="email" class="form-control form-control-lg"
-                                                placeholder="Digite seu email" required v-model="email" />
+                                                placeholder="Digite seu email" v-model="email" required  />
                                         </div>
                                         <div class="form-outline mb-2 position-relative">
-                                            <input :type="showPassword ? 'text' : 'password'" id="password"
+                                            <input :type="showPassword ? 'text' : 'password'"
                                                 class="form-control form-control-lg" placeholder="Digite sua senha" 
-                                                required v-model="password" />
+                                                v-model="password" required  />
                                             <i 
                                                 :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'" 
                                                 class="toggle-password" 
@@ -80,7 +85,7 @@ const toggleShowPassword = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <CustomButton class="button" @click="register()">Cadastrar-se</CustomButton>
+                                    <CustomButton class="button">Cadastrar-se</CustomButton>
                                     <p class="mb-3 mt-3 pb-lg-2 has-account">
                                         Já possui uma conta? <RouterLink to="/login">Entrar</RouterLink>
                                     </p>

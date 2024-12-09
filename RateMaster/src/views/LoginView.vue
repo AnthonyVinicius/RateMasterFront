@@ -1,7 +1,7 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 
@@ -11,6 +11,7 @@ const password = ref("");
 const errMsg = ref("");
 const showPassword = ref(false);
 
+// Login tradicional com e-mail e senha
 const login = async () => {
   const auth = getAuth();
   errMsg.value = "";
@@ -36,6 +37,25 @@ const login = async () => {
   }
 };
 
+// Login com Google
+const loginWithGoogle = () => {
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      console.log("Usuário autenticado:", user);
+      alert(`Bem-vindo, ${user.displayName}!`);
+      router.push('/');
+    })
+    .catch((error) => {
+      console.error("Erro na autenticação:", error);
+      errMsg.value = "Erro ao tentar autenticar com o Google.";
+    });
+};
+
+// Exibir ou ocultar senha
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;
 };
@@ -70,6 +90,9 @@ const toggleShowPassword = () => {
                 </div>
                 <CustomButton @click="login" class="button">Entrar</CustomButton>
                 <p v-if="errMsg" class="text-danger text-center">{{ errMsg }}</p>
+                <CustomButton @click="loginWithGoogle" class="google-button">
+                  <i class="bi bi-google me-2"></i> Entrar com Google
+                </CustomButton>
                 <p class="mb-3 mt-3 pb-lg-2 no-account">Não possui uma conta? <RouterLink to="/registerUser">Cadastre-se aqui.</RouterLink></p>
                 <RouterLink to="/terms" class="small text-muted">Termos de uso</RouterLink>
                 <RouterLink to="/privacy" class="small text-muted">Política de Privacidade</RouterLink>
@@ -81,8 +104,6 @@ const toggleShowPassword = () => {
     </div>
   </BaseLayout>
 </template>
-
-
 
 <style scoped>
 .container {
@@ -123,16 +144,34 @@ button:hover {
 }
 
 .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #aaa;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #aaa;
 }
 
 .toggle-password:hover {
-    color: #000;
+  color: #000;
+}
+
+.google-button {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.google-button:hover {
+  background-color: #357ae8;
 }
 </style>

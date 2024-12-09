@@ -1,7 +1,7 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
-import { auth } from '@/firebase.js'; // Importa o auth configurado
+import { auth } from '@/firebase.js';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -12,7 +12,6 @@ const password = ref("");
 const errMsg = ref("");
 const showPassword = ref(false);
 
-// Login com e-mail e senha
 const login = async () => {
   errMsg.value = "";
 
@@ -37,7 +36,6 @@ const login = async () => {
   }
 };
 
-// Login com Google
 const loginWithGoogle = () => {
   const provider = new GoogleAuthProvider();
 
@@ -54,7 +52,6 @@ const loginWithGoogle = () => {
     });
 };
 
-// Alternar exibição de senha
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;
 };

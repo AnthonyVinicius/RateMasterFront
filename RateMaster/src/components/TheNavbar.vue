@@ -1,10 +1,32 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import CustomButton from './CustomButton.vue';
+import { useRouter } from 'vue-router';
 
-const logado = true;
+const router = useRouter();
+const isLogged = ref(false);
 const showDropdown = ref(false);
- 
+
+let auth;
+onMounted(() =>{
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if(user){
+      isLogged.value = true;
+    }else{
+      isLogged.value = false;
+    }
+  });
+
+});
+
+const handleSignOut = () =>{
+  signOut(auth).then(() =>{
+    router.push("/");
+  });
+};
+
 </script>
 
 <template>
@@ -27,15 +49,15 @@ const showDropdown = ref(false);
           <li class="nav-item">
             <RouterLink class="nav-link" to="/reviews"><i class="bi bi-star-fill p-2"></i>Avaliações</RouterLink>
           </li>
-          <li class="nav-item" v-if="!logado">
+          <li class="nav-item" v-if="!isLogged">
             <RouterLink class="nav-link" to="/login"><i class="bi bi-box-arrow-in-right p-2"></i>Login</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/registerProduct" v-if="logado"><i class="bi bi-plus-square-fill p-2"></i>Registrar Produto</RouterLink>
+            <RouterLink class="nav-link" to="/registerProduct" v-if="isLogged"><i class="bi bi-plus-square-fill p-2"></i>Registrar Produto</RouterLink>
           </li>
         </ul>
 
-        <div v-if="!logado">
+        <div v-if="!isLogged">
           <RouterLink to="/registerUser">
             <CustomButton class="button m-2"> Cadastrar-se</CustomButton>
           </RouterLink>
@@ -44,13 +66,13 @@ const showDropdown = ref(false);
           </RouterLink>
         </div>
 
-        <div v-if="logado">
+        <div v-if="isLogged">
           <div class="dropdown">
             <button class="btn btn-link dropdown-toggle profile-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" @click="showDropdown = !showDropdown">
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
             <ul class="dropdown-menu">
-              <li class="dropdown-item">Sair</li>
+              <li @click="handleSignOut" class="dropdown-item">Sair</li>
             <RouterLink to="/myProducts">
               <li class="dropdown-item">Meus Produtos </li>
             </RouterLink>

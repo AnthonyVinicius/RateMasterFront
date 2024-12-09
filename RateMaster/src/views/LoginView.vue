@@ -1,76 +1,84 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { ref } from 'vue';
+import { useRouter, RouterLink } from 'vue-router';
+
+const router = useRouter();
+const email = ref("");
+const password = ref("");
+const errMsg = ref("");
+const showPassword = ref(false);
+
+const login = async () => {
+  const auth = getAuth();
+  errMsg.value = "";
+
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    alert("Usuário logado com sucesso!");
+    router.push('/');
+  } catch (error) {
+    switch (error.code) {
+      case "auth/invalid-email":
+        errMsg.value = "E-mail inválido.";
+        break;
+      case "auth/user-not-found":
+        errMsg.value = "Nenhuma conta com este e-mail foi encontrada.";
+        break;
+      case "auth/wrong-password":
+        errMsg.value = "Senha inválida.";
+        break;
+      default:
+        errMsg.value = "Erro ao tentar login. Tente novamente.";
+    }
+  }
+};
+
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+};
 </script>
 
 <template>
-
   <BaseLayout>
-    <div class="container" v-if="true">
-        <div class="card login-card">
-          <div class="row g-0">
-
-            
-            <div class="col-md-6 col-lg-6 d-none d-md-block">
-              <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
-            </div>
-
-            <div class="col-md-6 col-lg-6 d-flex">
-              <div class="card-body p-4 p-lg-5">
-
-                <form>
-                  
-                  <div class="mb-2 pb-1">
-                    <h1 class="h1 fw-bold login-title">RateMaster</h1>
+    <div class="container">
+      <div class="card login-card">
+        <div class="row g-0">
+          <div class="col-md-6 col-lg-6 d-none d-md-block">
+            <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start" />
+          </div>
+          <div class="col-md-6 col-lg-6 d-flex">
+            <div class="card-body p-4 p-lg-5">
+              <form @submit.prevent="login">
+                <div class="mb-2 pb-1">
+                  <h1 class="h1 fw-bold login-title">RateMaster</h1>
+                </div>
+                <h5 class="fw-normal pb-3 login-header">Faça login na sua conta.</h5>
+                <div>
+                  <div class="form-outline mb-1">
+                    <input type="email" class="form-control form-control-lg" placeholder="Digite seu email" v-model="email" required />
                   </div>
-
-                  
-                  <h5 class="fw-normal pb-3 login-header">Faça login na sua conta.</h5>
-
-                  <div>
-
-                    <div class="form-outline mb-1">
-                      <input type="email" class="form-control form-control-lg" placeholder="Digite seu email"
-                        required v-model="email" />
-                    </div>
-
-
-                    <div class="form-outline mb-1">
-                      <input type="password" class="form-control form-control-lg"
-                        placeholder="Digite sua senha" required v-model ="password"/>
-                    </div>
-
-
-                    <div class="d-flex justify-content-between m-3">
-
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">Lembrar de mim.</label>
-                      </div>
-
-                      <RouterLink to="/forgot-password">Esqueci a senha</RouterLink>
-
-                    </div>
+                  <div class="form-outline mb-2 position-relative">
+                    <input :type="showPassword ? 'text' : 'password'" class="form-control form-control-lg" placeholder="Digite sua senha" v-model="password" required />
+                    <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'" class="toggle-password" @click="toggleShowPassword"></i>
                   </div>
-
-
-                  <CustomButton class="button"> Entrar </CustomButton>
-                  
-                  
-                  <p class="mb-3 mt-3 pb-lg-2 no-account"> Não possui uma conta? <RouterLink to="/registerUser">
-                    Cadastre-se aqui.</RouterLink>
-                  </p>
-
-                  <RouterLink to="/terms" class="small text-muted">Termos de uso</RouterLink>
-
-                  <RouterLink to="/privacy" class="small text-muted"> Politica de Privacidade</RouterLink>
-                </form>
-
-              </div>
+                  <div class="d-flex justify-content-between m-3">
+                    <RouterLink to="/forgot-password">Esqueci a senha</RouterLink>
+                  </div>
+                </div>
+                <CustomButton @click="login" class="button">Entrar</CustomButton>
+                <p v-if="errMsg" class="text-danger text-center">{{ errMsg }}</p>
+                <p class="mb-3 mt-3 pb-lg-2 no-account">Não possui uma conta? <RouterLink to="/registerUser">Cadastre-se aqui.</RouterLink></p>
+                <RouterLink to="/terms" class="small text-muted">Termos de uso</RouterLink>
+                <RouterLink to="/privacy" class="small text-muted">Política de Privacidade</RouterLink>
+              </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </BaseLayout>
 </template>
 
@@ -112,5 +120,19 @@ a:hover {
 
 button:hover {
   transform: scale(1.01);
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+.toggle-password:hover {
+    color: #000;
 }
 </style>

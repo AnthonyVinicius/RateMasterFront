@@ -1,10 +1,10 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
-import { auth } from '@/firebase'; 
-import { createUserWithEmailAndPassword} from 'firebase/auth';
+import { auth } from '@/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref } from 'vue';
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const email = ref("");
@@ -12,15 +12,15 @@ const password = ref("");
 const confirmPassword = ref("");
 const showPassword = ref(false);
 
-  const register = async () => {
+const register = async () => {
     if (password.value !== confirmPassword.value) {
         alert("As senhas não coincidem. Por favor, verifique.");
         return;
-     };
-      await createUserWithEmailAndPassword(auth, email.value, password.value)
-     .then((data) => {
-         alert("Email cadastrado com sucesso!");
-         router.push('/');
+    };
+    await createUserWithEmailAndPassword(auth, email.value, password.value)
+        .then((data) => {
+            alert("Email cadastrado com sucesso!");
+            router.push('/');
         })
         .catch((error) => {
             alert(error.message);
@@ -30,6 +30,7 @@ const showPassword = ref(false);
 const toggleShowPassword = () => {
     showPassword.value = !showPassword.value;
 };
+
 </script>
 
 <template>
@@ -52,31 +53,26 @@ const toggleShowPassword = () => {
                                         </div>
                                         <div class="form-outline mb-2">
                                             <input type="email" class="form-control form-control-lg"
-                                                placeholder="Digite seu email" v-model="email" required  />
+                                                placeholder="Digite seu email" v-model="email" required />
                                         </div>
                                         <div class="form-outline mb-2 position-relative">
                                             <input :type="showPassword ? 'text' : 'password'"
-                                                class="form-control form-control-lg" placeholder="Digite sua senha" 
-                                                v-model="password" required  />
-                                            <i 
-                                                :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'" 
-                                                class="toggle-password" 
-                                                @click="toggleShowPassword"
-                                            ></i>
+                                                class="form-control form-control-lg" placeholder="Digite sua senha"
+                                                v-model="password" required />
+                                            <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+                                                class="toggle-password" @click="toggleShowPassword"></i>
                                         </div>
                                         <div class="form-outline mb-2 position-relative">
                                             <input :type="showPassword ? 'text' : 'password'"
                                                 class="form-control form-control-lg" placeholder="Confirme sua senha"
                                                 required v-model="confirmPassword" />
-                                            <i 
-                                                :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'" 
-                                                class="toggle-password" 
-                                                @click="toggleShowPassword"
-                                            ></i>
+                                            <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+                                                class="toggle-password" @click="toggleShowPassword"></i>
                                         </div>
                                         <div class="d-flex justify-content-between m-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                                <input class="form-check-input" type="checkbox" id="termsCheck"
+                                                    required>
                                                 <label class="form-check-label" for="termsCheck">
                                                     Eu concordo com o
                                                     <RouterLink to="/terms">Termos de uso</RouterLink> e

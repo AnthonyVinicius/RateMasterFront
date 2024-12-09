@@ -18,7 +18,7 @@ const register = async () => {
         return;
     };
     await createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then((data) => {
+        .then(() => {
             alert("Email cadastrado com sucesso!");
             router.push('/');
         })

@@ -47,14 +47,14 @@ const handleImageUpload = (event) => {
   }
 };
 
+
 const formatPrice = (event) => {
   let value = event.target.value.replace(/\D/g, '');
-  if (value.length > 2) {
-    value = value.slice(0, value.length - 2) + ',' + value.slice(value.length - 2);
-  }
-  product.value.price = value ? 'R$ ' + value : '';
+  const numericValue = Number(value) / 100;
+  product.value.price = numericValue
+    ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(numericValue)
+    : '';
 };
-
 </script>
 
 <template>
@@ -128,7 +128,6 @@ const formatPrice = (event) => {
     </div>
   </BaseLayout>
 </template>
-
 
 <style scoped>
 .card {

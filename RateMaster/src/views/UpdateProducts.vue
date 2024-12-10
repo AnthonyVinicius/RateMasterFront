@@ -55,6 +55,7 @@ const submit = async () => {
 
     await daoProducts.update(product.value.id, product.value);
     alert('Produto atualizado com sucesso!');
+    router.push("/myProducts")
   } catch (error) {
     console.error(error);
     alert('Erro ao atualizar o produto.');

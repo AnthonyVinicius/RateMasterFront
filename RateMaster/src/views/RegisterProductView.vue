@@ -27,6 +27,12 @@ onMounted(() => {
 });
 
 const submit = async () => {
+  product.value.name = product.value.name.trim();
+  product.value.description = product.value.description.trim();
+  product.value.price = product.value.price.trim();
+  product.value.brand = product.value.brand.trim();
+  product.value.type = product.value.type.trim();
+
   if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
@@ -35,6 +41,7 @@ const submit = async () => {
   await daoProducts.insert(product.value);
   alert('Produto cadastrado com sucesso!');
 };
+
 
 const handleImageUpload = (event) => {
   const file = event.target.files[0];

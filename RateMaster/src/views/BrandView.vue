@@ -3,9 +3,7 @@ import BaseLayout from '@/components/BaseLayout.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
 const daoBrands = new DAOService('brands');
 
 const brands = ref([]);

@@ -17,17 +17,13 @@ const loadBrands = async () => {
   brands.value = await daoBrands.getAll();
 };
 
-onMounted(() => {
-  loadBrands();
-});
-
 const product = ref({
   name: '',
   description: '',
   brand: '',
   price: '',
   type: '',
-  image: null
+  image: null,
 });
 
 const fetchProduct = async () => {
@@ -50,15 +46,20 @@ const fetchProduct = async () => {
 };
 
 const submit = async () => {
-
   if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
   }
 
-  await daoProducts.update(product.value.id, product.value);
-  alert('Produto atualizado com sucesso!');
-}
+  try {
+
+    await daoProducts.update(product.value.id, product.value);
+    alert('Produto atualizado com sucesso!');
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao atualizar o produto.');
+  }
+};
 
 const image = ref('');
 
@@ -82,15 +83,16 @@ const formatPrice = (event) => {
   product.value.price = value ? 'R$ ' + value : '';
 };
 
-onMounted(fetchProduct)
+onMounted(() => {
+  loadBrands();
+  fetchProduct();
+});
 </script>
 
 <template>
-
   <BaseLayout>
     <div class="container mt-5">
       <div class="row">
-
         <div class="col-md-6">
           <div class="card">
             <div class="card-body">
@@ -130,8 +132,8 @@ onMounted(fetchProduct)
                 <div class="mb-3">
                   <label for="brand" class="form-label">Marca</label>
                   <div class="d-flex align-items-center">
-                    <select v-model="product.brand" class="form-select me-2" style="flex: 1;" required>
-                      <option v-for="brand in brands" :key="brand.id" :value="brand.name">
+                    <select v-model="product.brand" class="form-select me-2" required>
+                      <option v-for="brand in brands" :key="brand.id" :value="brand.id">
                         {{ brand.name }}
                       </option>
                     </select>
@@ -150,7 +152,7 @@ onMounted(fetchProduct)
                     <option value="Serviço">Serviço</option>
                   </select>
                 </div>
-                <CustomButton class="button container-fluid">Finalizar</CustomButton>
+                <CustomButton class="button container-fluid">Salvar</CustomButton>
               </form>
             </div>
           </div>

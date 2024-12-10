@@ -1,10 +1,14 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
+import DAOService from '@/services/DAOService';
 import { auth } from '@/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+const daoUser = new DAOService('user');
+const daoShop = new DAOService('shop');
 
 const router = useRouter();
 const email = ref("");

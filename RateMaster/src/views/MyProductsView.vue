@@ -10,36 +10,50 @@ const router = useRouter();
 const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
 
-
-onMounted(() => {
-  showAll();
-})
 const products = ref([]);
-const id = "45GOxp3HxbZGbUNbRhvv";
-const brand = daoBrands.get(id);
+const brandMap = ref({});
 
-alert(brand.name);
+const loadBrands = async () => {
+    try {
+        const brands = await daoBrands.getAll();
+        brandMap.value = brands.reduce((map, brand) => {
+            map[brand.id] = brand.name;
+            return map;
+        }, {});
+    } catch (error) {
+        console.error("Erro ao carregar marcas:", error);
+    }
+};
 
 const showAll = async () => {
-  products.value = await daoProducts.getAll()
-}
+    await loadBrands();
+    const allProducts = await daoProducts.getAll();
+    products.value = allProducts.map(product => {
+        product.brandName = brandMap.value[product.brand] || 'Sem Marca';
+        return product;
+    });
+};
 
 const deleteProduct = async (id) => {
   if (confirm('Tem certeza de que deseja remover este Produto?')) {
     try {
-      await daoProducts.delete(id)
+      await daoProducts.delete(id);
       products.value = products.value.filter(product => product.id !== id);
       alert('Produto removido com sucesso!');
     } catch (error) {
       console.error(error);
-      alert("Erro ao remover o produto")
+      alert("Erro ao remover o produto");
     }
   }
-}
+};
 
 const goToUpdate = (productId) => {
   router.push({ name: 'updateProducts', params: { id: productId } });
 };
+
+onMounted(() => {
+  showAll();
+});
 </script>
 
 <template>
@@ -50,7 +64,7 @@ const goToUpdate = (productId) => {
           <tr>
             <th scope="col">Imagem</th>
             <th scope="col">Nome</th>
-            <th scope="col" class="">
+            <th scope="col">
               <span class="m-3">Marca</span>
               <RouterLink to="/brand">
                 <CustomButton>
@@ -70,7 +84,7 @@ const goToUpdate = (productId) => {
               <img :src="product.image" class="img-fluid" style="max-width: 100px;" />
             </td>
             <td>{{ product.name }}</td>
-            <td>{{ product.brand }}</td>
+            <td>{{ product.brandName }}</td> 
             <td>{{ product.price }}</td>
             <td>{{ product.type }}</td>
             <td>{{ product.description }}</td>
@@ -89,6 +103,5 @@ const goToUpdate = (productId) => {
   </BaseLayout>
 </template>
 
-<style scoped> 
-
+<style scoped>
 </style>

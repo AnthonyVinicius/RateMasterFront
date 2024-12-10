@@ -3,23 +3,41 @@ import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 import { auth } from '@/firebase.js';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import DAOService from "@/services/DAOService";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+
+const daoUser = new DAOService("user");
+const daoShop = new DAOService("shop");
 
 const router = useRouter();
 const email = ref("");
 const password = ref("");
 const errMsg = ref("");
 const showPassword = ref(false);
+const userData = ref(null); // Dados do usuário logado
 
 const login = async () => {
   errMsg.value = "";
 
   try {
-    await signInWithEmailAndPassword(auth, email.value, password.value);
-    alert("Usuário logado com sucesso!");
-    router.push('/');
+    // Realiza o login
+    const { user } = await signInWithEmailAndPassword(auth, email.value, password.value);
+
+    // Busca os dados do usuário nos DAOs
+    const userFromDB = await fetchUserData(user.uid);
+
+    if (userFromDB) {
+      alert("Usuário logado com sucesso!");
+      console.log("Dados do usuário:", userFromDB);
+
+      // Redireciona para a página inicial
+      router.push("/");
+    } else {
+      errMsg.value = "Erro ao carregar dados do usuário. Entre em contato com o suporte.";
+    }
   } catch (error) {
+    // Tratamento de erros de autenticação
     switch (error.code) {
       case "auth/invalid-email":
         errMsg.value = "E-mail inválido.";
@@ -36,17 +54,51 @@ const login = async () => {
   }
 };
 
-const loginWithGoogle = () => {
+const fetchUserData = async (uid) => {
+  // Tenta buscar nos DAOs `user` e `shop`
+  try {
+    let user = await daoUser.get(uid);
+    if (user) {
+      userData.value = { ...user, userType: "user" }; // Define tipo como `user`
+      return userData.value;
+    }
+
+    let shop = await daoShop.get(uid);
+    if (shop) {
+      userData.value = { ...shop, userType: "shop" }; // Define tipo como `shop`
+      return userData.value;
+    }
+
+    return null; // Caso não encontre em nenhum DAO
+  } catch (error) {
+    console.error("Erro ao buscar dados do usuário:", error);
+    return null;
+  }
+};
+
+const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
 
-  signInWithPopup(auth, provider)
-    .then(() => {
-      router.push('/');
-    })
-    .catch((error) => {
-      console.error("Erro na autenticação:", error);
-      errMsg.value = "Erro ao tentar autenticar com o Google.";
-    });
+  try {
+    // Realiza o login com Google
+    const { user } = await signInWithPopup(auth, provider);
+
+    // Busca os dados do usuário nos DAOs
+    const userFromDB = await fetchUserData(user.uid);
+
+    if (userFromDB) {
+      alert("Login com Google realizado com sucesso!");
+      console.log("Dados do usuário:", userFromDB);
+
+      // Redireciona para a página inicial
+      router.push("/");
+    } else {
+      errMsg.value = "Erro ao carregar dados do usuário. Entre em contato com o suporte.";
+    }
+  } catch (error) {
+    console.error("Erro na autenticação com Google:", error);
+    errMsg.value = "Erro ao tentar autenticar com o Google.";
+  }
 };
 
 const toggleShowPassword = () => {

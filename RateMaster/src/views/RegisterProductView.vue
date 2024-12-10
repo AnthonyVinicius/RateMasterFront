@@ -98,8 +98,8 @@ const formatPrice = (event) => {
                 <div class="mb-3">
                   <label for="brand" class="form-label">Marca</label>
                   <div class="d-flex align-items-center">
-                    <select v-model="product.brand" class="form-select me-2" style="flex: 1;" required>
-                      <option v-for="brand in brands" :key="brand.id" :value="brand.name">
+                    <select v-model="product.brand" class="form-select me-2" required>
+                      <option v-for="brand in brands" :key="brand.id" :value="brand.id">
                         {{ brand.name }}
                       </option>
                     </select>

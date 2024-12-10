@@ -40,10 +40,7 @@ const loginWithGoogle = () => {
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log("Usuário autenticado:", user);
-      alert(`Bem-vindo, ${user.displayName}!`);
+    .then(() => {
       router.push('/');
     })
     .catch((error) => {

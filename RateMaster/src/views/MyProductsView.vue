@@ -8,12 +8,17 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const daoProducts = new DAOService('products');
+const daoBrands = new DAOService('brands');
+
 
 onMounted(() => {
   showAll();
 })
-
 const products = ref([]);
+const id = "45GOxp3HxbZGbUNbRhvv";
+const brand = daoBrands.get(id);
+
+alert(brand.name);
 
 const showAll = async () => {
   products.value = await daoProducts.getAll()

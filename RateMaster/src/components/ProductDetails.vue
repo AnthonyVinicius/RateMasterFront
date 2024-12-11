@@ -12,7 +12,7 @@
       <div class="product-info">
         <h1>{{ product.name }}</h1>
         <div class="rating">
-          <span class="star">★</span> {{ product.rating }}/5
+          <span class="star">★</span> {{ averageRating }}/5
         </div>
         <p class="description">{{ product.description }}</p>
 
@@ -70,6 +70,7 @@ import { auth } from "@/firebase.js";
 
 const router = useRouter();
 const route = useRoute();
+const averageRating = ref(0)
 
 const daoProducts = new DAOService("products");
 const daoReviews = new DAOService("reviews");
@@ -87,6 +88,15 @@ const fetchProductDetails = async () => {
     product.value = await daoProducts.get(productId);
 
     reviews.value = await daoReviews.search("productId",productId ) || [];
+
+    if (reviews.value.length > 0) {
+      averageRating.value = (
+        reviews.value.reduce((sum, review) => sum + review.rating, 0) /
+        reviews.value.length
+      ).toFixed(1);
+    } else {
+      averageRating.value = 0;
+    }
   } catch (error) {
     console.error("Erro ao carregar os detalhes do produto:", error);
   }
@@ -113,6 +123,10 @@ const submitReview = async () => {
 
     // atualiza localmente a lista de avaliações
     reviews.value.unshift(review);
+
+    averageRating.value = (
+      review.value.reduce((sum, review) => sum + review.rating, 0) / reviews.value.length
+    ).toFixed(1);
 
     newReview.value.comment = "";
     newReview.value.rating = "";

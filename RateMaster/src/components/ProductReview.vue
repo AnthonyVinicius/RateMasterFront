@@ -29,7 +29,7 @@
           <p>{{ product.description }}</p>
           <p>{{ product.price }}</p>
           <div class="rating">
-            <span class="star">★</span> {{ product.rating }}/5
+            <span class="star">★</span> {{ product.averageRating }}/5
           </div>
         </div>
       </div>
@@ -43,6 +43,7 @@ import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
 
 const daoProducts = new DAOService('products');
+const daoReviews = new DAOService("reviews");
 const router = useRouter();
 
 const products = ref([]);
@@ -50,15 +51,29 @@ const filters = ref({
   price: [],
 //  rating: []
 });
+const reviews = ref([]);
 
 const fetchProducts = async () => {
   try {
     products.value = await daoProducts.getAll();
-    console.log('Produtos carregados:', products.value);
+
+    reviews.value = await daoReviews.getAll();
+
+    products.value.forEach(product => {
+      const productReviews = reviews.value.filter(review => review.productId === product.id);
+      const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
+      if (productReviews.length > 0){
+        product.averageRating = (totalRating / productReviews.length).toFixed(1);
+      } else {
+        product.averageRating = 0;
+      }
+    });
+
   } catch (error) {
     console.error('Erro ao carregar produtos:', error);
   }
 };
+
 
 const goToDetails = (productId) => {
   router.push({ name: 'productDetail', params: { id: productId } });

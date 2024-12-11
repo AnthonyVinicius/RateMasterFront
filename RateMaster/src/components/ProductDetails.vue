@@ -48,11 +48,9 @@
             <div v-for="review in reviews" :key="review.id" class="review-item">
               <div class="review-header">
                 <div class="review-rating">
-                  <span class="star" v-for="n in review.rating" :key="n"
-                    >★</span
-                  >
+                  <span class="star" v-for="n in review.rating" :key="n">★</span>
                 </div>
-                <span class="review-date">{{ review.date }}</span>
+                <span class="review-author">Por: {{ review.userName }}</span>
               </div>
               <p class="review-comment">{{ review.comment }}</p>
             </div>
@@ -63,21 +61,23 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
 import CustomButton from "./CustomButton.vue";
+import { auth } from "@/firebase.js";
 
 const router = useRouter();
 const route = useRoute();
 
 const daoProducts = new DAOService("products");
+const daoReviews = new DAOService("reviews");
+
 const product = ref(null);
 const reviews = ref([]);
 const newReview = ref({
-  rating: 5,
+  rating: "",
   comment: "",
 });
 
@@ -86,24 +86,43 @@ const fetchProductDetails = async () => {
     const productId = route.params.id;
     product.value = await daoProducts.get(productId);
 
-    reviews.value = product.value.reviews || [];
+    reviews.value = await daoReviews.search("productId",productId ) || [];
   } catch (error) {
     console.error("Erro ao carregar os detalhes do produto:", error);
   }
 };
 
-const submitReview = () => {
+const submitReview = async () => {
+  const currentUser = auth.currentUser;
+
+  if (!currentUser) {
+    alert("Você precisa estar logado para enviar uma avaliação.");
+    return;
+  }
+
   const review = {
-    id: reviews.value.length + 1,
+    productId: product.value.id,
+    userId: currentUser.uid,
+    userName: currentUser.displayName,
     rating: Number(newReview.value.rating),
     comment: newReview.value.comment,
-    date: new Date().toISOString().split("T")[0],
   };
 
-  reviews.value.unshift(review);
-  newReview.value.comment = "";
-  newReview.value.rating = 5;
+  try {
+    await daoReviews.insert(review);
 
+    // atualiza localmente a lista de avaliações
+    reviews.value.unshift(review);
+
+    newReview.value.comment = "";
+    newReview.value.rating = "";
+
+    alert("Avaliação enviada com sucesso!");
+    console.log(review)
+  } catch (error) {
+    console.error("Erro ao enviar avaliação:", error);
+    alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
+  }
 };
 
 onMounted(() => {

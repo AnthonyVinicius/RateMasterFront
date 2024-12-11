@@ -3,7 +3,7 @@ import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 import DAOService from '@/services/DAOService';
 import { auth } from '@/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -54,10 +54,16 @@ const register = async () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
         const { uid, email: createdEmail } = userCredential.user;
 
+        //transforma name em displayname
+        const displayName = userType.value === "individual" ? name.value : businessName.value;
+        await updateProfile(userCredential.user, {
+            displayName,
+        });
+
         const dao = userType.value === "individual" ? daoUser : daoShop;
         const additionalData =
             userType.value === "individual"
-                ? { name: name.value }
+                ? { displayName: name.value }
                 : { businessName: businessName.value };
 
         await dao.insert({

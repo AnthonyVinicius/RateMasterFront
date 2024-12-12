@@ -20,7 +20,7 @@
     </aside>
 
     <div class="products-grid">
-      <div v-for="product in products" :key="product.id" class="product-review" @click="goToDetails(product.id)">
+      <div v-for="product in filterProducts" :key="product.id" class="product-review" @click="goToDetails(product.id)">
         <div class="product-image">
           <img :src="product.image" :alt="product.name" />
         </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
 
@@ -49,7 +49,7 @@ const router = useRouter();
 const products = ref([]);
 const filters = ref({
   price: [],
-//  rating: []
+  rating: []
 });
 const reviews = ref([]);
 
@@ -73,6 +73,29 @@ const fetchProducts = async () => {
     console.error('Erro ao carregar produtos:', error);
   }
 };
+
+const normalizePrice = (price) => {
+  if (!price) return 0;
+  return parseFloat(price.replace('R$', '').replace(',', '.').trim());
+};
+
+const filterProducts = computed(() => {
+  return products.value.filter(product => {
+
+    const price = normalizePrice(product.price);
+    const equalPrice = filters.value.price.length === 0 || filters.value.price.some(priceRange => {
+      if (priceRange === "0-50") return price >= 0 && price <= 50;
+      if (priceRange === "51-100") return price >= 51 && price <= 100;
+      if (priceRange === "101+") return price >= 101;
+    });
+
+
+    const equalRating = filters.value.rating.length === 0 || filters.value.rating.some(rating => {
+      return parseFloat(rating) === Math.floor(product.averageRating);
+    })
+    return equalPrice && equalRating;
+  })
+})
 
 
 const goToDetails = (productId) => {

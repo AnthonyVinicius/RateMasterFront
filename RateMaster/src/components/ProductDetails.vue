@@ -125,14 +125,13 @@ const submitReview = async () => {
     reviews.value.unshift(review);
 
     averageRating.value = (
-      review.value.reduce((sum, review) => sum + review.rating, 0) / reviews.value.length
+      reviews.value.reduce((sum, review) => sum + review.rating, 0) / reviews.value.length
     ).toFixed(1);
 
     newReview.value.comment = "";
     newReview.value.rating = "";
 
     alert("Avaliação enviada com sucesso!");
-    console.log(review)
   } catch (error) {
     console.error("Erro ao enviar avaliação:", error);
     alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");

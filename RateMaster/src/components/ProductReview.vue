@@ -1,6 +1,9 @@
 <template>
   <div class="shop-container">
     <aside class="filters">
+      <div class="search-bar">
+        <input type="text" v-model="searchQuery" placeholder="Buscar" class="search-input" />
+      </div>
       <h3>Filtros</h3>
       <div class="filter-section">
         <h4>Preço</h4>
@@ -19,6 +22,7 @@
       </div>
     </aside>
 
+    
     <div class="products-grid">
       <div v-for="product in filterProducts" :key="product.id" class="product-review" @click="goToDetails(product.id)">
         <div class="product-image">
@@ -53,6 +57,8 @@ const filters = ref({
 });
 const reviews = ref([]);
 
+const searchQuery = ref('');
+
 const fetchProducts = async () => {
   try {
     products.value = await daoProducts.getAll();
@@ -81,6 +87,8 @@ const normalizePrice = (price) => {
 
 const filterProducts = computed(() => {
   return products.value.filter(product => {
+    const matchSearch = !searchQuery.value ||
+      product.name.toLowerCase().includes(searchQuery.value.toLowerCase());
 
     const price = normalizePrice(product.price);
     const equalPrice = filters.value.price.length === 0 || filters.value.price.some(priceRange => {
@@ -93,7 +101,7 @@ const filterProducts = computed(() => {
     const equalRating = filters.value.rating.length === 0 || filters.value.rating.some(rating => {
       return parseFloat(rating) === Math.floor(product.averageRating);
     })
-    return equalPrice && equalRating;
+    return equalPrice && equalRating && matchSearch;
   })
 })
 
@@ -194,6 +202,20 @@ onMounted(() => {
 .star {
   color: #EAB308;
 }
+
+.search-bar {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 
 @media (max-width: 768px) {
   .shop-container {

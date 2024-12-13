@@ -22,13 +22,52 @@
           <form @submit.prevent="submitReview" class="review-form">
             <div class="form-group">
               <label for="rating">Nota:</label>
-              <select v-model="newReview.rating" id="rating" required>
-                <option value="5">5 Estrelas</option>
-                <option value="4">4 Estrelas</option>
-                <option value="3">3 Estrelas</option>
-                <option value="2">2 Estrelas</option>
-                <option value="1">1 Estrela</option>
-              </select>
+              <div class="star-rating">
+                <input
+                  type="radio"
+                  id="sr-5"
+                  name="star-rating"
+                  value="5"
+                  v-model="newReview.rating"
+                />
+                <label for="sr-5">★</label>
+
+                <input
+                  type="radio"
+                  id="sr-4"
+                  name="star-rating"
+                  value="4"
+                  v-model="newReview.rating"
+                />
+                <label for="sr-4">★</label>
+
+                <input
+                  type="radio"
+                  id="sr-3"
+                  name="star-rating"
+                  value="3"
+                  v-model="newReview.rating"
+                />
+                <label for="sr-3">★</label>
+
+                <input
+                  type="radio"
+                  id="sr-2"
+                  name="star-rating"
+                  value="2"
+                  v-model="newReview.rating"
+                />
+                <label for="sr-2">★</label>
+
+                <input
+                  type="radio"
+                  id="sr-1"
+                  name="star-rating"
+                  value="1"
+                  v-model="newReview.rating"
+                />
+                <label for="sr-1">★</label>
+              </div>
             </div>
 
             <div class="form-group">
@@ -109,7 +148,6 @@ const submitReview = async () => {
     alert("Você precisa estar logado para enviar uma avaliação.");
     return;
   }
-
   const review = {
     productId: product.value.id,
     userId: currentUser.uid,
@@ -132,6 +170,7 @@ const submitReview = async () => {
     newReview.value.rating = "";
 
     alert("Avaliação enviada com sucesso!");
+    console.log('id', currentUser.uid)
   } catch (error) {
     console.error("Erro ao enviar avaliação:", error);
     alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
@@ -284,6 +323,45 @@ textarea {
 .review-comment {
   color: #333;
   line-height: 1.5;
+}
+
+.star-rating {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin: 0 -0.25rem;
+  font-size: 25px
+}
+
+input {
+  position: absolute;
+  opacity: 0;
+}
+
+input:checked ~ label {
+  color: gold;
+}
+
+input:hover ~ label {
+  color: goldenrod;
+  transition: none;
+}
+
+input:focus-visible + label {
+  outline-offset: 1px;
+  outline: #4f46e5 solid 2px;
+}
+
+label {
+  cursor: pointer;
+  color: grey;
+  padding: 0 0.25rem;
+  transition: color 0.15s;
+}
+
+label:active {
+  color: darkgoldenrod !important;
 }
 
 @media (max-width: 768px) {

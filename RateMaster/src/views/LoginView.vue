@@ -32,9 +32,7 @@ const login = async () => {
       console.log("Dados do usuário:", userFromDB);
 
       // Redireciona para a página inicial
-      router.push("/");
-    } else {
-      errMsg.value = "Erro ao carregar dados do usuário. Entre em contato com o suporte.";
+      router.push('/');
     }
   } catch (error) {
     // Tratamento de erros de autenticação
@@ -84,22 +82,38 @@ const loginWithGoogle = async () => {
     const { user } = await signInWithPopup(auth, provider);
 
     // Busca os dados do usuário nos DAOs
-    const userFromDB = await fetchUserData(user.uid);
+    let userFromDB = await fetchUserData(user.uid);
 
-    if (userFromDB) {
-      alert("Login com Google realizado com sucesso!");
-      console.log("Dados do usuário:", userFromDB);
+    if (!userFromDB) {
+      // Caso o usuário não exista nos DAOs, cria um novo registro
+      const displayName = user.displayName || "Usuário Google";
 
-      // Redireciona para a página inicial
-      router.push("/");
-    } else {
-      errMsg.value = "Erro ao carregar dados do usuário. Entre em contato com o suporte.";
+      // Define o tipo de usuário como `user` por padrão
+      const newUser = {
+        uid: user.uid,
+        email: user.email,
+        userType: "individual", // Pode ser ajustado conforme necessário
+        displayName,
+      };
+
+      // Insere no DAO
+      await daoUser.insert(newUser);
+
+      userFromDB = { ...newUser }; // Atualiza os dados do usuário localmente
+      console.log("Novo usuário criado:", newUser);
     }
+
+    alert("Login com Google realizado com sucesso!");
+    console.log("Dados do usuário:", userFromDB);
+
+    // Redireciona para a página inicial
+    router.push('/');
   } catch (error) {
     console.error("Erro na autenticação com Google:", error);
     errMsg.value = "Erro ao tentar autenticar com o Google.";
   }
 };
+
 
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;

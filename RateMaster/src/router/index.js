@@ -11,9 +11,10 @@ const router = createRouter({
     { path: '/registerProduct', name: 'registerProduct', component: () => import('../views/RegisterProductView.vue') },
     { path: '/myProducts', name: 'myProducts', component: () => import('../views/MyProductsView.vue') },
     { path: '/brand', name: 'brands', component: () => import('../views/BrandView.vue') },
-    { path: '/updateProducts/:id', name: 'updateProducts', component: () => import('../views/UpdateProducts.vue') },
+    { path: '/updateProducts/:id', name: 'updateProducts', component: () => import('../views/UpdateProductsView.vue') },
     { path: '/product/:id', name: 'productDetail', component: () => import('../views/ProductDetailsView.vue') },
-    { path: '/myProfile', name: 'myProfile', component: () => import('../views/MyProfile.vue')},
+    { path: '/myProfile', name: 'myProfile', component: () => import('../views/MyProfileView.vue')},
+    { path: '/updateProfile/:uid', name: 'updateProfile', component: () => import('../views/UpdateProfileView.vue')},
   ],
 })
 

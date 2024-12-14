@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import BaseLayout from '@/components/BaseLayout.vue';
 import { auth } from '@/firebase.js';
 
 const user = ref(null);
+const router = useRouter();
 
 const fetchUser = async () => {
   try {
@@ -12,6 +14,10 @@ const fetchUser = async () => {
     console.error('Erro ao carregar as informações do usuário:', error);
     alert('Erro ao carregar informações do usuário!');
   }
+};
+
+const goToEditProfile = (userId) => {
+  router.push({name: 'updateProfile', params: {uid: userId} });
 };
 
 onMounted(() => {
@@ -30,6 +36,9 @@ onMounted(() => {
               <div v-if="user">
                 <p><strong>Nome:</strong> {{ user.displayName }}</p>
                 <p><strong>Email:</strong> {{ user.email }}</p>
+                <button class="btn btn-primary mt-3" @click="goToEditProfile(user.uid)">
+                  Editar Perfil
+                </button>
               </div>
               <div v-else>
                 <p>Carregando informações do usuário...</p>
@@ -54,5 +63,12 @@ onMounted(() => {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
+}
+
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 </style>

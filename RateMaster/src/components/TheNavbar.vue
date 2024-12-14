@@ -73,6 +73,9 @@ const handleSignOut = () =>{
             </button>
             <ul class="dropdown-menu">
               <li @click="handleSignOut" class="dropdown-item">Sair</li>
+            <RouterLink to="/MyProfile">
+              <li class="dropdown-item">Perfil</li>
+            </RouterLink>
             <RouterLink to="/myProducts">
               <li class="dropdown-item">Meus Produtos </li>
             </RouterLink>

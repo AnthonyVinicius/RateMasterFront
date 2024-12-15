@@ -5,13 +5,10 @@ import { auth } from '@/firebase.js';
 import CustomButton from './CustomButton.vue';
 import { useRouter } from 'vue-router';
 
-// Router para redirecionamento
 const router = useRouter();
 
-// Estado local para verificar se o usuário está logado
 const isLogged = ref(false);
 
-// Obtém os dados do usuário injetados a partir do App.vue
 const userData = inject('userData');
 
 // Observa as mudanças em `userData` e loga no console para debug
@@ -91,9 +88,8 @@ const handleSignOut = async () => {
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+              <RouterLink to="/MyProfile" class="dropdown-item" v-if="userData?.userType !== 'individual'">Perfil</RouterLink>
               <li @click="handleSignOut" class="dropdown-item">Sair</li>
-              <RouterLink to="/MyProfile" class="dropdown-item">Perfil</RouterLink>
-              <RouterLink to="/myProducts" class="dropdown-item" v-if="userData?.userType !== 'individual'">Meus Produtos</RouterLink>
             </ul>
           </div>
         </div>

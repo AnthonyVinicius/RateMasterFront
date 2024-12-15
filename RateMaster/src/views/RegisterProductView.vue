@@ -1,7 +1,7 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 
 const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');

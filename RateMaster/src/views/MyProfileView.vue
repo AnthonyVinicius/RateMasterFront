@@ -11,12 +11,48 @@ const daoBrands = new DAOService('brands');
 const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
 
+const on_off = ref(false);
+const newUserName = ref('');
+
+const teste = ref('')
+
+
+const editUserName = () =>{
+  on_off.value = true;
+};
+
+const cancelEditUserName = () =>{
+  on_off.value = false;
+  newUserName.value = null;
+};
+
+
+const updateUserName = async () => {
+  teste.value = newUserName.value.trim();
+  on_off.value = false;
+  console.log(userData.value.Usertype)
+  try {
+    if (userData.Usertype == 'individual') {
+      console.log(teste, "individual")
+      await daoUser.update(userData.id, { name: teste });
+    }
+    if (userData.Usertype == 'business') {
+      console.log(teste, "business")
+      await daoShop.update(userData.id, { name: teste });
+    }
+    newUserName.value = null;
+  } catch (error) {
+    console.error("Erro ao atualizar o nome:", error);
+  }
+};
+
+
+
 const products = ref([]);
 const brandMap = ref({});
 
 const userData = inject('userData');
-const editingName = ref(false);  // Estado para controlar o modo de edição
-const editedName = ref(userData?.name || '');  // Nome que será editado
+
 
 const loadBrands = async () => {
   try {
@@ -56,34 +92,10 @@ const goToUpdate = (productId) => {
   router.push({ name: 'updateProducts', params: { id: productId } });
 };
 
-const startEditing = () => {
-  editingName.value = true;
-};
-
-const cancelEditing = () => {
-  editingName.value = false;
-  editedName.value = userData?.name || '';
-};
-
-const saveName = async () => {
-  if (editedName.value !== userData?.name) {
-    try {
-      if (userData?.type === 'individual') {
-        await daoUser.update(userData.id, { name: editedName.value });
-      } else if (userData?.type === 'business') {
-        await daoShop.update(userData.id, { name: editedName.value });
-      }
-      userData.name = editedName.value;
-      editingName.value = false; 
-    } catch (error) {
-      console.error("Erro ao salvar o nome:", error);
-      alert("Erro ao salvar o nome.");
-    }
-  }
-};
 
 onMounted(() => {
   showAll();
+  console.log(userData.value.Usertype)
 });
 </script>
 
@@ -93,19 +105,23 @@ onMounted(() => {
       <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Profile Logo" class="img-fluid img-thumbnail mt-4 mb-2 profile-logo">
     </div>
     <div class="ms-3 profile-text">
-      <h5 v-if="!editingName">{{ userData.name }}</h5>
-      <input v-if="editingName" v-model="editedName" type="text" class="form-control" />
+      
+      <h5 v-if="!on_off">{{ userData.name }}</h5>
+      
+      <input v-if="on_off" v-model="newUserName" type="text" class="form-control" />
+
       <p>{{ userData.email }}</p>
-      <div v-if="editingName">
-        <CustomButton class="button m-2" @click="saveName">
+      
+      <div v-if="on_off">
+        <CustomButton class="button m-2" @click="updateUserName">
           Salvar
         </CustomButton>
-        <CustomButton class="button m-2" @click="cancelEditing">
+        <CustomButton class="button m-2" @click="cancelEditUserName">
           Cancelar
         </CustomButton>
       </div>
       <div v-else>
-        <CustomButton class="button m-2" @click="startEditing">
+        <CustomButton class="button m-2" @click="editUserName">
           Editar Perfil
         </CustomButton>
       </div>

@@ -74,7 +74,6 @@ const updateBrand = async () => {
         }
         editingBrandId.value = null;
         editedBrandName.value = '';
-        alert('Marca atualizada com sucesso!');
     } catch (error) {
         console.error(error);
         alert('Erro ao atualizar a marca.');

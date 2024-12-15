@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref, watch } from 'vue';
+import { inject, ref } from 'vue';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/firebase.js';
 import CustomButton from './CustomButton.vue';
@@ -11,12 +11,6 @@ const isLogged = ref(false);
 
 const userData = inject('userData');
 
-// Observa as mudanças em `userData` e loga no console para debug
-watch(userData, (newVal) => {
-    console.log("Dados do usuário atualizados:", newVal);
-});
-
-// Verifica o estado de autenticação na montagem do componente
   onAuthStateChanged(auth, (user) => {
   if (user) {
     isLogged.value = true;

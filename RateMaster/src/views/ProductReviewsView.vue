@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from '@/components/BaseLayout.vue';
 import { ref, onMounted, computed } from 'vue';
 import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
@@ -81,7 +80,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <h1 class="text-center">Avaliações de Produtos</h1>
     <div class="shop-container">
     <aside class="filters">
@@ -124,7 +122,6 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

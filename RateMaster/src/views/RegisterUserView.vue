@@ -1,6 +1,5 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
-import BaseLayout from '@/components/BaseLayout.vue';
 import DAOService from '@/services/DAOService';
 import { auth } from '@/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -76,7 +75,6 @@ const toggleShowPassword = () => {
 </script>
 
 <template>
-    <BaseLayout>
         <div class="container">
             <div class="card register-card">
                 <div class="row g-0">
@@ -149,7 +147,6 @@ const toggleShowPassword = () => {
                 </div>
             </div>
         </div>
-    </BaseLayout>
 </template>
 
 <style scoped>

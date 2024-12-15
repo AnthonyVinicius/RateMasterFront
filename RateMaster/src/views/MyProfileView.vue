@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import BaseLayout from '@/components/BaseLayout.vue';
 import { auth } from '@/firebase.js';
 
 const user = ref(null);
@@ -26,7 +25,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -48,7 +46,6 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

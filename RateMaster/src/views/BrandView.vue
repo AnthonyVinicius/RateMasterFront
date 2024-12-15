@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from '@/components/BaseLayout.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
@@ -84,7 +83,6 @@ const updateBrand = async () => {
 </script>
 
 <template>
-    <BaseLayout>
         <div class="content container-fluid mt-5">
             <div class="d-flex align-items-center mb-4">
                 <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto"
@@ -131,7 +129,6 @@ const updateBrand = async () => {
                 </tbody>
             </table>
         </div>
-    </BaseLayout>
 </template>
 
 <style scoped>

@@ -4,60 +4,95 @@ import DAOService from '@/services/DAOService';
 import { ref, onMounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
-const daoUser = new DAOService('user');
-const daoShop = new DAOService('shop');
-const userData = inject('userData');  // Dados do usuário injetados no componente
 const router = useRouter();
 
+const daoProducts = new DAOService('products');
+const daoBrands = new DAOService('brands');
+const daoUser = new DAOService('user');
+const daoShop = new DAOService('shop');
+
+const products = ref([]);
+const brandMap = ref({});
+
+const userData = inject('userData');
 const editingName = ref(false);  // Estado para controlar o modo de edição
 const editedName = ref(userData?.name || '');  // Nome que será editado
 
-// Função para iniciar a edição do nome
+const loadBrands = async () => {
+  try {
+    const brands = await daoBrands.getAll();
+    brandMap.value = brands.reduce((map, brand) => {
+      map[brand.id] = brand.name;
+      return map;
+    }, {});
+  } catch (error) {
+    console.error("Erro ao carregar marcas:", error);
+  }
+};
+
+const showAll = async () => {
+  await loadBrands();
+  const allProducts = await daoProducts.getAll();
+  products.value = allProducts.map(product => {
+  product.brandName = brandMap.value[product.brand] || 'Sem Marca';
+    return product;
+  });
+};
+
+const deleteProduct = async (id) => {
+  if (confirm('Tem certeza de que deseja remover este Produto?')) {
+    try {
+      await daoProducts.delete(id);
+      products.value = products.value.filter(product => product.id !== id);
+      alert('Produto removido com sucesso!');
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao remover o produto");
+    }
+  }
+};
+
+const goToUpdate = (productId) => {
+  router.push({ name: 'updateProducts', params: { id: productId } });
+};
+
 const startEditing = () => {
   editingName.value = true;
 };
 
-// Função para cancelar a edição
 const cancelEditing = () => {
   editingName.value = false;
   editedName.value = userData?.name || '';
 };
 
-// Função para salvar o nome alterado
 const saveName = async () => {
   if (editedName.value !== userData?.name) {
     try {
-      // Atualiza o nome do usuário na base de dados
       if (userData?.type === 'individual') {
         await daoUser.update(userData.id, { name: editedName.value });
       } else if (userData?.type === 'business') {
         await daoShop.update(userData.id, { name: editedName.value });
       }
       userData.name = editedName.value;
-      editingName.value = false;
+      editingName.value = false; 
     } catch (error) {
-      console.error('Erro ao salvar o nome:', error);
-      alert('Erro ao salvar o nome.');
+      console.error("Erro ao salvar o nome:", error);
+      alert("Erro ao salvar o nome.");
     }
   }
 };
 
 onMounted(() => {
-  // Aqui você pode carregar os dados do usuário, caso precise de algo mais do que já foi injetado
+  showAll();
 });
 </script>
 
 <template>
   <div class="text-white d-flex flex-row profile-background">
     <div class="ms-4 mt-5 d-flex flex-column">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-        alt="Profile Logo"
-        class="img-fluid img-thumbnail mt-4 mb-2 profile-logo"
-      />
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Profile Logo" class="img-fluid img-thumbnail mt-4 mb-2 profile-logo">
     </div>
     <div class="ms-3 profile-text">
-      <!-- Exibe o nome do usuário -->
       <h5 v-if="!editingName">{{ userData.name }}</h5>
       <input v-if="editingName" v-model="editedName" type="text" class="form-control" />
       <p>{{ userData.email }}</p>
@@ -76,11 +111,11 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
+  
   <div class="d-flex justify-content-end text-center mt-1 py-1 text-body">
     <div>
       <p class="mb-1 me-5 h5">253</p>
-      <p class="small text-muted me-5">Produtos</p>
+      <p class="small text-muted me-5">Products</p>
     </div>
   </div>
 
@@ -105,9 +140,9 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in userData.products" :key="product.id">
+        <tr v-for="product in products.filter(p => p.idShop === userData.id)">
           <td>
-            <img :src="product.image" class="img-fluid product-img" />
+            <img :src="product.image" class="img-fluid product-img"/>
           </td>
           <td>{{ product.name }}</td>
           <td>{{ product.brandName }}</td>
@@ -140,7 +175,7 @@ onMounted(() => {
   width: 150px;
   z-index: 1;
 }
-.product-img {
+.product-img{
   max-width: 100px;
 }
 </style>

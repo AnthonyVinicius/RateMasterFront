@@ -1,32 +1,40 @@
 <script setup>
-import { inject, onMounted, ref } from 'vue';
-import {onAuthStateChanged, signOut } from 'firebase/auth';
+import { inject, onMounted, ref, watch } from 'vue';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/firebase.js';
 import CustomButton from './CustomButton.vue';
 import { useRouter } from 'vue-router';
 
+// Router para redirecionamento
 const router = useRouter();
+
+// Estado local para verificar se o usuário está logado
 const isLogged = ref(false);
-const userType = inject('userData')
-console.log(userType)
 
-onMounted(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLogged.value = true;
-    } else {
-      isLogged.value = false;
-    }
-  });
+// Obtém os dados do usuário injetados a partir do App.vue
+const userData = inject('userData');
 
+// Observa as mudanças em `userData` e loga no console para debug
+watch(userData, (newVal) => {
+    console.log("Dados do usuário atualizados:", newVal.userType);
 });
 
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
+// Verifica o estado de autenticação na montagem do componente
+onMounted(() => {
+    onAuthStateChanged(auth, (user) => {
+        isLogged.value = !!user; // Atualiza o estado de login
+    });
+});
 
+// Função para deslogar o usuário
+const handleSignOut = async () => {
+    try {
+        await signOut(auth);
+        router.push("/"); // Redireciona para a página inicial
+    } catch (error) {
+        console.error("Erro ao sair:", error);
+    }
+};
 </script>
 
 <template>

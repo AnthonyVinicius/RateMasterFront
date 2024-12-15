@@ -3,7 +3,6 @@ import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import BaseLayout from '@/components/BaseLayout.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -91,7 +90,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-6">
@@ -160,7 +158,6 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

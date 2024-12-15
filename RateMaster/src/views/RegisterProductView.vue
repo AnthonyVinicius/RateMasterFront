@@ -2,7 +2,6 @@
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
-import BaseLayout from '@/components/BaseLayout.vue';
 
 const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
@@ -65,7 +64,6 @@ const formatPrice = (event) => {
 </script>
 
 <template>
-  <BaseLayout>
     <div class="container mt-5">
       <div class="row">
 
@@ -133,7 +131,6 @@ const formatPrice = (event) => {
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

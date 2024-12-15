@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from '@/components/BaseLayout.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
@@ -57,7 +56,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <div class="content container-fluid mt-3">
       <table class="table table-striped table-bordered">
         <thead>
@@ -100,7 +98,6 @@ onMounted(() => {
         </tbody>
       </table>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

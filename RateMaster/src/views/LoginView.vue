@@ -1,6 +1,5 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
-import BaseLayout from '@/components/BaseLayout.vue';
 import { auth } from '@/firebase.js';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ref } from "vue";
@@ -49,7 +48,6 @@ const toggleShowPassword = () => {
 
 
 <template>
-  <BaseLayout>
     <div class="container">
       <div class="card login-card">
         <div class="row g-0">
@@ -92,7 +90,6 @@ const toggleShowPassword = () => {
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

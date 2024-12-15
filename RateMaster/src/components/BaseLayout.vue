@@ -13,20 +13,18 @@ const daoShop = new DAOService("shop");
 const userData = ref(null); // Reativo para armazenar os dados do usuário
 provide('userData', userData); // Disponibiliza userData para os componentes filhos
 
-// Função assíncrona para buscar os dados do usuário
 const fetchUserData = async (uid) => {
     try {
         const user = await daoUser.search('uid', uid);
-        if (user) {
-            return { ...user[0]}; // Retorna dados do usuário com tipo "user"
+        if (user && user.length > 0) {
+            return { ...user[0] };
         }
-
         const shop = await daoShop.search('uid', uid);
-        if (shop) {
-            return { ...shop[0]}; // Retorna dados do usuário com tipo "shop"
+        if (shop && shop.length > 0) {
+            return { ...shop[0] };
         }
-
-        return null; // Caso nenhum dado seja encontrado
+        console.warn("Nenhum dado encontrado nas coleções user ou shop.");
+        return null;
     } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
         return null;
@@ -49,7 +47,7 @@ onAuthStateChanged(auth, async (user) => {
             userData.value = null;
         }
     } else {
-        userData.value = null; // Limpa os dados se o usuário sair
+        userData.value = null;
     }
 });
 </script>

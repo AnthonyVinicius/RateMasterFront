@@ -1,6 +1,6 @@
 <script setup>
 import BaseLayout from "@/components/BaseLayout.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
 import CustomButton from "@/components/CustomButton.vue";
@@ -12,6 +12,7 @@ const averageRating = ref(0);
 
 const daoProducts = new DAOService("products");
 const daoReviews = new DAOService("reviews");
+const userData = inject('userData');
 
 const product = ref(null);
 const reviews = ref([]);
@@ -47,10 +48,17 @@ const submitReview = async () => {
     alert("Você precisa estar logado para enviar uma avaliação.");
     return;
   }
+
+  if (!userData.value) {
+    console.log(userData[0])
+    alert("Dados do usuário não estão disponíveis.");
+    return;
+  }
+
   const review = {
     productId: product.value.id,
-    userId: currentUser.uid,
-    userName: currentUser.displayName,
+    userId: userData.value.id,
+    name: userData.value.displayName,
     rating: Number(newReview.value.rating),
     comment: newReview.value.comment,
   };
@@ -70,8 +78,9 @@ const submitReview = async () => {
     newReview.value.rating = "";
 
     alert("Avaliação enviada com sucesso!");
-    console.log("id", currentUser.uid);
+    console.log("id", userData.value.id);
   } catch (error) {
+    console.log(userData.value);
     console.error("Erro ao enviar avaliação:", error);
     alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
   }
@@ -182,7 +191,7 @@ onMounted(() => {
                       >★</span
                     >
                   </div>
-                  <span class="review-author">Por: {{ review.userName }}</span>
+                  <span class="review-author">Por: {{ review.name }}</span>
                 </div>
                 <p class="review-comment">{{ review.comment }}</p>
               </div>

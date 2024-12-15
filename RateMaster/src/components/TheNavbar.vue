@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/firebase.js';
 import CustomButton from './CustomButton.vue';
@@ -16,14 +16,16 @@ const userData = inject('userData');
 
 // Observa as mudanças em `userData` e loga no console para debug
 watch(userData, (newVal) => {
-    console.log("Dados do usuário atualizados:", newVal.userType);
+    console.log("Dados do usuário atualizados:", newVal);
 });
 
 // Verifica o estado de autenticação na montagem do componente
-onMounted(() => {
-    onAuthStateChanged(auth, (user) => {
-        isLogged.value = !!user; // Atualiza o estado de login
-    });
+  onAuthStateChanged(auth, (user) => {
+  if (user) {
+    isLogged.value = true;
+  } else {
+    isLogged.value = false;
+  }
 });
 
 // Função para deslogar o usuário
@@ -66,7 +68,7 @@ const handleSignOut = async () => {
               <i class="bi bi-box-arrow-in-right p-2"></i>Login
             </RouterLink>
           </li>
-          <li class="nav-item" v-if="isLogged && userType === 'individual'">
+          <li class="nav-item" v-if="isLogged && userData?.userType !== 'individual'">
             <RouterLink class="nav-link" to="/registerProduct">
               <i class="bi bi-plus-square-fill p-2"></i>Registrar Produto
             </RouterLink>
@@ -91,7 +93,7 @@ const handleSignOut = async () => {
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
               <li @click="handleSignOut" class="dropdown-item">Sair</li>
               <RouterLink to="/MyProfile" class="dropdown-item">Perfil</RouterLink>
-              <RouterLink to="/myProducts" class="dropdown-item" v-if= "userType === 'individual'">Meus Produtos</RouterLink>
+              <RouterLink to="/myProducts" class="dropdown-item" v-if="userData?.userType !== 'individual'">Meus Produtos</RouterLink>
             </ul>
           </div>
         </div>

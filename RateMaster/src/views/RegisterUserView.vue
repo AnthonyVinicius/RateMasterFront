@@ -3,28 +3,26 @@ import CustomButton from '@/components/CustomButton.vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 import DAOService from '@/services/DAOService';
 import { auth } from '@/firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
-
 const router = useRouter();
+
+const name = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const showPassword = ref(false);
 const userType = ref("individual");
-const name = ref("");
-const businessName = ref("");
 
 const trimInputs = () => {
     email.value = email.value.trim();
     password.value = password.value.trim();
     confirmPassword.value = confirmPassword.value.trim();
     name.value = name.value.trim();
-    businessName.value = businessName.value.trim();
 };
 
 const register = async () => {
@@ -45,7 +43,7 @@ const register = async () => {
         return;
     }
 
-    if (userType.value === "business" && !businessName.value) {
+    if (userType.value === "business" && !name.value) {
         alert("Por favor, preencha o nome da empresa para Pessoa Jurídica.");
         return;
     }
@@ -54,17 +52,8 @@ const register = async () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
         const { uid, email: createdEmail } = userCredential.user;
 
-        //transforma name em displayname
-        const displayName = userType.value === "individual" ? name.value : businessName.value;
-        await updateProfile(userCredential.user, {
-            displayName,
-        });
-
         const dao = userType.value === "individual" ? daoUser : daoShop;
-        const additionalData =
-            userType.value === "individual"
-                ? { displayName: name.value }
-                : { businessName: businessName.value };
+        const additionalData = userType.value === "individual" ? { name: name.value } : { name: name.value };
 
         await dao.insert({
             uid,
@@ -134,7 +123,7 @@ const toggleShowPassword = () => {
                                 <div v-if="userType === 'business'">
                                     <div class="form-outline mb-2">
                                         <input type="text" class="form-control form-control-lg"
-                                               placeholder="Nome da Empresa" v-model="businessName" required />
+                                               placeholder="Nome da Empresa" v-model="name" required />
                                     </div>
                                 </div>
 

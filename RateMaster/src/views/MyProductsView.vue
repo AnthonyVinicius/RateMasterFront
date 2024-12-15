@@ -2,13 +2,14 @@
 import BaseLayout from '@/components/BaseLayout.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
 const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
+const userData = inject('userData');
 
 const products = ref([]);
 const brandMap = ref({});
@@ -31,6 +32,7 @@ const showAll = async () => {
     products.value = allProducts.map(product => {
         product.brandName = brandMap.value[product.brand] || 'Sem Marca';
         return product;
+        
     });
 };
 
@@ -79,7 +81,7 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id">
+          <tr v-for="product in products.filter(p => p.idShop === userData.id)">
             <td>
               <img :src="product.image" class="img-fluid" style="max-width: 100px;" />
             </td>
@@ -96,7 +98,7 @@ onMounted(() => {
                   <i class="bi bi-pencil-square"></i>
               </CustomButton>
             </td>
-          </tr>
+            </tr>
         </tbody>
       </table>
     </div>

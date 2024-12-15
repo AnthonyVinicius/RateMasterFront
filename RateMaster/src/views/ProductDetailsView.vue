@@ -12,7 +12,9 @@ const averageRating = ref(0);
 
 const daoProducts = new DAOService("products");
 const daoReviews = new DAOService("reviews");
+const daoShops = new DAOService('shop');
 const userData = inject('userData');
+
 
 const product = ref(null);
 const reviews = ref([]);
@@ -26,8 +28,10 @@ const fetchProductDetails = async () => {
     const productId = route.params.id;
     product.value = await daoProducts.get(productId);
 
+    // Buscar as avaliações do produto
     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
+    // Calcular a média de avaliação
     if (reviews.value.length > 0) {
       averageRating.value = (
         reviews.value.reduce((sum, review) => sum + review.rating, 0) /
@@ -36,6 +40,11 @@ const fetchProductDetails = async () => {
     } else {
       averageRating.value = 0;
     }
+
+    // Buscar o nome da empresa
+    const company = await daoShops.get(product.value.idShop);
+    product.value.companyName = company ? company.name : 'Empresa desconhecida';
+
   } catch (error) {
     console.error("Erro ao carregar os detalhes do produto:", error);
   }
@@ -58,7 +67,7 @@ const submitReview = async () => {
   const review = {
     productId: product.value.id,
     userId: userData.value.id,
-    name: userData.value.displayName,
+    userName: userData.value.name,
     rating: Number(newReview.value.rating),
     comment: newReview.value.comment,
   };
@@ -111,6 +120,7 @@ onMounted(() => {
             <span class="star">★</span> {{ averageRating }}/5
           </div>
           <p class="description">{{ product.description }}</p>
+          <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
 
           <div class="reviews-section">
             <h2>Avaliação</h2>
@@ -191,10 +201,11 @@ onMounted(() => {
                       >★</span
                     >
                   </div>
-                  <span class="review-author">Por: {{ review.name }}</span>
+                  <span class="review-author">Por: {{ review.userName }}</span>
                 </div>
                 <p class="review-comment">{{ review.comment }}</p>
               </div>
+                
             </div>
           </div>
         </div>

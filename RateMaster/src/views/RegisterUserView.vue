@@ -141,8 +141,8 @@ const toggleShowPassword = () => {
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" id="termsCheck" required>
                                     <label class="form-check-label" for="termsCheck">
-                                        Eu concordo com o <RouterLink to="/terms">Termos de uso</RouterLink> e
-                                        <RouterLink to="/privacy">Política de privacidade</RouterLink>.
+                                        Eu concordo com o <a to="/terms">Termos de uso</a> e
+                                        <a to="/privacy">Política de privacidade</a>.
                                     </label>
                                 </div>
 

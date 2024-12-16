@@ -1,5 +1,4 @@
 <script setup>
-import BaseLayout from '@/components/BaseLayout.vue';
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
@@ -27,8 +26,7 @@ const addBrand = async () => {
     }
 
     try {
-        const addedBrand = await daoBrands.insert({ name: trimmedBrand });
-        brands.value.push({ id: addedBrand.id, name: trimmedBrand });
+        await daoBrands.insert({ name: trimmedBrand });
         newBrand.value = '';
         alert('Marca adicionada com sucesso!');
     } catch (error) {
@@ -41,7 +39,6 @@ const deleteBrand = async (id) => {
     if (confirm('Tem certeza de que deseja remover esta marca?')) {
         try {
             await daoBrands.delete(id);
-            brands.value = brands.value.filter(brand => brand.id !== id);
             alert('Marca removida com sucesso!');
         } catch (error) {
             console.error(error);
@@ -69,13 +66,8 @@ const updateBrand = async () => {
 
     try {
         await daoBrands.update(editingBrandId.value, { name: trimmedName });
-        const brand = brands.value.find(brand => brand.id === editingBrandId.value);
-        if (brand) {
-            brand.name = trimmedName;
-        }
         editingBrandId.value = null;
         editedBrandName.value = '';
-        alert('Marca atualizada com sucesso!');
     } catch (error) {
         console.error(error);
         alert('Erro ao atualizar a marca.');
@@ -84,7 +76,6 @@ const updateBrand = async () => {
 </script>
 
 <template>
-    <BaseLayout>
         <div class="content container-fluid mt-5">
             <div class="d-flex align-items-center mb-4">
                 <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto"
@@ -131,7 +122,6 @@ const updateBrand = async () => {
                 </tbody>
             </table>
         </div>
-    </BaseLayout>
 </template>
 
 <style scoped>

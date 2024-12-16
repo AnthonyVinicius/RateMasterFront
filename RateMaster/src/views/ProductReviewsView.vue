@@ -1,11 +1,11 @@
 <script setup>
-import BaseLayout from '@/components/BaseLayout.vue';
 import { ref, onMounted, computed } from 'vue';
 import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
 
 const daoProducts = new DAOService('products');
-const daoReviews = new DAOService("reviews");
+const daoReviews = new DAOService('reviews');
+const daoShops = new DAOService('shop');
 const router = useRouter();
 
 const products = ref([]);
@@ -14,18 +14,23 @@ const filters = ref({
   rating: []
 });
 const reviews = ref([]);
-
+const companies = ref([]);
 const searchQuery = ref('');
 
 const fetchProducts = async () => {
   try {
     products.value = await daoProducts.getAll();
-
+    companies.value = await daoShops.getAll();
     reviews.value = await daoReviews.getAll();
 
     products.value.forEach(product => {
       const productReviews = reviews.value.filter(review => review.productId === product.id);
+
       const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
+
+      const company = companies.value.find(company => company.id === product.idShop);
+      product.companyName = company ? company.name : 'Empresa desconhecida';
+
       if (productReviews.length > 0){
         product.averageRating = (totalRating / productReviews.length).toFixed(1);
       } else {
@@ -46,7 +51,8 @@ const normalizePrice = (price) => {
 const filterProducts = computed(() => {
   return products.value.filter(product => {
     const matchSearch = !searchQuery.value ||
-      product.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+      product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      product.companyName.toLowerCase().includes(searchQuery.value.toLowerCase());
 
     const price = normalizePrice(product.price);
     const equalPrice = filters.value.price.length === 0 || filters.value.price.some(priceRange => {
@@ -74,7 +80,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <h1 class="text-center">Avaliações de Produtos</h1>
     <div class="shop-container">
     <aside class="filters">
@@ -112,11 +117,11 @@ onMounted(() => {
           <div class="rating">
             <span class="star">★</span> {{ product.averageRating }}/5
           </div>
+          <p><strong>Loja:</strong> {{ product.companyName }}</p>
         </div>
       </div>
     </div>
   </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

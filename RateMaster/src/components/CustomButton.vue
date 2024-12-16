@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <button class="btn btn-outline" type="submit">
     <slot></slot>

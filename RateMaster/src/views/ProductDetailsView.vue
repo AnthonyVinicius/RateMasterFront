@@ -1,6 +1,5 @@
 <script setup>
-import BaseLayout from "@/components/BaseLayout.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
 import CustomButton from "@/components/CustomButton.vue";
@@ -12,6 +11,9 @@ const averageRating = ref(0);
 
 const daoProducts = new DAOService("products");
 const daoReviews = new DAOService("reviews");
+const daoShops = new DAOService('shop');
+const userData = inject('userData');
+
 
 const product = ref(null);
 const reviews = ref([]);
@@ -25,8 +27,10 @@ const fetchProductDetails = async () => {
     const productId = route.params.id;
     product.value = await daoProducts.get(productId);
 
+    // Buscar as avaliações do produto
     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
+    // Calcular a média de avaliação
     if (reviews.value.length > 0) {
       averageRating.value = (
         reviews.value.reduce((sum, review) => sum + review.rating, 0) /
@@ -35,6 +39,11 @@ const fetchProductDetails = async () => {
     } else {
       averageRating.value = 0;
     }
+
+    // Buscar o nome da empresa
+    const company = await daoShops.get(product.value.idShop);
+    product.value.companyName = company ? company.name : 'Empresa desconhecida';
+
   } catch (error) {
     console.error("Erro ao carregar os detalhes do produto:", error);
   }
@@ -47,10 +56,17 @@ const submitReview = async () => {
     alert("Você precisa estar logado para enviar uma avaliação.");
     return;
   }
+
+  if (!userData.value) {
+    console.log(userData[0])
+    alert("Dados do usuário não estão disponíveis.");
+    return;
+  }
+
   const review = {
     productId: product.value.id,
-    userId: currentUser.uid,
-    userName: currentUser.displayName,
+    userId: userData.value.id,
+    userName: userData.value.name,
     rating: Number(newReview.value.rating),
     comment: newReview.value.comment,
   };
@@ -70,8 +86,9 @@ const submitReview = async () => {
     newReview.value.rating = "";
 
     alert("Avaliação enviada com sucesso!");
-    console.log("id", currentUser.uid);
+    console.log("id", userData.value.id);
   } catch (error) {
+    console.log(userData.value);
     console.error("Erro ao enviar avaliação:", error);
     alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
   }
@@ -83,7 +100,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseLayout>
     <h1 class="text-center">Detalhes de Produtos</h1>
     <br />
     <div class="product-details">
@@ -102,6 +118,7 @@ onMounted(() => {
             <span class="star">★</span> {{ averageRating }}/5
           </div>
           <p class="description">{{ product.description }}</p>
+          <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
 
           <div class="reviews-section">
             <h2>Avaliação</h2>
@@ -186,12 +203,12 @@ onMounted(() => {
                 </div>
                 <p class="review-comment">{{ review.comment }}</p>
               </div>
+                
             </div>
           </div>
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

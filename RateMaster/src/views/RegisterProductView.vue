@@ -1,13 +1,14 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref, onMounted } from 'vue';
-import BaseLayout from '@/components/BaseLayout.vue';
+import { ref, onMounted, inject } from 'vue';
 
 const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
+const userData = inject('userData')
 
 const product = ref({
+  idShop:'',
   name: '',
   description: '',
   brand: '',
@@ -27,13 +28,15 @@ onMounted(() => {
 });
 
 const submit = async () => {
+  product.value.idShop = userData.value.id
   product.value.name = product.value.name.trim();
   product.value.description = product.value.description.trim();
   product.value.price = product.value.price.trim();
   product.value.brand = product.value.brand.trim();
   product.value.type = product.value.type.trim();
 
-  if (!product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
+  if (!product.value.idShop || !product.value.name || !product.value.description || !product.value.price || !product.value.brand || !product.value.type) {
+    console.log(userData.value.id)
     alert('Por favor, preencha todos os campos obrigatórios!');
     return;
   }
@@ -65,7 +68,6 @@ const formatPrice = (event) => {
 </script>
 
 <template>
-  <BaseLayout>
     <div class="container mt-5">
       <div class="row">
 
@@ -133,7 +135,6 @@ const formatPrice = (event) => {
         </div>
       </div>
     </div>
-  </BaseLayout>
 </template>
 
 <style scoped>

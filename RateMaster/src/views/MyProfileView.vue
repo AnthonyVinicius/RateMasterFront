@@ -10,9 +10,15 @@ const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
 const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
+const products = ref([]);
+const brandMap = ref({});
+
+const userData = inject('userData');
+
 
 const on_off = ref(false);
 const newUserName = ref('');
+const editedUserName = ref('');
 
 const teste = ref('')
 
@@ -28,31 +34,22 @@ const cancelEditUserName = () =>{
 
 
 const updateUserName = async () => {
-  teste.value = newUserName.value.trim();
+  editedUserName.value = newUserName.value.trim();
   on_off.value = false;
-  console.log(userData.value.Usertype)
   try {
-    if (userData.Usertype == 'individual') {
+    if (userData.value.userType === 'individual') {
       console.log(teste, "individual")
-      await daoUser.update(userData.id, { name: teste });
+      await daoUser.update(userData.id, { name: editedUserName.value });
     }
-    if (userData.Usertype == 'business') {
+    if (userData.value.userType === 'business') {
       console.log(teste, "business")
-      await daoShop.update(userData.id, { name: teste });
+      await daoShop.update(userData.value.id, { name: editedUserName.value });
     }
     newUserName.value = null;
   } catch (error) {
     console.error("Erro ao atualizar o nome:", error);
   }
 };
-
-
-
-const products = ref([]);
-const brandMap = ref({});
-
-const userData = inject('userData');
-
 
 const loadBrands = async () => {
   try {
@@ -95,7 +92,6 @@ const goToUpdate = (productId) => {
 
 onMounted(() => {
   showAll();
-  console.log(userData.value.Usertype)
 });
 </script>
 

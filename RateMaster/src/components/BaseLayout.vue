@@ -6,12 +6,12 @@ import DAOService from "@/services/DAOService";
 import { provide, ref } from 'vue';
 import { onAuthStateChanged } from 'firebase/auth';
 
-// Instâncias do DAOService para buscar dados de usuário e loja
+
 const daoUser = new DAOService("user");
 const daoShop = new DAOService("shop");
 
-const userData = ref(null); // Reativo para armazenar os dados do usuário
-provide('userData', userData); // Disponibiliza userData para os componentes filhos
+const userData = ref(null); 
+provide('userData', userData); 
 
 const fetchUserData = async (uid) => {
     try {
@@ -31,7 +31,6 @@ const fetchUserData = async (uid) => {
     }
 };
 
-// Observa mudanças na autenticação
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         try {

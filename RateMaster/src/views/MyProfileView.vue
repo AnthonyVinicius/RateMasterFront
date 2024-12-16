@@ -66,15 +66,15 @@ const loadBrands = async () => {
 const showAll = async () => {
   try {
     await loadBrands();
-    const filteredProducts = await daoProducts.search('idShop', userData.value.id);
+    products.value = await daoProducts.search('idShop', userData.value.id);
 
-    products.value = filteredProducts.map(product => {
+    products.value = products.value.map(product => {
       product.brandName = brandMap.value[product.brand] || 'Sem Marca';
-      console.log('filtrado',filteredProducts)
+      console.log('filtrado',products.value)
       return product
     });
   } catch (error) {
-    console.log('erro filtrado', filteredProducts)
+    console.log('erro filtrado', products.value)
     console.error('Erro ao carregar produtos:', error);
   }
 };
@@ -131,26 +131,21 @@ onMounted(() => {
     </div>
   </div>
   
-  <div class="d-flex justify-content-end text-center mt-1 py-1 text-body">
+  <div class="mt-3 pt-5 text-body">
     <div>
-      <p class="mb-1 me-5 h5">{{ tamanho.value }}</p>
-      <p class="small text-muted me-5">Products</p>
-    </div>
-  </div>
-
-  <div class="card-body p-4">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Imagem</th>
-          <th scope="col">Nome</th>
-          <th scope="col">
-            <span class="m-3">Marca</span>
-            <RouterLink to="/brand">
-              <CustomButton>
-                <i class="bi bi-plus-square-fill"></i>
-              </CustomButton>
-            </RouterLink>
+      <div class="card-body p-4">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Imagem</th>
+              <th scope="col">Nome</th>
+              <th scope="col">
+                <span class="m-3">Marca</span>
+                <RouterLink to="/brand">
+                  <CustomButton>
+                    <i class="bi bi-plus-square-fill"></i>
+                  </CustomButton>
+                </RouterLink>
           </th>
           <th scope="col">Preço</th>
           <th scope="col">Tipo</th>
@@ -179,6 +174,9 @@ onMounted(() => {
         </tr>
       </tbody>
     </table>
+    
+        </div>
+      </div>
   </div>
 </template>
 

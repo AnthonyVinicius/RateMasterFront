@@ -26,8 +26,7 @@ const addBrand = async () => {
     }
 
     try {
-        const addedBrand = await daoBrands.insert({ name: trimmedBrand });
-        brands.value.push({ id: addedBrand.id, name: trimmedBrand });
+        await daoBrands.insert({ name: trimmedBrand });
         newBrand.value = '';
         alert('Marca adicionada com sucesso!');
     } catch (error) {
@@ -40,7 +39,6 @@ const deleteBrand = async (id) => {
     if (confirm('Tem certeza de que deseja remover esta marca?')) {
         try {
             await daoBrands.delete(id);
-            brands.value = brands.value.filter(brand => brand.id !== id);
             alert('Marca removida com sucesso!');
         } catch (error) {
             console.error(error);
@@ -68,10 +66,6 @@ const updateBrand = async () => {
 
     try {
         await daoBrands.update(editingBrandId.value, { name: trimmedName });
-        const brand = brands.value.find(brand => brand.id === editingBrandId.value);
-        if (brand) {
-            brand.name = trimmedName;
-        }
         editingBrandId.value = null;
         editedBrandName.value = '';
     } catch (error) {

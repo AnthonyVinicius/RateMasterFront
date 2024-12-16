@@ -12,12 +12,13 @@ const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
 const products = ref([]);
 const brandMap = ref({});
-const tamanho = ref(0);
 
 const userData = inject('userData');
 
+
 const on_off = ref(false);
 const newUserName = ref('');
+const editedUserName = ref('');
 
 const teste = ref('')
 
@@ -33,16 +34,16 @@ const cancelEditUserName = () =>{
 
 
 const updateUserName = async () => {
-  teste.value = newUserName.value.trim();
+  editedUserName.value = newUserName.value.trim();
   on_off.value = false;
   try {
-    if (userData.Usertype == 'individual') {
+    if (userData.value.userType === 'individual') {
       console.log(teste, "individual")
-      await daoUser.update(userData.id, { name: teste });
+      await daoUser.update(userData.id, { name: editedUserName.value });
     }
-    if (userData.Usertype == 'business') {
+    if (userData.value.userType === 'business') {
       console.log(teste, "business")
-      await daoShop.update(userData.id, { name: teste });
+      await daoShop.update(userData.value.id, { name: editedUserName.value });
     }
     newUserName.value = null;
   } catch (error) {
@@ -98,7 +99,6 @@ const goToUpdate = (productId) => {
 
 onMounted(() => {
   showAll();
-  console.log(userData.value.Usertype)
 });
 </script>
 

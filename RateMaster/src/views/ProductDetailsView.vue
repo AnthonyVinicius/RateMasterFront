@@ -100,7 +100,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1 class="text-center">Detalhes de Produtos</h1>
+    <h1 class="text-center mt-2">Detalhes de Produtos</h1>
     <br />
     <div class="product-details">
       <button class="back-button" @click="router.push('/reviews')">

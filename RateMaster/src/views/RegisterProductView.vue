@@ -43,6 +43,13 @@ const submit = async () => {
 
   await daoProducts.insert(product.value);
   alert('Produto cadastrado com sucesso!');
+
+  product.value.idShop = null
+  product.value.name = null
+  product.value.description = null
+  product.value.price = null
+  product.value.brand = null
+  product.value.type = null
 };
 
 

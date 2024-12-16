@@ -80,7 +80,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1 class="text-center">Avaliações de Produtos</h1>
+    <h1 class="text-center mt-2">Avaliações de Produtos</h1>
     <div class="shop-container">
     <aside class="filters">
       <div class="search-bar">

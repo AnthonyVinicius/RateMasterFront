@@ -1,7 +1,6 @@
 <script setup>
 import ReviewHomePage from '@/components/ReviewHomePage.vue';
 import UserReview from '@/components/UserReview.vue';
-import CustomButton from '@/components/CustomButton.vue';
 </script>
 
 <template>
@@ -88,26 +87,6 @@ import CustomButton from '@/components/CustomButton.vue';
                 <div>
                     <h1 class="display-4 text-white text-start">Entre em contato conosco.</h1>
                     <p class="lead text-white text-start">Descubra como nossa plataforma pode ajudá-lo.</p>
-                </div>
-
-                <div class="row justify-content-center w-100">
-                    <div class="col-12 col-md-6">
-                        <form>
-                            <div class="mb-3">
-                                <label for="nome" class="form-label text-white">Nome</label>
-                                <input type="text" class="form-control" placeholder="Seu nome">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label text-white">Email</label>
-                                <input type="email" class="form-control" placeholder="Seu email">
-                            </div>
-                            <div class="mb-3">
-                                <label for="mensagem" class="form-label text-white">Mensagem</label>
-                                <input type="mens" class="form-control" placeholder="Escreva sua mensagem">
-                            </div>
-                            <CustomButton class="button mt-2">Enviar</CustomButton>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

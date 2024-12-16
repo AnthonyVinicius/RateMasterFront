@@ -19,8 +19,6 @@ const login = async () => {
     console.log(userFromDB)
 
     if (userFromDB) {
-      alert("Usuário logado com sucesso!");
-
       router.push('/');
     }
   } catch (error) {

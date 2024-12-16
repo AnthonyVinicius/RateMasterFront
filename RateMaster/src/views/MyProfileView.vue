@@ -23,11 +23,11 @@ const editedUserName = ref('');
 const teste = ref('')
 
 
-const editUserName = () =>{
+const editUserName = () => {
   on_off.value = true;
 };
 
-const cancelEditUserName = () =>{
+const cancelEditUserName = () => {
   on_off.value = false;
   newUserName.value = null;
 };
@@ -70,7 +70,7 @@ const showAll = async () => {
 
     products.value = products.value.map(product => {
       product.brandName = brandMap.value[product.brand] || 'Sem Marca';
-      console.log('filtrado',products.value)
+      console.log('filtrado', products.value)
       return product
     });
   } catch (error) {
@@ -105,16 +105,17 @@ onMounted(() => {
 <template>
   <div class="text-white d-flex flex-row profile-background">
     <div class="ms-4 mt-5 d-flex flex-column">
-      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Profile Logo" class="img-fluid img-thumbnail mt-4 mb-2 profile-logo">
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Profile Logo"
+        class="img-fluid img-thumbnail mt-4 mb-2 profile-logo">
     </div>
     <div class="ms-3 profile-text">
-      
+
       <h5 v-if="!on_off">{{ userData.name }}</h5>
-      
+
       <input v-if="on_off" v-model="newUserName" type="text" class="form-control" />
 
       <p>{{ userData.email }}</p>
-      
+
       <div v-if="on_off">
         <CustomButton class="button m-2" @click="updateUserName">
           Salvar
@@ -130,53 +131,54 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  
-  <div class="mt-3 pt-5 text-body">
+
+  <div class="mt-3 pt-5 text-body" v-if="userData?.userType !== 'individual'">
     <div>
       <div class="card-body p-4">
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Imagem</th>
-              <th scope="col">Nome</th>
-              <th scope="col">
-                <span class="m-3">Marca</span>
-                <RouterLink to="/brand">
-                  <CustomButton>
-                    <i class="bi bi-plus-square-fill"></i>
-                  </CustomButton>
-                </RouterLink>
-          </th>
-          <th scope="col">Preço</th>
-          <th scope="col">Tipo</th>
-          <th scope="col">Descrição</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>
-            <img :src="product.image" class="img-fluid product-img"/>
-          </td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.brandName }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.type }}</td>
-          <td>{{ product.description }}</td>
-          <td>
-            <CustomButton @click="deleteProduct(product.id)" type="button" class="btn btn-danger ms-2 me-2">
-              <i class="bi bi-trash-fill"></i>
-            </CustomButton>
-            <CustomButton @click="goToUpdate(product.id)" type="button" class="btn btn-warning ms-2 me-2">
-              <i class="bi bi-pencil-square"></i>
-            </CustomButton>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Imagem</th>
+                <th scope="col">Nome</th>
+                <th scope="col">
+                  <span class="m-3">Marca</span>
+                  <RouterLink to="/brand">
+                    <CustomButton>
+                      <i class="bi bi-plus-square-fill"></i>
+                    </CustomButton>
+                  </RouterLink>
+                </th>
+                <th scope="col">Preço</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+              <tbody>
+                <tr v-for="product in products" :key="product.id">
+                  <td>
+                    <img :src="product.image" class="img-fluid product-img" />
+                  </td>
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.brandName }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ product.type }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>
+                    <CustomButton @click="deleteProduct(product.id)" type="button" class="btn btn-danger ms-2 me-2">
+                      <i class="bi bi-trash-fill"></i>
+                    </CustomButton>
+                    <CustomButton @click="goToUpdate(product.id)" type="button" class="btn btn-warning ms-2 me-2">
+                      <i class="bi bi-pencil-square"></i>
+                    </CustomButton>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -184,15 +186,23 @@ onMounted(() => {
 .profile-text {
   margin-top: 130px;
 }
+
 .profile-background {
   background-color: #000;
   height: 200px;
 }
+
 .profile-logo {
   width: 150px;
   z-index: 1;
 }
-.product-img{
+
+.product-img {
   max-width: 100px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>

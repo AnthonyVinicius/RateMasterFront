@@ -19,11 +19,11 @@ const userData = inject('userData');
   }
 });
 
-// Função para deslogar o usuário
+
 const handleSignOut = async () => {
     try {
         await signOut(auth);
-        router.push("/"); // Redireciona para a página inicial
+        router.push("/");
     } catch (error) {
         console.error("Erro ao sair:", error);
     }
@@ -82,7 +82,7 @@ const handleSignOut = async () => {
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-              <RouterLink to="/MyProfile" class="dropdown-item" v-if="userData?.userType !== 'individual'">Perfil</RouterLink>
+              <RouterLink to="/MyProfile" class="dropdown-item">Perfil</RouterLink>
               <li @click="handleSignOut" class="dropdown-item">Sair</li>
             </ul>
           </div>

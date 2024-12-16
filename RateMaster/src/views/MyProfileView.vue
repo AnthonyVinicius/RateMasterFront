@@ -10,6 +10,11 @@ const daoProducts = new DAOService('products');
 const daoBrands = new DAOService('brands');
 const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
+const products = ref([]);
+const brandMap = ref({});
+const tamanho = ref(0);
+
+const userData = inject('userData');
 
 const on_off = ref(false);
 const newUserName = ref('');
@@ -30,7 +35,6 @@ const cancelEditUserName = () =>{
 const updateUserName = async () => {
   teste.value = newUserName.value.trim();
   on_off.value = false;
-  console.log(userData.value.Usertype)
   try {
     if (userData.Usertype == 'individual') {
       console.log(teste, "individual")
@@ -46,14 +50,6 @@ const updateUserName = async () => {
   }
 };
 
-
-
-const products = ref([]);
-const brandMap = ref({});
-
-const userData = inject('userData');
-
-
 const loadBrands = async () => {
   try {
     const brands = await daoBrands.getAll();
@@ -67,12 +63,19 @@ const loadBrands = async () => {
 };
 
 const showAll = async () => {
-  await loadBrands();
-  const allProducts = await daoProducts.getAll();
-  products.value = allProducts.map(product => {
-  product.brandName = brandMap.value[product.brand] || 'Sem Marca';
-    return product;
-  });
+  try {
+    await loadBrands();
+    const filteredProducts = await daoProducts.search('idShop', userData.value.id);
+
+    products.value = filteredProducts.map(product => {
+      product.brandName = brandMap.value[product.brand] || 'Sem Marca';
+      console.log('filtrado',filteredProducts)
+      return product
+    });
+  } catch (error) {
+    console.log('erro filtrado', filteredProducts)
+    console.error('Erro ao carregar produtos:', error);
+  }
 };
 
 const deleteProduct = async (id) => {
@@ -130,7 +133,7 @@ onMounted(() => {
   
   <div class="d-flex justify-content-end text-center mt-1 py-1 text-body">
     <div>
-      <p class="mb-1 me-5 h5">253</p>
+      <p class="mb-1 me-5 h5">{{ tamanho.value }}</p>
       <p class="small text-muted me-5">Products</p>
     </div>
   </div>
@@ -156,7 +159,7 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products.filter(p => p.idShop === userData.id)">
+        <tr v-for="product in products" :key="product.id">
           <td>
             <img :src="product.image" class="img-fluid product-img"/>
           </td>

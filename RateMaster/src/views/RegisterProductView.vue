@@ -14,7 +14,7 @@ const product = ref({
   brand: '',
   price: '',
   type: '',
-  image: null
+  image: ''
 });
 
 const brands = ref([]);
@@ -45,19 +45,6 @@ const submit = async () => {
   alert('Produto cadastrado com sucesso!');
 };
 
-
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      product.value.image = reader.result;
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
-
 const formatPrice = (event) => {
   let value = event.target.value.replace(/\D/g, '');
   const numericValue = Number(value) / 100;
@@ -73,12 +60,9 @@ const formatPrice = (event) => {
 
         <div class="col-md-6">
           <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Anexar imagem</h5>
-              <input type="file" @change="handleImageUpload" class="form-control" />
-              <div v-if="product.image" class="mt-3">
-                <img :src="product.image" alt="Product Preview" class="img-fluid" />
-              </div>
+            <div class="mb-3">
+              <h5 class="card-title">Link da imagem</h5>
+              <input v-model="product.image" type="text" class="form-control" placeholder="Insira o Link do produto." required />
             </div>
           </div>
         </div>
@@ -140,6 +124,7 @@ const formatPrice = (event) => {
 <style scoped>
 .card {
   margin-bottom: 20px;
+  padding: auto;
 }
 
 .card-title {
@@ -147,13 +132,17 @@ const formatPrice = (event) => {
   font-weight: bold;
 }
 
-img {
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
 button:hover {
   transform: scale(1.01);
 }
+
+.card .mb-3{
+  margin: 0.5rem 1rem;
+}
+
+.card input{
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+
 </style>

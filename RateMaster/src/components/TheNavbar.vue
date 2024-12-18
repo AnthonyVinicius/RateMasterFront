@@ -145,4 +145,16 @@ const handleSignOut = async () => {
 .dropdown-item:hover {
   background-color: #f1f1f1;
 }
+
+.navbar-toggler {
+  background-color: #E74C3C;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.navbar-toggler:hover {
+  background-color: #E74C3C;
+}
+
 </style>

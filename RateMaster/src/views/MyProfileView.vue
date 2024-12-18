@@ -39,7 +39,7 @@ const updateUserName = async () => {
   try {
     if (userData.value.userType === 'individual') {
       console.log(teste, "individual")
-      await daoUser.update(userData.id, { name: editedUserName.value });
+      await daoUser.update(userData.value.id, { name: editedUserName.value });
     }
     if (userData.value.userType === 'business') {
       console.log(teste, "business")

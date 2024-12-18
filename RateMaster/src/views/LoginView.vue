@@ -46,7 +46,7 @@ const toggleShowPassword = () => {
 
 
 <template>
-    <div class="container">
+    <div class="container d-flex justify-content-center align-items-center  pt-2 pb-2">
       <div class="card login-card">
         <div class="row g-0">
           <div class="col-md-6 col-lg-6 d-none d-md-block">
@@ -91,12 +91,13 @@ const toggleShowPassword = () => {
 </template>
 
 <style scoped>
-.container {
-  padding: 100px;
+.container-fluid {
+  padding: 20px;
 }
 
 .login-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .login-image {
@@ -140,23 +141,5 @@ button:hover {
 
 .toggle-password:hover {
   color: #000;
-}
-
-.google-button {
-  background-color: #4285F4;
-  color: white;
-  border: none;
-  width: 100%;
-  padding: 10px 0;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 1rem;
-}
-
-.google-button:hover {
-  background-color: #357ae8;
 }
 </style>

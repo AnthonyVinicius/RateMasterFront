@@ -25,7 +25,7 @@ const trimInputs = () => {
 };
 
 const register = async () => {
-    trimInputs(); // Remove espaços extras antes de qualquer validação
+    trimInputs();
 
     if (password.value !== confirmPassword.value) {
         alert("As senhas não coincidem. Por favor, verifique.");

@@ -46,7 +46,7 @@ const register = async () => {
         alert("Por favor, preencha o nome da empresa para Pessoa Jurídica.");
         return;
     }
-
+    
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
         const { uid, email: createdEmail } = userCredential.user;

@@ -27,10 +27,10 @@ const fetchProductDetails = async () => {
     const productId = route.params.id;
     product.value = await daoProducts.get(productId);
 
-    // Buscar as avaliações do produto
+    // buscar as avaliações do produto
     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
-    // Calcular a média de avaliação
+    // calcular a média de avaliação
     if (reviews.value.length > 0) {
       averageRating.value = (
         reviews.value.reduce((sum, review) => sum + review.rating, 0) /
@@ -40,7 +40,7 @@ const fetchProductDetails = async () => {
       averageRating.value = 0;
     }
 
-    // Buscar o nome da empresa
+    // buscar o nome da empresa
     const company = await daoShops.get(product.value.idShop);
     product.value.companyName = company ? company.name : 'Empresa desconhecida';
 

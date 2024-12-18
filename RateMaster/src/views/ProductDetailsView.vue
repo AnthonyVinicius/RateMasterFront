@@ -57,6 +57,11 @@ const submitReview = async () => {
     return;
   }
 
+  if(userData.value.userType === 'business'){
+    alert("Seu tipo de usuário não permite essa ação");
+    return;
+  }
+
   if (!userData.value) {
     console.log(userData[0])
     alert("Dados do usuário não estão disponíveis.");

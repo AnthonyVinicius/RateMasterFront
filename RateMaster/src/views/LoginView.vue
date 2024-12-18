@@ -91,7 +91,8 @@ const toggleShowPassword = () => {
 </template>
 
 <style scoped>
-.container-fluid {
+.container {
+  margin-top: 50px;
   padding: 20px;
 }
 

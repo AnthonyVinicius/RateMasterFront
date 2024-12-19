@@ -70,7 +70,6 @@ const showAll = async () => {
 
     products.value = products.value.map(product => {
       product.brandName = brandMap.value[product.brand] || 'Sem Marca';
-      console.log('filtrado', products.value)
       return product
     });
   } catch (error) {

@@ -125,7 +125,7 @@ onMounted(() => {
           <p class="description">{{ product.description }}</p>
           <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
 
-          <div class="reviews-section">
+          <div class="reviews-section" v-if="userData.userType === 'individual'">
             <h2>Avaliação</h2>
 
             <form @submit.prevent="submitReview" class="review-form">
@@ -191,8 +191,8 @@ onMounted(() => {
               </div>
               <CustomButton> Enviar Avaliação</CustomButton>
             </form>
-
-            <div class="reviews-list">
+          </div>
+          <div class="reviews-list">
               <div
                 v-for="review in reviews"
                 :key="review.id"
@@ -210,7 +210,6 @@ onMounted(() => {
               </div>
                 
             </div>
-          </div>
         </div>
       </div>
     </div>

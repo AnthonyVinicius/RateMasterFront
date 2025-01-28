@@ -38,18 +38,22 @@ const updateUserName = async () => {
   on_off.value = false;
   try {
     if (userData.value.userType === 'individual') {
-      console.log(teste, "individual")
+      console.log(teste, "individual");
       await daoUser.update(userData.value.id, { name: editedUserName.value });
     }
     if (userData.value.userType === 'business') {
-      console.log(teste, "business")
+      console.log(teste, "business");
       await daoShop.update(userData.value.id, { name: editedUserName.value });
     }
+    
+    userData.value.name = editedUserName.value;
+
     newUserName.value = null;
   } catch (error) {
     console.error("Erro ao atualizar o nome:", error);
   }
 };
+
 
 const loadBrands = async () => {
   try {

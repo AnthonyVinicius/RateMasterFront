@@ -9,6 +9,9 @@ const brands = ref([]);
 const newBrand = ref('');
 const editingBrandId = ref(null);
 const editedBrandName = ref('');
+const alertMessage = ref(null);
+const alertType = ref('success');
+const showAlert = ref(false);
 
 onMounted(() => {
     showAllBrands();
@@ -18,21 +21,28 @@ const showAllBrands = async () => {
     brands.value = await daoBrands.getAll();
 };
 
+const triggerAlert = (message, type = 'success') => {
+    alertMessage.value = message;
+    alertType.value = type;
+    showAlert.value = true;
+    setTimeout(() => (showAlert.value = false), 3000);
+};
+
 const addBrand = async () => {
     const trimmedBrand = newBrand.value.trim();
     if (!trimmedBrand) {
-        alert('Por favor, insira um nome válido para a marca.');
+        triggerAlert('Por favor, insira um nome válido para a marca.', 'warning');
         return;
     }
 
     try {
         await daoBrands.insert({ name: trimmedBrand });
-        brands.value.push({ name: trimmedBrand });
+        await showAllBrands();
         newBrand.value = '';
-        alert('Marca adicionada com sucesso!');
+        triggerAlert('Marca adicionada com sucesso!', 'success');
     } catch (error) {
         console.error(error);
-        alert('Erro ao adicionar a marca.');
+        triggerAlert('Erro ao adicionar a marca.', 'danger');
     }
 };
 
@@ -41,10 +51,10 @@ const deleteBrand = async (id) => {
         try {
             await daoBrands.delete(id);
             brands.value = brands.value.filter((brand) => brand.id !== id);
-            alert('Marca removida com sucesso!');
+            triggerAlert('Marca removida com sucesso!', 'success');
         } catch (error) {
             console.error(error);
-            alert('Erro ao remover a marca.');
+            triggerAlert('Erro ao remover a marca.', 'danger');
         }
     }
 };
@@ -62,36 +72,40 @@ const cancelEdit = () => {
 const updateBrand = async () => {
     const trimmedName = editedBrandName.value.trim();
     if (!trimmedName) {
-        alert('Por favor, insira um nome válido para a marca.');
+        triggerAlert('Por favor, insira um nome válido para a marca.', 'warning');
         return;
     }
 
     try {
         await daoBrands.update(editingBrandId.value, { name: trimmedName });
 
-        // Atualize a marca diretamente na lista
         const index = brands.value.findIndex((brand) => brand.id === editingBrandId.value);
         if (index !== -1) {
             brands.value[index].name = trimmedName;
         }
 
-        // Limpe os campos de edição
         editingBrandId.value = null;
         editedBrandName.value = '';
-        alert('Marca atualizada com sucesso!');
+        triggerAlert('Marca atualizada com sucesso!', 'success');
     } catch (error) {
         console.error(error);
-        alert('Erro ao atualizar a marca.');
+        triggerAlert('Erro ao atualizar a marca.', 'danger');
     }
 };
-
 </script>
 
 <template>
     <div class="content container-fluid mt-5">
+        <div v-if="showAlert" :class="`alert alert-${alertType} alert-dismissible fade show custom-alert`" role="alert">
+            <i v-if="alertType === 'success'" class="bi bi-check-circle-fill"></i>
+            <i v-if="alertType === 'warning'" class="bi bi-exclamation-triangle-fill"></i>
+            <i v-if="alertType === 'danger'" class="bi bi-x-circle-fill"></i>
+            {{ alertMessage }}
+            <button type="button" class="btn-close" @click="showAlert = false"></button>
+        </div>
+
         <div class="d-flex align-items-center mb-4">
-            <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto"
-                placeholder="Nova marca" />
+            <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto" placeholder="Nova marca" />
             <CustomButton class="btn btn-sm ms-2" @click="addBrand">Adicionar</CustomButton>
         </div>
 
@@ -122,8 +136,7 @@ const updateBrand = async () => {
                             </CustomButton>
                         </div>
                         <div v-else>
-                            <CustomButton @click="() => editBrand(brand)" type="button"
-                                class="btn btn-warning ms-2 me-2">
+                            <CustomButton @click="() => editBrand(brand)" type="button" class="btn btn-warning ms-2 me-2">
                                 <i class="bi bi-pencil-square"></i>
                             </CustomButton>
                             <CustomButton @click="deleteBrand(brand.id)" type="button" class="btn btn-danger ms-2 me-2">
@@ -138,7 +151,21 @@ const updateBrand = async () => {
 </template>
 
 <style scoped>
-.table {
-    margin-top: 20px;
+.custom-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.5s;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 </style>

@@ -99,6 +99,7 @@ const goToUpdate = (productId) => {
 onMounted(() => {
   showAll();
 });
+
 </script>
 
 <template>
@@ -157,7 +158,7 @@ onMounted(() => {
               <tbody>
                 <tr v-for="product in products" :key="product.id">
                   <td>
-                    <img :src="product.image" class="img-fluid product-img" />
+                    <img :src="product.image" class="img-fluid product-img rounded-2" />
                   </td>
                   <td>{{ product.name }}</td>
                   <td>{{ product.brandName }}</td>
@@ -198,6 +199,7 @@ onMounted(() => {
 
 .product-img {
   max-width: 100px;
+  
 }
 
 .table-responsive {

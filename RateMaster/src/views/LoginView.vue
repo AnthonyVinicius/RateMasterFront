@@ -46,8 +46,8 @@ const toggleShowPassword = () => {
 
 
 <template>
-    <div class="container d-flex justify-content-center align-items-center  pt-2 pb-2">
-      <div class="card login-card">
+    <div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
+      <div class="card login-card ">
         <div class="row g-0">
           <div class="col-md-6 col-lg-6 d-none d-md-block">
             <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start"
@@ -80,7 +80,7 @@ const toggleShowPassword = () => {
                 <p class="mb-3 mt-3 pb-lg-2 no-account">Não possui uma conta? <RouterLink to="/registerUser">Cadastre-se
                     aqui.</RouterLink>
                 </p>
-                <a class="small text-muted">Termos de uso</a>
+                <a class="small text-muted">Termos de uso </a>
                 <a class="small text-muted">Política de Privacidade</a>
               </form>
             </div>
@@ -99,6 +99,7 @@ const toggleShowPassword = () => {
 .login-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  max-width: 1000px;
 }
 
 .login-image {

@@ -31,12 +31,12 @@ const handleSignOut = async () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid">
       <RouterLink to="/">
         <img src="../assets/img/Icon.png" alt="Logo" class="logo" />
       </RouterLink>
-      <h1 class="fw-medium fs-3 text-white">RateMaster</h1>
+      <h1 class="fw-medium fs-3 text-white me-2">RateMaster</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <i class="bi bi-list text-white"></i>

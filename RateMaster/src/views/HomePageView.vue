@@ -5,7 +5,7 @@ import UserReview from '@/components/UserReview.vue';
 
 <template>
     <div class="container-fluid p-0">
-        <img class="header-img" src="../assets/img/Home.png" alt="Picture">
+        <img class="header-img shadow-sm" src="../assets/img/Home.png" alt="Picture">
     </div>
 
     <div class="container-fluid  white-comment-container">
@@ -98,7 +98,6 @@ import UserReview from '@/components/UserReview.vue';
     padding-top: 100px;
     padding-bottom: 100px;
     background-color: #2C3E50;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .white-comment-container {

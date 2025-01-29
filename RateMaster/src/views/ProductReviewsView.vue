@@ -31,7 +31,7 @@ const fetchProducts = async () => {
       const company = companies.value.find(company => company.id === product.idShop);
       product.companyName = company ? company.name : 'Empresa desconhecida';
 
-      if (productReviews.length > 0){
+      if (productReviews.length > 0) {
         product.averageRating = (totalRating / productReviews.length).toFixed(1);
       } else {
         product.averageRating = 0;
@@ -80,44 +80,48 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1 class="text-center mt-2">Avaliações de Produtos</h1>
-    <div class="shop-container">
-    <aside class="filters">
-      <div class="search-bar">
-        <input type="text" v-model="searchQuery" placeholder="Buscar" class="search-input" />
+  <h1 class="text-center mt-5">Avaliações de Produtos</h1>
+  <div class="shop-container">
+    <aside class="filters shadow-sm">
+      <h3 class="fw-bold mb-4">Filtros</h3>
+      <div class="form-floating search-bar">
+        <input type="search" v-model="searchQuery" class="form-control mb-3" id="floatingInput" placeholder="Buscar" />
+        <label for="floatingInput"><i class="bi bi-search"></i> Buscar</label>
       </div>
-      <h3>Filtros</h3>
       <div class="filter-section">
-        <h4>Preço</h4>
+        <h4 class="fw-bold">Preço</h4>
         <label><input type="checkbox" v-model="filters.price" value="0-50"> R$0 - R$50</label>
         <label><input type="checkbox" v-model="filters.price" value="51-100"> R$51 - R$100</label>
         <label><input type="checkbox" v-model="filters.price" value="101+"> R$101+</label>
       </div>
-      
+
       <div class="filter-section">
-        <h4>Nota</h4>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="5"> ★★★★★</label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="4"> ★★★★</label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="3"> ★★★ </label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="2"> ★★ </label>
-        <label class="star"><input type="checkbox" v-model="filters.rating" value="1"> ★ </label>
+        <h4 class="fw-bold mb-3 mt-3">Nota</h4>
+        <div class="vstack gap-3">
+          <label class="star"><input type="checkbox" v-model="filters.rating" value="5"> <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+          <label class="star"><input type="checkbox" v-model="filters.rating" value="4"> <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+          <label class="star"><input type="checkbox" v-model="filters.rating" value="3"> <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+          <label class="star"><input type="checkbox" v-model="filters.rating" value="2"> <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
+          <label class="star"><input type="checkbox" v-model="filters.rating" value="1"> <i class="bi bi-star-fill"></i>
+          </label>
+        </div>
       </div>
     </aside>
 
-    
+
     <div class="products-grid">
       <div v-for="product in filterProducts" :key="product.id" class="product-review" @click="goToDetails(product.id)">
-        <div class="product-image">
-          <img :src="product.image" :alt="product.name" />
+        <div class="container product-image">
+          <img class="img-fluid" :src="product.image" :alt="product.name" />
         </div>
         <div class="product-info">
           <h2>{{ product.name }}</h2>
           <p>{{ product.description }}</p>
           <p>{{ product.price }}</p>
           <div class="rating">
-            <span class="star">★</span> {{ product.averageRating }}/5
+            <span class="star"><i class="bi bi-star-fill"></i></span> {{ product.averageRating }}/5
           </div>
-          <p><strong>Loja:</strong> {{ product.companyName }}</p>
+          <p class="mt-2"><strong>Loja:</strong> {{ product.companyName }}</p>
         </div>
       </div>
     </div>
@@ -142,17 +146,7 @@ onMounted(() => {
   height: fit-content;
 }
 
-.filter-section {
-  margin-bottom: 1.5rem;
-}
-
-.filter-section h4 {
-  margin-bottom: 0.5rem;
-}
-
 .filter-section label {
-  display: block;
-  margin-bottom: 0.5rem;
   cursor: pointer;
 }
 
@@ -182,8 +176,6 @@ onMounted(() => {
 
 .product-image img {
   border-radius: 8px;
-  max-width: 100%;
-  height: auto;
 }
 
 .product-info {
@@ -211,20 +203,6 @@ onMounted(() => {
 .star {
   color: #EAB308;
 }
-
-.search-bar {
-  margin-bottom: 1.5rem;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 
 @media (max-width: 768px) {
   .shop-container {

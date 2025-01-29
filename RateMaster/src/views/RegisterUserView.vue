@@ -75,8 +75,8 @@ const toggleShowPassword = () => {
 </script>
 
 <template>
-    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
-      <div class="card register-card w-100" style="max-width: 900px;">
+    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 mt-5 mb-5">
+      <div class="card register-card w-100">
         <div class="row g-0">
           <div class="col-lg-6 d-flex">
             <div class="card-body p-4">
@@ -190,6 +190,7 @@ const toggleShowPassword = () => {
   .register-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    max-width: 1000px;
   }
   
   .register-image {

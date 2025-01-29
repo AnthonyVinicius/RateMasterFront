@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="container-fluid d-flex flex-column align-items-center box rounded-4 mb-5">
+  <div class="container-fluid d-flex flex-column align-items-center box rounded-4 mb-5 shadow-lg">
     <p class="lead text-white pt-4 text-resize">{{ props.comment }}</p>
     <img :src="props.src" alt="Profile Icon" class="img-profile" />
     <p class="lead text-white">{{props.user}}</p>
@@ -31,7 +31,6 @@ const props = defineProps({
   min-height: 350px; 
   overflow: hidden;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
   img{
     width: 100px;

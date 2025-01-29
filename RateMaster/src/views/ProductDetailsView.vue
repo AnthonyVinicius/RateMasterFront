@@ -57,7 +57,7 @@ const submitReview = async () => {
     return;
   }
 
-  if(userData.value.userType === 'business'){
+  if (userData.value.userType === 'business') {
     alert("Seu tipo de usuário não permite essa ação");
     return;
   }
@@ -105,114 +105,84 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1 class="text-center mt-2">Detalhes de Produtos</h1>
-    <br />
-    <div class="product-details">
-      <button class="back-button" @click="router.push('/reviews')">
-        ← Voltar para os produtos
-      </button>
+  <h1 class="text-center mt-5">Detalhes de Produtos</h1>
+  <br />
+  <div class="product-details">
+    <button class="back-button" @click="router.push('/reviews')">
+      ← Voltar para os produtos
+    </button>
 
-      <div class="product-container" v-if="product">
-        <div class="product-image">
-          <img :src="product.image" :alt="product.name" />
-        </div>
+    <div class="product-container shadow-sm" v-if="product">
 
-        <div class="product-info">
-          <h1>{{ product.name }}</h1>
-          <div class="rating">
-            <span class="star">★</span> {{ averageRating }}/5
-          </div>
-          <p class="description">{{ product.description }}</p>
-          <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
-
-          <div class="reviews-section" v-if="userData.userType === 'individual'">
-            <h2>Avaliação</h2>
-
-            <form @submit.prevent="submitReview" class="review-form">
-              <div class="form-group">
-                <label for="rating">Nota:</label>
-                <div class="star-rating">
-                  <input
-                    type="radio"
-                    id="sr-5"
-                    name="star-rating"
-                    value="5"
-                    v-model="newReview.rating"
-                  />
-                  <label for="sr-5">★</label>
-
-                  <input
-                    type="radio"
-                    id="sr-4"
-                    name="star-rating"
-                    value="4"
-                    v-model="newReview.rating"
-                  />
-                  <label for="sr-4">★</label>
-
-                  <input
-                    type="radio"
-                    id="sr-3"
-                    name="star-rating"
-                    value="3"
-                    v-model="newReview.rating"
-                  />
-                  <label for="sr-3">★</label>
-
-                  <input
-                    type="radio"
-                    id="sr-2"
-                    name="star-rating"
-                    value="2"
-                    v-model="newReview.rating"
-                  />
-                  <label for="sr-2">★</label>
-
-                  <input
-                    type="radio"
-                    id="sr-1"
-                    name="star-rating"
-                    value="1"
-                    v-model="newReview.rating"
-                  />
-                  <label for="sr-1">★</label>
+      <div class="row">
+        <div class="col">
+          <div class="">
+            <img :src="product.image" class="card-img-top rounded-2 mb-2" :alt="product.name">
+            <div class="">
+              <div class="hstack">
+                <h1 class="fw-bold">{{ product.name }}</h1>
+                <div class="ms-auto me-3 rating">
+                  <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
                 </div>
               </div>
-
-              <div class="form-group">
-                <label for="comment">Suas Avaliações</label>
-                <textarea
-                  v-model="newReview.comment"
-                  id="comment"
-                  rows="4"
-                  required
-                  placeholder="Escreva sua avaliação aqui"
-                ></textarea>
+              <div class="vstack gap-3">
+                <p class="description">{{ product.description }}</p>
+                <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
               </div>
-              <CustomButton> Enviar Avaliação</CustomButton>
-            </form>
-          </div>
-          <div class="reviews-list">
-              <div
-                v-for="review in reviews"
-                :key="review.id"
-                class="review-item"
-              >
-                <div class="review-header">
-                  <div class="review-rating">
-                    <span class="star" v-for="n in review.rating" :key="n"
-                      >★</span
-                    >
-                  </div>
-                  <span class="review-author">Por: {{ review.userName }}</span>
-                </div>
-                <p class="review-comment">{{ review.comment }}</p>
-              </div>
-                
             </div>
+          </div>
         </div>
+
+          <div class="col">
+            <div class="reviews-section" v-if="userData.userType === 'individual'">
+              <h2 class="fw-bold">Avaliação</h2>
+
+              <form @submit.prevent="submitReview" class="review-form">
+                <div class="form-group">
+                  <label for="rating">Nota:</label>
+                  <div class="star-rating">
+                    <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
+                    <label for="sr-5">★</label>
+
+                    <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
+                    <label for="sr-4">★</label>
+
+                    <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
+                    <label for="sr-3">★</label>
+
+                    <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
+                    <label for="sr-2">★</label>
+
+                    <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
+                    <label for="sr-1">★</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="comment">Suas Avaliações</label>
+                  <textarea v-model="newReview.comment" id="comment" rows="4" required
+                    placeholder="Escreva sua avaliação aqui"></textarea>
+                </div>
+                <div class="d-flex ms-auto">
+                  <CustomButton class="ms-auto">Enviar Avaliação</CustomButton>
+                </div>
+              </form>
+            </div>
+          </div>
       </div>
     </div>
+    <div class="reviews-list mt-3">
+      <div v-for="review in reviews" :key="review.id" class="review-item shadow-sm">
+        <div class="review-header">
+          <div class="review-rating">
+            <span class="star ms-1" v-for="n in review.rating" :key="n"><i class="bi bi-star-fill"></i></span>
+          </div>
+          <span class="review-author">Por: {{ review.userName }}</span>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -237,23 +207,9 @@ onMounted(() => {
 }
 
 .product-container {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.product-image img {
-  width: 100%;
-  border-radius: 8px;
-}
-
-.product-info h1 {
-  margin: 0 0 1rem 0;
-  font-size: 2rem;
 }
 
 .rating {
@@ -271,11 +227,6 @@ onMounted(() => {
 .description {
   color: #666;
   line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.reviews-section {
-  margin-top: 3rem;
 }
 
 .reviews-section h2 {
@@ -369,16 +320,16 @@ input {
   opacity: 0;
 }
 
-input:checked ~ label {
+input:checked~label {
   color: gold;
 }
 
-input:hover ~ label {
+input:hover~label {
   color: goldenrod;
   transition: none;
 }
 
-input:focus-visible + label {
+input:focus-visible+label {
   outline-offset: 1px;
   outline: #4f46e5 solid 2px;
 }

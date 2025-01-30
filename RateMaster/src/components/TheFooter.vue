@@ -1,5 +1,5 @@
 <template>
-    <footer class="container-fluid p-4 bg-color text-center">
+    <footer class="container-fluid p-4 bg-color text-center position-fixed-bottom">
         <div class="mb-3">
             <img class="logo" src="/src/assets/img/Icon.png" alt="Logo da Empresa">
             <h1 class="fw-bold text-white">RateMaster</h1>

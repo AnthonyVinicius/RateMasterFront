@@ -12,6 +12,7 @@ const router = createRouter({
     { path: '/', name: 'homepage', component: Home },
     { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
     { path: '/registerUser', name: 'registerUser', meta: {requireAuth : true}, component: () => import('../views/RegisterUserView.vue') },
+    { path: '/teste', name: 'teste', meta: {requireAuth : true}, component: () => import('../views/Teste.vue') },
     { path: '/reviews', name: 'reviews', meta: {requireAuth : true}, component: () => import('../views/ProductReviewsView.vue') },
     { path: '/registerProduct', name: 'registerProduct', meta: {requireAuth : true}, component: () => import('../views/RegisterProductView.vue') },
     { path: '/brand', name: 'brands', meta: {requireAuth : true}, component: () => import('../views/BrandView.vue') },

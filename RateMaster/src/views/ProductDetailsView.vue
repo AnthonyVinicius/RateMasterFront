@@ -17,10 +17,7 @@ const userData = inject('userData');
 
 const product = ref(null);
 const reviews = ref([]);
-const newReview = ref({
-  rating: "",
-  comment: "",
-});
+const newReview = ref({ rating: "", comment: "" });
 
 const fetchProductDetails = async () => {
   try {
@@ -107,64 +104,61 @@ onMounted(() => {
 <template>
   <h1 class="text-center mt-5">Detalhes de Produtos</h1>
   <br />
-  <div class="product-details">
-    <button class="back-button" @click="router.push('/reviews')">
+  <div class="container">
+    <button type="button" class="btn pb-3" @click="router.push('/reviews')">
       ← Voltar para os produtos
     </button>
 
-    <div class="product-container shadow-sm" v-if="product">
+    <div class=" container bg-white p-4 rounded-2 shadow-sm" v-if="product">
 
       <div class="row">
         <div class="col">
-          <div class="">
-            <img :src="product.image" class="card-img-top rounded-2 mb-2" :alt="product.name">
-            <div class="">
+            <img :src="product.image" class="card-img-top rounded-2 mb-2 product-img" :alt="product.name">
+            <div class="vstack">
               <div class="hstack">
                 <h1 class="fw-bold">{{ product.name }}</h1>
                 <div class="ms-auto me-3 rating">
                   <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
                 </div>
               </div>
-              <div class="vstack gap-3">
                 <p class="description">{{ product.description }}</p>
                 <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
               </div>
-            </div>
-          </div>
         </div>
 
-          <div class="col">
-            <div class="reviews-section" v-if="userData.userType === 'individual'">
-              <h2 class="fw-bold">Avaliação</h2>
+          <div class="col" v-if="userData.userType === 'individual'">
+            <div class="reviews-section" >
+              <h2 class="fw-bold mb-3">Avaliação</h2>
 
-              <form @submit.prevent="submitReview" class="review-form">
+              <form @submit.prevent="submitReview" class="pb-4 p-2 rounded-2 shadow-sm review-form">
                 <div class="form-group">
-                  <label for="rating">Nota:</label>
-                  <div class="star-rating">
+                  <label class="mt-2 mb-2" for="rating">Nota:</label>
+                  <br>
+                  <div class="mb-2 star-rating">
                     <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
-                    <label for="sr-5">★</label>
+                    <label for="sr-5"><i class="bi bi-star-fill"></i></label>
 
                     <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
-                    <label for="sr-4">★</label>
+                    <label for="sr-4"><i class="bi bi-star-fill"></i></label>
 
                     <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
-                    <label for="sr-3">★</label>
+                    <label for="sr-3"><i class="bi bi-star-fill"></i></label>
 
                     <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
-                    <label for="sr-2">★</label>
+                    <label for="sr-2"><i class="bi bi-star-fill"></i></label>
 
                     <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
-                    <label for="sr-1">★</label>
+                    <label for="sr-1"><i class="bi bi-star-fill"></i></label>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="comment">Suas Avaliações</label>
-                  <textarea v-model="newReview.comment" id="comment" rows="4" required
+                <div class="mb-3">
+                  <label class="mb-2" for="comment">Suas Avaliações:</label>
+                  <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
                     placeholder="Escreva sua avaliação aqui"></textarea>
                 </div>
-                <div class="d-flex ms-auto">
-                  <CustomButton class="ms-auto">Enviar Avaliação</CustomButton>
+                <div class="d-flex">
+                  <CustomButton class="ms-auto shadow-sm">Enviar Avaliação</CustomButton>
                 </div>
               </form>
             </div>
@@ -172,13 +166,11 @@ onMounted(() => {
       </div>
     </div>
     <div class="reviews-list mt-3">
-      <div v-for="review in reviews" :key="review.id" class="review-item shadow-sm">
-        <div class="review-header">
-          <div class="review-rating">
+      <div v-for="review in reviews" :key="review.id" class="mb-3 p-3 rounded-2 bg-white review-item shadow-sm">
+          <div class="d-flex">
             <span class="star ms-1" v-for="n in review.rating" :key="n"><i class="bi bi-star-fill"></i></span>
+            <span class="ms-auto review-author">Por: {{ review.userName }}</span>
           </div>
-          <span class="review-author">Por: {{ review.userName }}</span>
-        </div>
         <p class="review-comment">{{ review.comment }}</p>
       </div>
     </div>
@@ -186,38 +178,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.product-details {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  padding: 0.5rem 0;
-}
-
 .back-button:hover {
   color: #333;
-}
-
-.product-container {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
 }
 
 .star {
@@ -226,84 +188,10 @@ onMounted(() => {
 
 .description {
   color: #666;
-  line-height: 1.6;
-}
-
-.reviews-section h2 {
-  margin-bottom: 1.5rem;
 }
 
 .review-form {
   background: #f5f5f5;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-select,
-textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.submit-button {
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.submit-button:hover {
-  background-color: #4338ca;
-}
-
-.reviews-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.review-item {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.review-date {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.review-comment {
-  color: #333;
-  line-height: 1.5;
 }
 
 .star-rating {
@@ -311,8 +199,7 @@ textarea {
   display: inline-flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  margin: 0 -0.25rem;
-  font-size: 25px;
+  font-size: 18px;
 }
 
 input {
@@ -329,29 +216,8 @@ input:hover~label {
   transition: none;
 }
 
-input:focus-visible+label {
-  outline-offset: 1px;
-  outline: #4f46e5 solid 2px;
-}
-
 label {
-  cursor: pointer;
   color: grey;
-  padding: 0 0.25rem;
-  transition: color 0.15s;
 }
 
-label:active {
-  color: darkgoldenrod !important;
-}
-
-@media (max-width: 768px) {
-  .product-container {
-    grid-template-columns: 1fr;
-  }
-
-  .product-details {
-    padding: 1rem;
-  }
-}
 </style>

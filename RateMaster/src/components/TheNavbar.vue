@@ -98,69 +98,86 @@ const handleSignOut = async () => {
 </template>
 
 
+
 <style scoped>
 .navbar {
-  background-color: #2C3E50;
-  padding: 10px 20px;
+  background: linear-gradient(135deg, #1E2A38, #34495E);
+  padding: 15px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.brand-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
 }
 
 .nav-link {
   color: white;
   font-size: 16px;
   padding: 8px 12px;
-  margin: 5px;
+  border-radius: 5px;
   transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: #34495e;
-  color: #fff;
-  border-radius: 5px;
+  background-color: #1ABC9C;
+  color: white;
   transform: scale(1.1);
 }
 
 .logo {
-  width: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 60px;
+  margin-right: 15px;
 }
 
 .profile-icon {
-  font-size: 50px;
+  font-size: 45px;
   color: white;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .profile-icon:hover {
-  color: #1e90ff;
+  color: #1ABC9C;
+  transform: scale(1.1);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  background-color: #1ABC9C;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #16A085;
+}
+
+.profile-dropdown {
+  position: relative;
 }
 
 .dropdown-menu {
-  max-width: 200px;
-  overflow-wrap: break-word;
-  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .dropdown-item {
   color: #333;
-  padding: 8px 15px;
+  padding: 10px 15px;
   transition: background-color 0.2s ease;
 }
 
 .dropdown-item:hover {
   background-color: #f1f1f1;
 }
-
-.navbar-toggler {
-  background-color: #E74C3C;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.navbar-toggler:hover {
-  background-color: #E74C3C;
-}
-
-
 </style>

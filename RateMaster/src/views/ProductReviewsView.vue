@@ -123,7 +123,7 @@ onMounted(() => {
             </section>
 
             <div class="mb-5 col-md-9">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col" v-for="product in filterProducts" :key="product.id"
                         @click="goToDetails(product.id)">
                         <div class="card p-2 shadow-sm h-100">

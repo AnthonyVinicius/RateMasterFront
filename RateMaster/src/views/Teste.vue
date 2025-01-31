@@ -142,7 +142,7 @@ onMounted(() => {
             <CustomButton class="mt-3" @click="viewTypeList"><i class="bi bi-list-nested"></i></CustomButton>
         </div>
     </div>
-    <div class="container-fluid mt-5 mb-5 col-md-9" v-if="viewType.value === 'columns'">
+    <div class="container-fluid mt-5 mb-5 col-md-9" v-if="viewType === 'columns'">
         <div class="row row-cols-1 row-cols-md-5 g-3">
             <div class="card text">
                 <div class="card-img-overlay">
@@ -168,7 +168,7 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <div class="mt-3 pt-5 text-body" v-if="viewType.value == 'list'" >
+    <div class="mt-3 pt-5 text-body" v-if="viewType == 'list'" >
         <div>
             <div class="card-body p-4">
                 <div class="table-responsive">

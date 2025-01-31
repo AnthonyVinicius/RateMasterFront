@@ -6,7 +6,7 @@
 
 <style scoped>
 button {
-  background-color: #E74C3C;
+  background-color: #16A085;
   color: white;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }

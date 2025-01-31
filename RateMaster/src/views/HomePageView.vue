@@ -59,24 +59,50 @@ import UserReview from '@/components/UserReview.vue';
         </div>
     </div>
 
-
     <div class="container">
         <div class="container text-center white-comment-container">
-            <div class="row g-4 pt-5 ">
+            <div class="row g-3 pt-5 ">
                 <div class="col">
-                    <UserReview
-                        comment="Eu simplesmente amei este produto! Qualidade é excepcional e superou minhas expectativas. Vou recomendá-lo aos meus amigos e familiares."
-                        src="/user1.jpeg" user="Carol" />
+                    <UserReview>
+                        <template #comment>
+                            Eu simplesmente amei este produto! Qualidade é excepcional e superou minhas expectativas.
+                            Vou recomendá-lo aos meus amigos e familiares.
+                        </template>
+                        <template #src>
+                            <img class="review-logo rounded-pill" src="/user1.jpeg" alt="review-logo">
+                        </template>
+                        <template #user>
+                            Carol
+                        </template>
+                    </UserReview>
                 </div>
                 <div class="col">
-                    <UserReview
-                        comment="O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas. Funciona, mas há espaço para melhorias."
-                        src="/user2.jpeg" user="Maria" />
+                    <UserReview>
+                        <template #comment>
+                            O produto é razoável pelo preço, mas não atendeu totalmente às minhas expectativas.
+                            Funciona, mas há espaço para melhorias.
+                        </template>
+                        <template #src>
+                            <img class="review-logo rounded-pill" src="/user2.jpeg" alt="review-logo">
+                        </template>
+                        <template #user>
+                            Maria
+                        </template>
+                    </UserReview>
                 </div>
                 <div class="col">
-                    <UserReview
-                        comment="O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e resolveram meu problema em pouco tempo. Experiência A+!"
-                        src="/user3.jpeg" user="Carlos" />
+                    <UserReview>
+                        <template #comment>
+                            O atendimento ao cliente foi fantástico! Foram rápidos em responder, amigáveis e
+                            resolveram meu problema em pouco tempo. Experiência A+!
+                        </template>
+                        <template #src>
+                            <img class="review-logo rounded-pill" src="/user3.jpeg" alt="review-logo">
+                        </template>
+                        <template #user>
+                            Carlos
+                        </template>
+                    </UserReview>
                 </div>
             </div>
         </div>
@@ -97,7 +123,7 @@ import UserReview from '@/components/UserReview.vue';
 .colored-comment-container {
     padding-top: 100px;
     padding-bottom: 100px;
-    background-color: #2C3E50;
+    background: linear-gradient(135deg, #1E2A38, #34495E);
 }
 
 .white-comment-container {
@@ -116,5 +142,10 @@ button:hover {
 .header-img {
     width: 100%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.review-logo {
+    width: 100px;
+
 }
 </style>

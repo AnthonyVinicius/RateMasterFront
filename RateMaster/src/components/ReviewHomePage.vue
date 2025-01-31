@@ -12,14 +12,14 @@
 
 <style scoped>
 .box {
-  background-color: #2C3E50;
+  background: linear-gradient(135deg, #1E2A38, #34495E);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   min-height: 350px;
 }
 
 .icon-box {
   display: inline-block;
-  color: #E74C3C;
+  color: #16A085;
   padding-top: 20px;
   font-size: 50px;
 }

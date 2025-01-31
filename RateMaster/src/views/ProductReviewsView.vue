@@ -127,15 +127,19 @@ onMounted(() => {
                     <div class="col" v-for="product in filterProducts" :key="product.id"
                         @click="goToDetails(product.id)">
                         <div class="card p-2 shadow-sm h-100">
-                            <img class="rounded-2" :src="product.image" :alt="product.name">
+                            <div class="d-flex justify-content-center align-items-center img-container">
+                                <img class="img-fluid rounded-2 product-img" :src="product.image" :alt="product.name">
+                            </div>
+
                             <div class="card-body">
                                 <div class="hstack">
-                                    <h4 class="fw-bold">{{ product.name }}</h4>
-                                    <div class="ms-auto me-3 rating">
-                                        <span class="star"><i class="bi bi-star-fill"></i></span> {{
-                                        product.averageRating }}/5
+                                    <h5 class="fw-bold">{{ product.name }}</h5>
+                                    <div class="ms-auto me-2 rating">
+                                        <span class="star"><i class="bi bi-star-fill"></i></span>
+                                        {{ product.averageRating }}/5
                                     </div>
                                 </div>
+                                <h6>Marca:<strong>{{ }}</strong></h6>
                                 <p class="card-text">{{ product.description }}</p>
                                 <p class="card-text">{{ product.price }}</p>
                                 <p class="card-text"><strong>Loja:</strong> {{ product.companyName }}</p>
@@ -150,9 +154,20 @@ onMounted(() => {
 
 
 <style scoped>
-
 .filter-section label {
     cursor: pointer;
+}
+
+.img-container {
+    width: 100%;
+    height: 200px;
+
+}
+
+.product-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .star {

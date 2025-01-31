@@ -20,8 +20,6 @@ const on_off = ref(false);
 const newUserName = ref('');
 const editedUserName = ref('');
 
-const teste = ref('')
-
 
 const editUserName = () => {
   on_off.value = true;
@@ -38,11 +36,9 @@ const updateUserName = async () => {
   on_off.value = false;
   try {
     if (userData.value.userType === 'individual') {
-      console.log(teste, "individual");
       await daoUser.update(userData.value.id, { name: editedUserName.value });
     }
     if (userData.value.userType === 'business') {
-      console.log(teste, "business");
       await daoShop.update(userData.value.id, { name: editedUserName.value });
     }
     
@@ -204,10 +200,5 @@ onMounted(() => {
 .product-img {
   max-width: 100px;
   
-}
-
-.table-responsive {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 </style>

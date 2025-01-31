@@ -110,67 +110,66 @@ onMounted(() => {
     </button>
 
     <div class=" container bg-white p-4 rounded-2 shadow-sm" v-if="product">
-
-      <div class="row">
+      <div class="row review-form p-3 rounded-2 shadow-sm">
         <div class="col">
-            <img :src="product.image" class="card-img-top rounded-2 mb-2 product-img" :alt="product.name">
-            <div class="vstack">
-              <div class="hstack">
-                <h1 class="fw-bold">{{ product.name }}</h1>
-                <div class="ms-auto me-3 rating">
-                  <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
-                </div>
-              </div>
-                <p class="description">{{ product.description }}</p>
-                <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
-              </div>
+          <img :src="product.image" class="rounded-2 mb-2 product-img " :alt="product.name">
         </div>
-
-          <div class="col" v-if="userData.userType === 'individual'">
-            <div class="reviews-section" >
-              <h2 class="fw-bold mb-3">Avaliação</h2>
-
-              <form @submit.prevent="submitReview" class="pb-4 p-2 rounded-2 shadow-sm review-form">
-                <div class="form-group">
-                  <label class="mt-2 mb-2" for="rating">Nota:</label>
-                  <br>
-                  <div class="mb-2 star-rating">
-                    <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
-                    <label for="sr-5"><i class="bi bi-star-fill"></i></label>
-
-                    <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
-                    <label for="sr-4"><i class="bi bi-star-fill"></i></label>
-
-                    <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
-                    <label for="sr-3"><i class="bi bi-star-fill"></i></label>
-
-                    <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
-                    <label for="sr-2"><i class="bi bi-star-fill"></i></label>
-
-                    <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
-                    <label for="sr-1"><i class="bi bi-star-fill"></i></label>
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label class="mb-2" for="comment">Suas Avaliações:</label>
-                  <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
-                    placeholder="Escreva sua avaliação aqui"></textarea>
-                </div>
-                <div class="d-flex">
-                  <CustomButton class="ms-auto shadow-sm">Enviar Avaliação</CustomButton>
-                </div>
-              </form>
+        <div class="col">
+          <div class="vstack">
+            <div class="hstack">
+              <h1 class="fw-bold">{{ product.name }}</h1>
+              <div class="ms-auto me-3 rating">
+                <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
+              </div>
             </div>
+            <p class="description">{{ product.description }}</p>
+            <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
           </div>
+        </div>
+      </div>
+
+
+      <div class="col" v-if="userData.userType === 'individual'">
+          <form @submit.prevent="submitReview" class="p-3 mt-4 rounded-2 shadow-sm review-form">
+            <h2 class="fw-bold mb-3">Avaliação</h2>
+            <div class="form-group">
+              <label class="mt-2 mb-2" for="rating">Nota:</label>
+              <br>
+              <div class="mb-2 star-rating">
+                <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
+                <label for="sr-5"><i class="bi bi-star-fill"></i></label>
+
+                <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
+                <label for="sr-4"><i class="bi bi-star-fill"></i></label>
+
+                <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
+                <label for="sr-3"><i class="bi bi-star-fill"></i></label>
+
+                <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
+                <label for="sr-2"><i class="bi bi-star-fill"></i></label>
+
+                <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
+                <label for="sr-1"><i class="bi bi-star-fill"></i></label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="mb-2" for="comment">Suas Avaliações:</label>
+              <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
+                placeholder="Escreva sua avaliação aqui"></textarea>
+            </div>
+            <div class="d-flex">
+              <CustomButton class="ms-auto shadow-sm">Enviar Avaliação</CustomButton>
+            </div>
+          </form>
       </div>
     </div>
     <div class="reviews-list mt-3">
       <div v-for="review in reviews" :key="review.id" class="mb-3 p-3 rounded-2 bg-white review-item shadow-sm">
-          <div class="d-flex">
-            <span class="star ms-1" v-for="n in review.rating" :key="n"><i class="bi bi-star-fill"></i></span>
-            <span class="ms-auto review-author">Por: {{ review.userName }}</span>
-          </div>
+        <div class="d-flex">
+          <span class="star ms-1" v-for="n in review.rating" :key="n"><i class="bi bi-star-fill"></i></span>
+          <span class="ms-auto review-author">Por: {{ review.userName }}</span>
+        </div>
         <p class="review-comment">{{ review.comment }}</p>
       </div>
     </div>
@@ -202,6 +201,10 @@ onMounted(() => {
   font-size: 18px;
 }
 
+.product-img {
+  max-width: 500px;
+}
+
 input {
   position: absolute;
   opacity: 0;
@@ -219,5 +222,4 @@ input:hover~label {
 label {
   color: grey;
 }
-
 </style>

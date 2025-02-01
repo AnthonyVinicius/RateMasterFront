@@ -142,27 +142,33 @@ onMounted(() => {
             <CustomButton class="mt-3" @click="viewTypeList"><i class="bi bi-list-nested"></i></CustomButton>
         </div>
     </div>
-    <div class="container-fluid mt-5 mb-5 col-md-9" v-if="viewType === 'columns'">
-        <div class="row row-cols-1 row-cols-md-5 g-3">
-            <div class="card text">
-                <div class="card-img-overlay">
-                    <h1>Registrar Produto</h1>
-                    <h1>+</h1>
+    <div class="container-fluid mt-5 mb-5 col-md-11" v-if="viewType === 'columns'">
+        <div class="row row-cols-1 row-cols-md-6 g-4">
+            <div class="card p-2 h-100">
+                    <div class="d-flex justify-content-center align-items-center img-container">
+                        <img class="img-fluid rounded-2 product-img">
+                    </div>
+                    <div class="card-body">
+                        <div class="hstack">
+                            <h4 class="fw-bold"></h4>
+                        </div>
+                        <p><strong></strong></p>
+                        <p class="card-text text-truncate"></p>
+                        <p class="card-text"></p>
+                    </div>
                 </div>
-            </div>
             <div v-for="product in products" :key="product.id">
-                <div class="card p-2 shadow-sm h-100">
+                <div class="card p-2 h-100 text-truncate">
                     <div class="d-flex justify-content-center align-items-center img-container">
                         <img class="img-fluid rounded-2 product-img" :src="product.image" :alt="product.name">
                     </div>
-
                     <div class="card-body">
                         <div class="hstack">
-                            <h4 class="fw-bold">{{ product.name }}</h4>
+                            <h4 class="fw-bold text-truncate">{{ product.name }}</h4>
                         </div>
-                        <p>Marca: <strong>{{ product.brandName }}</strong></p>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="card-text">{{ product.price }}</p>
+                        <p class="card-text text-truncate">Marca: <strong>{{ product.brandName }}</strong></p>
+                        <p class="card-text text-truncate">{{ product.description }}</p>
+                        <p class="price text-truncate">{{ product.price }}</p>
                     </div>
                 </div>
             </div>
@@ -198,18 +204,18 @@ onMounted(() => {
                         <img class="img-fluid rounded-2 product-img-list" :src="product.image" :alt="product.name">
                     </div>
                                 </td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.brandName }}</td>
-                                <td>{{ product.price }}</td>
-                                <td>{{ product.type }}</td>
-                                <td>{{ product.description }}</td>
+                                <td class="">{{ product.name }}</td>
+                                <td class="">{{ product.brandName }}</td>
+                                <td class="price">{{ product.price }}</td>
+                                <td class="card-text">{{ product.type }}</td>
+                                <td class="card-text">{{ product.description }}</td>
                                 <td>
                                     <CustomButton @click="deleteProduct(product.id)" type="button"
-                                        class="btn btn-danger ms-2 me-2">
+                                        class=" ms-2 me-2 mb-2">
                                         <i class="bi bi-trash-fill"></i>
                                     </CustomButton>
                                     <CustomButton @click="goToUpdate(product.id)" type="button"
-                                        class="btn btn-warning ms-2 me-2">
+                                        class="ms-2 me-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </CustomButton>
                                 </td>
@@ -260,4 +266,37 @@ onMounted(() => {
     max-height: 100%;
 }
 
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.img-container {
+    height: 150px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.product-img {
+    max-height: 100%;
+    object-fit: cover;
+}
+.rating {
+    color: #f39c12;
+}
+.card-body {
+    background-color: #f8f9fa;
+    border-radius: 0 0 15px 15px;
+}
+.card-text {
+    font-size: 0.9rem;
+}
+.price {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
 </style>

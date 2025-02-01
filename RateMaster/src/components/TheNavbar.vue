@@ -31,13 +31,13 @@ const handleSignOut = async () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg sticky-top">
+  <nav class="navbar navbar-expand-lg sticky-top shadow-sm p-3">
     <div class="container-fluid">
       <RouterLink to="/">
-        <img src="../assets/img/Icon.png" alt="Logo" class="logo" />
+        <img src="../assets/img/Icon.png" alt="Logo" class="logo me-2" />
       </RouterLink>
       <h1 class="fw-medium fs-3 text-white me-2">RateMaster</h1>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+      <button class="bg-menu navbar-toggler border ps-3 pe-3 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <i class="bi bi-list text-white"></i>
       </button>
@@ -86,7 +86,7 @@ const handleSignOut = async () => {
               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Profile options">
               <i class="bi bi-person-circle profile-icon"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <ul class="dropdown-menu shadow-sm dropdown-menu-end" aria-labelledby="profileDropdown">
               <RouterLink to="/MyProfile" class="dropdown-item">Perfil</RouterLink>
               <li @click="handleSignOut" class="dropdown-item">Sair</li>
             </ul>
@@ -102,15 +102,8 @@ const handleSignOut = async () => {
 <style scoped>
 .navbar {
   background: linear-gradient(135deg, #1E2A38, #34495E);
-  padding: 15px 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.brand-name {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-}
 
 .nav-link {
   color: white;
@@ -128,7 +121,6 @@ const handleSignOut = async () => {
 
 .logo {
   width: 60px;
-  margin-right: 15px;
 }
 
 .profile-icon {
@@ -142,35 +134,6 @@ const handleSignOut = async () => {
   transform: scale(1.1);
 }
 
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.button {
-  background-color: #1ABC9C;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-.button:hover {
-  background-color: #16A085;
-}
-
-.profile-dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-}
-
 .dropdown-item {
   color: #333;
   padding: 10px 15px;
@@ -179,5 +142,9 @@ const handleSignOut = async () => {
 
 .dropdown-item:hover {
   background-color: #f1f1f1;
+}
+.bg-menu{
+  background-color: #1ABC9C;
+  
 }
 </style>

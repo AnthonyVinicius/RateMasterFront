@@ -126,23 +126,23 @@ onMounted(() => {
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col" v-for="product in filterProducts" :key="product.id"
                         @click="goToDetails(product.id)">
-                        <div class="card p-2 shadow-sm h-100">
+                        <div class="card p-2 h-100 text-truncate">
                             <div class="d-flex justify-content-center align-items-center img-container">
                                 <img class="img-fluid rounded-2 product-img" :src="product.image" :alt="product.name">
                             </div>
 
                             <div class="card-body">
-                                <div class="hstack">
-                                    <h5 class="fw-bold">{{ product.name }}</h5>
+                                <div class="hstack mb-2">
+                                    <h6 class="fw-bold text-truncate">{{ product.name }}</h6>
                                     <div class="ms-auto me-2 rating">
                                         <span class="star"><i class="bi bi-star-fill"></i></span>
                                         {{ product.averageRating }}/5
                                     </div>
                                 </div>
-                                <h6>Marca:<strong>{{ }}</strong></h6>
-                                <p class="card-text">{{ product.description }}</p>
-                                <p class="card-text">{{ product.price }}</p>
-                                <p class="card-text"><strong>Loja:</strong> {{ product.companyName }}</p>
+                                <h6 class="card-text text-truncate">Marca: <strong>{{ product.brand }}</strong></h6>
+                                <p class="card-text text-truncate text-muted">{{ product.description }}</p>
+                                <p class="price text-truncate">{{ product.price }}</p>
+                                <p class="card-text text-truncate"><strong>Loja:</strong> {{ product.companyName }}</p>
                             </div>
                         </div>
                     </div>
@@ -172,5 +172,48 @@ onMounted(() => {
 
 .star {
     color: #EAB308;
+}
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.img-container {
+    height: 150px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.product-img {
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.rating {
+    color: #f39c12;
+
+}
+
+.card-body {
+    background-color: #f8f9fa;
+    border-radius: 0 0 15px 15px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+.price {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 </style>

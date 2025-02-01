@@ -111,6 +111,9 @@ onMounted(() => {
         </div>
     </div>
     <div class="container mt-5">
+      <button type="button" class="btn pb-3" @click="router.push('/Myprofile')">
+      ← Voltar para os produtos
+    </button>
       <div class="row">
         <div class="col-md-6">
           <div class="card">

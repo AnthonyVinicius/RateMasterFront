@@ -109,7 +109,7 @@ onMounted(() => {
       ← Voltar para os produtos
     </button>
 
-    <div class=" container bg-white p-4 rounded-2 shadow-sm" v-if="product">
+    <div class=" container bg-white p-4 rounded-2 shadow-sm text-truncate" v-if="product">
       <div class="row review-form p-3 rounded-2 shadow-sm">
         <div class="col">
           <img :src="product.image" class="rounded-2 mb-2 product-img " :alt="product.name">
@@ -117,13 +117,13 @@ onMounted(() => {
         <div class="col">
           <div class="vstack">
             <div class="hstack">
-              <h1 class="fw-bold">{{ product.name }}</h1>
+              <h1 class="fw-bold text-truncate">{{ product.name }}</h1>
               <div class="ms-auto me-3 rating">
                 <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
               </div>
             </div>
-            <p class="description">{{ product.description }}</p>
-            <p class="description"><strong>Loja:</strong> {{ product.companyName }}</p>
+            <p class="description text-truncate">{{ product.description }}</p>
+            <p class="description text-truncate"><strong>Loja:</strong> {{ product.companyName }}</p>
           </div>
         </div>
       </div>

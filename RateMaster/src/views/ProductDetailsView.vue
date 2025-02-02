@@ -117,10 +117,14 @@ const submitResponse = async (review) => {
       comment: newResponse.value.comment,
     };
 
+    console.log("Enviando resposta:", response);
     await daoReviews.addResponse(review.id, response);
+    console.log("Resposta enviada com sucesso");
+
     review.responses.push(response);
-    newResponse.value.comment = ""; 
+    newResponse.value.comment = "";
     alert("Resposta enviada com sucesso!");
+
   } catch (error) {
     console.error("Erro ao enviar resposta:", error);
     alert("Ocorreu um erro ao enviar sua resposta. Tente novamente.");
@@ -221,7 +225,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <div v-if="userData.userType === 'business'" class="response-form mt-4">
+            <div v-if="userData.userType === 'business' && review.productId && product.idShop === userData.id" class="response-form mt-4">
               <form @submit.prevent="submitResponse(review)">
                 <textarea v-model="newResponse.comment" placeholder="Digite sua resposta..."></textarea>
                 <button type="submit">Enviar Resposta</button>

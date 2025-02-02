@@ -117,7 +117,7 @@ const submitResponse = async (review) => {
       comment: newResponse.value.comment,
     };
 
-    console.log("Enviando resposta:", response);
+    console.log("Enviando resposta:", response); // verificacao antes de enviar
     await daoReviews.addResponse(review.id, response);
     console.log("Resposta enviada com sucesso");
 

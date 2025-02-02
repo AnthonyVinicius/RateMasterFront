@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
 import CustomButton from "@/components/CustomButton.vue";
 import { auth } from "@/firebase.js";
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const router = useRouter();
 const route = useRoute();
@@ -170,7 +171,7 @@ onMounted(() => {
 
     <div v-if="userData.userType === 'individual'">
 
-      <form @submit.prevent="submitReview" class="p-5 mt-5 mb-5 rounded-4 bg-white review-form">
+      <Form @submit="submitReview" class="p-5 mt-5 mb-5 rounded-4 bg-white review-form">
         <h3 class="fw-bold mb-3 text-modified">Deixe sua avaliação</h3>
         <div class="form-group">
           <label class="mt-2 mb-2" for="rating">Sua nota:</label>
@@ -195,13 +196,29 @@ onMounted(() => {
 
         <div class="mb-3">
           <label class="mb-2" for="comment">Seu comentário:</label>
-          <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
+          <Field
+          v-model="newReview.comment"
+          name="comment"
+          id="comment"
+          rules="required|min:5|max:200"
+          v-slot="{field, errors, meta}">
+            <textarea
+            v-bind="field"
+            :class="{
+                'form-control': true,
+                'is-valid': meta.touched && errors.length,
+                'is-invalid':meta.touched && errors.length
+            }"
+            class="container-fluid rounded-2 p-1" 
+            rows="4" 
             placeholder="Compartilhe sua experiência com o produto..."></textarea>
+          </Field>
+          <ErrorMessage name="comment" class="errorMessage" />
         </div>
         <div class="d-flex">
           <CustomButton class="shadow-sm">Enviar Avaliação</CustomButton>
         </div>
-      </form>
+      </Form>
     </div>
     <div class="reviews-list mt-5">
       <h2 class="mb-4 text-modified">Avaliações dos Clientes</h2>
@@ -226,10 +243,10 @@ onMounted(() => {
             </div>
 
             <div v-if="userData.userType === 'business' && review.productId && product.idShop === userData.id" class="response-form mt-4">
-              <form @submit.prevent="submitResponse(review)">
+              <Form @submit.prevent="submitResponse(review)">
                 <textarea v-model="newResponse.comment" placeholder="Digite sua resposta..."></textarea>
                 <button type="submit">Enviar Resposta</button>
-              </form>
+              </Form>
             </div>
           </div>
         </div>

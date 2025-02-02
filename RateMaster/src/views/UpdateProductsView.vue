@@ -3,6 +3,7 @@ import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const route = useRoute();
 const router = useRouter();
@@ -131,18 +132,48 @@ onMounted(() => {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Editar Produto</h5>
-              <form @submit.prevent="submit">
+              <Form @submit="submit">
 
                 <div class="mb-3">
                   <label for="productName" class="form-label">Nome do produto</label>
-                  <input v-model="product.name" type="text" class="form-control" placeholder="Digite o nome do produto."
-                    required />
+                  <Field
+                  v-model="product.name"
+                  name="productName"
+                  id="productName"
+                  type="text"
+                  rules="required|min:5|max:100"
+                  v-slot="{field, errors, meta}">
+                    <input
+                    v-bind="field"
+                    :class="{
+                      'form-control': true,
+                      'is-valid': meta.touched && errors.length,
+                      'is-invalid':meta.touched && errors.length
+                    }" 
+                    placeholder="Digite o nome do produto."/>
+                  </Field>
+                  
                 </div>
 
                 <div class="mb-3">
                   <label for="description" class="form-label">Descrição</label>
-                  <input v-model="product.description" type="text" class="form-control"
-                    placeholder="Digite a descrição do seu produto" required />
+                  <Field
+                  v-model="product.description"
+                  name="productDescription"
+                  id="productDescription"
+                  type="text"
+                  rules="required|min:5|max:300"
+                  v-slot="{field, errors, meta}">
+                    <input 
+                    v-bind="field"
+                    :class="{
+                      'form-control': true,
+                      'is-valid': meta.touched && errors.length,
+                      'is-invalid':meta.touched && errors.length
+                    }"
+                    placeholder="Digite a descrição do seu produto"/>
+                  </Field>
+                  <ErrorMessage name="productDescription" class="errorMessage"/>
                 </div>
 
                 <div class="mb-3">
@@ -175,7 +206,7 @@ onMounted(() => {
                   </select>
                 </div>
                 <CustomButton class="button container-fluid">Salvar</CustomButton>
-              </form>
+              </Form>
             </div>
           </div>
         </div>

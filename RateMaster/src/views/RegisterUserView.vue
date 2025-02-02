@@ -3,6 +3,7 @@ import CustomButton from '@/components/CustomButton.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import LoginService from '@/services/LoginService';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 
 const loginService = new LoginService();
@@ -64,7 +65,7 @@ const toggleShowPassword = () => {
                   <p class="text-muted">Junte-se ao RateMaster hoje</p>
                 </div>
 
-                <form @submit.prevent="createUser">
+                <Form @submit="createUser">
                   <div class="mb-3">
                     <label class="form-label">Tipo de Conta</label>
                     <select v-model="userType" class="form-select">
@@ -75,34 +76,98 @@ const toggleShowPassword = () => {
 
                   <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" v-model="email" placeholder="seu@email.com" required />
+                    <Field
+                    v-model="email"
+                    name="email"
+                    id="email"
+                    type="email"
+                    rules="required|email"
+                    v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && errors.length,
+                        'is-invalid':meta.touched && errors.length
+                      }"  
+                      placeholder="seu@email.com"/>
+                  </Field>
+                  <ErrorMessage name="email" class="errorMessage"/>
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">Senha</label>
                     <div class="input-group">
-                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="password" placeholder="Digite sua senha" required />
+                      <Field
+                      v-model="password"
+                      name="password"
+                      id="password"
+                      rules="required"
+                      v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && !errors.length,
+                        'is-invalid': meta.touched && errors.length
+                      }" 
+                      :type="showPassword ? 'text' : 'password'" 
+                      placeholder="Digite sua senha" />
+                      </Field>
+
                       <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                       </button>
                     </div>
+                    <ErrorMessage name="password" class="errorMessage"/>
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">Confirmar Senha</label>
                     <div class="input-group">
-                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="confirmPassword" placeholder="Confirme sua senha" required />
+                      <Field
+                      v-model="confirmPassword"
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      rules="required"
+                      v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && !errors.length,
+                        'is-invalid': meta.touched && errors.length
+                      }" 
+                      :type="showPassword ? 'text' : 'password'" 
+                      placeholder="Confirme sua senha" />
+                      </Field>
                       <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                       </button>
                     </div>
+                    <ErrorMessage name="confirmPassword" class="errorMessage"/>
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">
                       {{ userType === 'individual' ? 'Nome Completo' : 'Nome da Empresa' }}
                     </label>
-                    <input type="text" class="form-control" v-model="name" :placeholder="userType === 'individual' ? 'Seu nome completo' : 'Nome da empresa'" required />
+                    <Field
+                    v-model="name"
+                    name="name"
+                    id="name"
+                    rules="required|min:5|max:100"
+                    v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field" 
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && !errors.length,
+                        'is-invalid': meta.touched && errors.length
+                      }"
+                      :placeholder="userType === 'individual' ? 'Seu nome completo' : 'Nome da empresa'" />
+                    </Field>
+                    <ErrorMessage name="name" class="errorMessage"/>
                   </div>
 
                   <div class="form-check mb-4">
@@ -121,7 +186,7 @@ const toggleShowPassword = () => {
                     Já possui uma conta?
                     <RouterLink to="/login" class="text-decoration-none">Entrar</RouterLink>
                   </p>
-                </form>
+                </Form>
               </div>
             </div>
 
@@ -157,6 +222,9 @@ a:hover {
   padding: 0.75rem 1rem;
 }
 
+.errorMessage {
+  color: red;
+}
 .input-group .btn {
   padding-left: 1rem;
   padding-right: 1rem;

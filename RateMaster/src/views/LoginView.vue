@@ -3,6 +3,7 @@ import CustomButton from '@/components/CustomButton.vue';
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import LoginService from '@/services/LoginService'
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const router = useRouter();
 const email = ref("");
@@ -46,23 +47,53 @@ const toggleShowPassword = () => {
                   <p class="text-muted">Faça login na sua conta</p>
                 </div>
 
-                <form @submit.prevent="handleLogin">
+                <Form @submit="handleLogin">
 
                   <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" v-model="email" placeholder="seu@email.com" required />
+                    <Field
+                    v-model="email"
+                    name="email"
+                    id="email"
+                    rules="required|email"
+                    v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && !errors.length,
+                        'is-invalid': meta.touched && errors.length
+                          }"                        
+                      placeholder="seu@email.com" />
+                    </Field>
+                    <ErrorMessage name="email" class="errorMessage" />
                   </div>
 
 
                   <div class="mb-4">
                     <label class="form-label">Senha</label>
                     <div class="input-group">
-                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="password"
-                        placeholder="Digite sua senha" required />
+                      <Field
+                      v-model="password"
+                      name="password"
+                      id="password"
+                      rules="required"
+                      v-slot="{field, errors, meta}">
+                      <input
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && !errors.length,
+                        'is-invalid': meta.touched && errors.length
+                      }" 
+                      :type="showPassword ? 'text' : 'password'" 
+                      placeholder="Digite sua senha" />
+                      </Field>
                       <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                       </button>
                     </div>
+                    <ErrorMessage name="password" class="errorMessage" />
                   </div>
 
 
@@ -84,7 +115,7 @@ const toggleShowPassword = () => {
                     <a href="/terms" class="small text-muted me-2">Termos de uso</a>
                     <a href="/privacy" class="small text-muted">Política de Privacidade</a>
                   </div>
-                </form>
+                </Form>
               </div>
             </div>
           </div>

@@ -129,9 +129,8 @@ const formatPrice = (event) => {
                   id="description"
                   name="description"
                   type="text"
-                  rules="required|min:5|max:300"
-                  v-slot="{field, errors, meta}">
-                    <textarea 
+                  rules="required|min:5|max:300">
+                    <textarea
                     v-model="product.description"
                     v-bind="field" 
                     :class="{
@@ -140,7 +139,7 @@ const formatPrice = (event) => {
                         'is-invalid':meta.touched && errors.length
                       }"
                     placeholder="Enter product description" style="height: 100px">
-                    </textarea>
+                  </textarea>
                   </Field>
                   <ErrorMessage name="description" class="errorMessage" />
                   <label for="description">Descrição</label>

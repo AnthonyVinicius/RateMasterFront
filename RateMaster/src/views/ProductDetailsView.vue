@@ -102,81 +102,117 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1 class="text-center mt-5">Detalhes de Produtos</h1>
-  <br />
-  <div class="container">
-    <button type="button" class="btn pb-3" @click="router.push('/reviews')">
+  <div class="container pt-5">
+    <button type="button" class="btn pb-3 back-button" @click="router.push('/reviews')">
       ← Voltar para os produtos
     </button>
 
-    <div class=" container bg-white p-4 rounded-2 shadow-sm text-truncate" v-if="product">
-      <div class="row review-form p-3 rounded-2 shadow-sm">
-        <div class="col">
-          <img :src="product.image" class="rounded-2 mb-2 product-img " :alt="product.name">
+    <div class="review-form container p-0 text-truncate rounded-4" v-if="product">
+      <div class="row">
+
+        <div class="img-container col container-fluid d-flex justify-content-center p-5 rounded-start-3">
+          <img :src="product.image" class="rounded-4 product-img " :alt="product.name">
         </div>
-        <div class="col">
-          <div class="vstack">
+
+        <div class="product-detail col container-fluid bg-white rounded-end-4 p-4">
+          <div class="text-detail vstack gap-3">
             <div class="hstack">
-              <h1 class="fw-bold text-truncate">{{ product.name }}</h1>
+              <h1 class="text-modified text-truncate">{{ product.name }}</h1>
               <div class="ms-auto me-3 rating">
-                <span class="star"><i class="bi bi-star-fill"></i></span> {{ averageRating }}/5
+                <div class="rating-badge fw-bold p-2 rounded-4">
+                  <i class="bi bi-star-fill me-1"></i>
+                  <span>{{ averageRating }}/5</span>
+                </div>
               </div>
             </div>
             <p class="description text-truncate">{{ product.description }}</p>
-            <p class="description text-truncate"><strong>Loja:</strong> {{ product.companyName }}</p>
+            <p class="description text-truncate"><i class="bi bi-shop me-1"></i>{{ product.companyName }}</p>
           </div>
         </div>
       </div>
-
-
-      <div class="col" v-if="userData.userType === 'individual'">
-          <form @submit.prevent="submitReview" class="p-3 mt-4 rounded-2 shadow-sm review-form">
-            <h2 class="fw-bold mb-3">Avaliação</h2>
-            <div class="form-group">
-              <label class="mt-2 mb-2" for="rating">Nota:</label>
-              <br>
-              <div class="mb-2 star-rating">
-                <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
-                <label for="sr-5"><i class="bi bi-star-fill"></i></label>
-
-                <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
-                <label for="sr-4"><i class="bi bi-star-fill"></i></label>
-
-                <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
-                <label for="sr-3"><i class="bi bi-star-fill"></i></label>
-
-                <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
-                <label for="sr-2"><i class="bi bi-star-fill"></i></label>
-
-                <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
-                <label for="sr-1"><i class="bi bi-star-fill"></i></label>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="mb-2" for="comment">Suas Avaliações:</label>
-              <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
-                placeholder="Escreva sua avaliação aqui"></textarea>
-            </div>
-            <div class="d-flex">
-              <CustomButton class="ms-auto shadow-sm">Enviar Avaliação</CustomButton>
-            </div>
-          </form>
-      </div>
     </div>
-    <div class="reviews-list mt-3">
-      <div v-for="review in reviews" :key="review.id" class="mb-3 p-3 rounded-2 bg-white review-item shadow-sm">
-        <div class="d-flex">
-          <span class="star ms-1" v-for="n in review.rating" :key="n"><i class="bi bi-star-fill"></i></span>
-          <span class="ms-auto review-author">Por: {{ review.userName }}</span>
+
+
+    <div v-if="userData.userType === 'individual'">
+
+      <form @submit.prevent="submitReview" class="p-5 mt-5 mb-5 rounded-4 bg-white review-form">
+        <h3 class="fw-bold mb-3 text-modified">Deixe sua avaliação</h3>
+        <div class="form-group">
+          <label class="mt-2 mb-2" for="rating">Sua nota:</label>
+          <br>
+          <div class="mb-4 star-rating">
+            <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
+            <label for="sr-5"><i class="bi bi-star-fill"></i></label>
+
+            <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
+            <label for="sr-4"><i class="bi bi-star-fill"></i></label>
+
+            <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
+            <label for="sr-3"><i class="bi bi-star-fill"></i></label>
+
+            <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
+            <label for="sr-2"><i class="bi bi-star-fill"></i></label>
+
+            <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
+            <label for="sr-1"><i class="bi bi-star-fill"></i></label>
+          </div>
         </div>
-        <p class="review-comment">{{ review.comment }}</p>
+
+        <div class="mb-3">
+          <label class="mb-2" for="comment">Seu comentário:</label>
+          <textarea class="container-fluid rounded-2 p-1" v-model="newReview.comment" id="comment" rows="4" required
+            placeholder="Compartilhe sua experiência com o produto..."></textarea>
+        </div>
+        <div class="d-flex">
+          <CustomButton class="shadow-sm">Enviar Avaliação</CustomButton>
+        </div>
+      </form>
+    </div>
+    <div class="reviews-list mt-5">
+      <h2 class="mb-4 text-modified">Avaliações dos Clientes</h2>
+      <div v-if="reviews.length === 0" class="mb-5">
+        Ainda não há avaliações para este produto.
+      </div>
+      <div v-else class="row gap-4">
+        <div v-for="review in reviews" :key="review.id" class="col bg-white rounded-3 pb-4 pt-4 pe-4 ps-4 mb-5 review-form">
+          <div class="vstack gap-4 fs-6">
+            <div class="hstack gap-1">
+              <i class="bi bi-star-fill star" v-for="n in review.rating" :key="n"></i>
+              <div class="ms-auto description">{{ review.userName }}</div>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.review-form {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-container {
+  background: #f8f9fa;
+}
+
+.product-img {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+}
+
+.rating-badge {
+  background: #fff8e5;
+  color: #eab308;
+}
+
+.text-detail {
+  font-size: 14pt;
+}
+
 .back-button:hover {
   color: #333;
 }
@@ -185,41 +221,65 @@ onMounted(() => {
   color: #eab308;
 }
 
-.description {
+.description, label {
   color: #666;
 }
 
-.review-form {
-  background: #f5f5f5;
+.text-modified {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
 }
 
 .star-rating {
-  position: relative;
   display: inline-flex;
   flex-direction: row-reverse;
-  justify-content: flex-end;
-  font-size: 18px;
+  gap: 0.25rem;
 }
 
-.product-img {
-  max-width: 500px;
+.star-rating input {
+  display: none;
 }
 
-input {
-  position: absolute;
-  opacity: 0;
+.star-rating label {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #ddd;
+  transition: color 0.2s ease;
 }
 
-input:checked~label {
-  color: gold;
+.star-rating label:hover,
+.star-rating label:hover~label,
+.star-rating input:checked~label {
+  color: #eab308;
 }
 
-input:hover~label {
-  color: goldenrod;
-  transition: none;
-}
-
-label {
-  color: grey;
+.review-form:hover,
+.product-details-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 </style>

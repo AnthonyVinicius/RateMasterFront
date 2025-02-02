@@ -80,69 +80,72 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container">
-        <h4 class="fw-bold mt-5">Produtos</h4>
+    <div class="container-fluid pe-5 ps-5">
+        <div class="d-flex flex-column  mt-4 mb-4">
+                <h1 class="header ms-auto me-auto align-items-center ">Descrubra nossos Produtos</h1>
+                <div class="form-floating search-bar container search-container">
+                    <input type="search" v-model="searchQuery" class="form-control" id="floatingInput" placeholder="Procurar produto..." />
+                    <label class="ms-3" for="floatingInput"><i class="bi bi-search"></i> Procurar produto...</label>
+                </div>
+        </div>
 
-        <div class="row d-flex">
-            <section class="col-md-3">
-                <aside class="filters bg-white p-3 rounded-2 shadow-sm">
-                    <h6 class="fw-bold mb-4">Filtros</h6>
-                    <div class="form-floating search-bar">
-                        <input type="search" v-model="searchQuery" class="form-control mb-3" id="floatingInput"
-                            placeholder="Buscar" />
-                        <label for="floatingInput"><i class="bi bi-search"></i> Buscar</label>
+        <div class="row d-flex mt-5">
+            <section class="col-md-2">
+                <aside class="bg-white p-4 pb-5 rounded-3 shadow-sm">
+                    <div class="hstack mb-4">
+                        <h6 class="filter-text m-0 p-0">Filtros</h6>
+                        <button class="btn ms-auto clear-filters rounded-pill" @click="filters = { price: [], rating: [] }">
+                            Clear All
+                        </button>
                     </div>
-                    <div class="vstack filter-section">
-                        <h6 class="fw-bold">Preço</h6>
+                    <h6 class="filter-text">Preço</h6>
+                    <div class="vstack mb-3 filter-section checkbox">
                         <label><input type="checkbox" v-model="filters.price" value="0-50"> R$0 - R$50</label>
                         <label><input type="checkbox" v-model="filters.price" value="51-100"> R$51 - R$100</label>
                         <label><input type="checkbox" v-model="filters.price" value="101+"> R$101+</label>
                     </div>
 
                     <div class="filter-section">
-                        <div class="vstack gap-3">
-                            <h6 class="fw-bold mt-3">Nota</h6>
-                            <label class="star"><input type="checkbox" v-model="filters.rating" value="5"> <i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i></label>
-                            <label class="star"><input type="checkbox" v-model="filters.rating" value="4"> <i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
-                            <label class="star"><input type="checkbox" v-model="filters.rating" value="3"> <i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i></label>
-                            <label class="star"><input type="checkbox" v-model="filters.rating" value="2"> <i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></label>
-                            <label class="star"><input type="checkbox" v-model="filters.rating" value="1"> <i
-                                    class="bi bi-star-fill"></i>
+                        <div class="vstack">
+                            <h3 class="filter-text">Rating</h3>
+                            <label class="mb-2" v-for="n in 5" :key="n">
+                                <input class="checkbox" type="checkbox" v-model="filters.rating" :value="6 - n">
+                                <span class="star">
+                                    <i class="bi bi-star-fill ms-1" v-for="s in (6 - n)" :key="s"></i>
+                                    <i class="bi bi-star ms-1" v-for="s in (n - 1)" :key="s + 'empty'"></i>
+                                </span>
                             </label>
                         </div>
                     </div>
                 </aside>
             </section>
 
-            <div class="mb-5 col-md-9">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="mb-5 col-md-10">
+                <div class="row row-cols-1 row-cols-md-5 g-4">
                     <div class="col" v-for="product in filterProducts" :key="product.id"
                         @click="goToDetails(product.id)">
-                        <div class="card p-2 h-100 text-truncate">
+                        <div class="card rounded-3 text-truncate">
                             <div class="d-flex justify-content-center align-items-center img-container">
-                                <img class="img-fluid rounded-2 product-img" :src="product.image" :alt="product.name">
+                                <img class="img-fluid  product-img" :src="product.image" :alt="product.name">
                             </div>
 
                             <div class="card-body">
-                                <div class="hstack mb-2">
-                                    <h6 class="fw-bold text-truncate">{{ product.name }}</h6>
-                                    <div class="ms-auto me-2 rating">
-                                        <span class="star"><i class="bi bi-star-fill"></i></span>
-                                        {{ product.averageRating }}/5
+                                <div class="vstack gap-3">
+                                    <div class="hstack">
+                                        <h6 class="fw-bold text-truncate m-0">{{ product.name }}</h6>
+                                        <div class="ms-auto me-2 star">
+                                            <span class="star"><i class="bi bi-star-fill"></i></span>
+                                            {{ product.averageRating }}
+                                        </div>
+                                    </div>
+                                    <h6 class="card-text text-truncate">{{ product.brand }}</h6>
+                                    <p class="card-text text-truncate">{{ product.description }}</p>
+                                    <div class="hstack d-flex align-items-center">
+                                        <p class="price m-0 text-truncate">{{ product.price }}</p>
+                                        <p class="card-text ms-auto   text-truncate"><strong></strong> {{
+                                            product.companyName }}</p>
                                     </div>
                                 </div>
-                                <h6 class="card-text text-truncate">Marca: <strong>{{ product.brand }}</strong></h6>
-                                <p class="card-text text-truncate text-muted">{{ product.description }}</p>
-                                <p class="price text-truncate">{{ product.price }}</p>
-                                <p class="card-text text-truncate"><strong>Loja:</strong> {{ product.companyName }}</p>
                             </div>
                         </div>
                     </div>
@@ -158,27 +161,63 @@ onMounted(() => {
     cursor: pointer;
 }
 
-.img-container {
-    width: 100%;
-    height: 200px;
-
+.checkbox {
+    color: #666;
 }
 
 .product-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.search-container {
+    max-width: 700px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: none;
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+
+.img-container {
+    width: 100%;
+    height: 150px;
 }
 
 .star {
-    color: #EAB308;
+    color: #ffd700;
+    font-weight: 600;
 }
 
 .card {
     transition: transform 0.3s, box-shadow 0.3s;
     border: none;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
+}
+.clear-filters {
+    color: #666;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-filters:hover {
+    background-color: #f0f0f0;
 }
 
 .card:hover {
@@ -186,34 +225,21 @@ onMounted(() => {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.img-container {
-    height: 150px;
-    overflow: hidden;
-    border-radius: 12px;
-}
-
-.product-img {
-    max-height: 100%;
-    object-fit: cover;
-}
-
-.rating {
-    color: #f39c12;
-
-}
-
-.card-body {
-    background-color: #f8f9fa;
-    border-radius: 0 0 15px 15px;
-}
-
 .card-text {
     font-size: 0.9rem;
+    color: #666;
+}
+
+.filter-text {
+    font-size: 1rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .price {
-    color: #28a745;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2ecc71;
 }
 </style>

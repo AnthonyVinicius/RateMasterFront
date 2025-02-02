@@ -2,9 +2,12 @@
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
+import { useRouter } from "vue-router";
+
 
 const daoBrands = new DAOService('brands');
 
+const router = useRouter();
 const brands = ref([]);
 const newBrand = ref('');
 const editingBrandId = ref(null);
@@ -103,9 +106,13 @@ const updateBrand = async () => {
             {{ alertMessage }}
             <button type="button" class="btn-close" @click="showAlert = false"></button>
         </div>
+        <button type="button" class="btn pb-3 back-button" @click="router.push('/myProfile')">
+            ← Voltar para os produtos
+        </button>
 
         <div class="d-flex align-items-center mb-4">
-            <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto" placeholder="Nova marca" />
+            <input v-model="newBrand" type="text" class="form-control form-control-sm w-auto"
+                placeholder="Nova marca" />
             <CustomButton class="btn btn-sm ms-2" @click="addBrand">Adicionar</CustomButton>
         </div>
 
@@ -128,18 +135,19 @@ const updateBrand = async () => {
                     </td>
                     <td>
                         <div v-if="editingBrandId === brand.id">
-                            <CustomButton @click="updateBrand" type="button" class="btn btn-success ms-2 me-2">
+                            <CustomButton @click="updateBrand" type="button" class="btn ms-2 me-2">
                                 Salvar
                             </CustomButton>
-                            <CustomButton @click="cancelEdit" type="button" class="btn btn-secondary ms-2 me-2">
+                            <CustomButton @click="cancelEdit" type="button" class="btn ms-2 me-2">
                                 Cancelar
                             </CustomButton>
                         </div>
                         <div v-else>
-                            <CustomButton @click="() => editBrand(brand)" type="button" class="btn btn-warning ms-2 me-2">
+                            <CustomButton @click="() => editBrand(brand)" type="button"
+                                class="btn ms-2 me-2">
                                 <i class="bi bi-pencil-square"></i>
                             </CustomButton>
-                            <CustomButton @click="deleteBrand(brand.id)" type="button" class="btn btn-danger ms-2 me-2">
+                            <CustomButton @click="deleteBrand(brand.id)" type="button" class="btn ms-2 me-2">
                                 <i class="bi bi-trash-fill"></i>
                             </CustomButton>
                         </div>
@@ -160,10 +168,20 @@ const updateBrand = async () => {
     font-size: 1rem;
 }
 
+.back-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.1rem;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }

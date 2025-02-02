@@ -1,7 +1,7 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject,} from 'vue';
 import { useRouter } from "vue-router";
 
 const router = useRouter();

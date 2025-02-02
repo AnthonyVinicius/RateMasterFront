@@ -22,7 +22,6 @@ const login = async () => {
       router.push('/');
     }
   } catch (error) {
-
     switch (error.code) {
       case "auth/invalid-email":
         errMsg.value = "E-mail inválido.";
@@ -44,104 +43,102 @@ const toggleShowPassword = () => {
 };
 </script>
 
-
 <template>
-    <div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
-      <div class="card login-card ">
-        <div class="row g-0">
-          <div class="col-md-6 col-lg-6 d-none d-md-block">
-            <img src="../assets/img/Login.jpg" alt="login form" class="img-fluid login-image rounded-start"
-              loading="lazy" />
-          </div>
-          <div class="col-md-6 col-lg-6 d-flex">
-            <div class="card-body p-4 p-lg-5">
-              <form @submit.prevent="login">
-                <div class="mb-2 pb-1">
-                  <h1 class="h1 fw-bold login-title">RateMaster</h1>
-                </div>
-                <h5 class="fw-normal pb-3 login-header">Faça login na sua conta.</h5>
-                <div>
-                  <div class="form-outline mb-1">
-                    <input type="email" class="form-control form-control-lg" placeholder="Digite seu email"
-                      v-model="email" required />
-                  </div>
-                  <div class="form-outline mb-2 position-relative">
-                    <input :type="showPassword ? 'text' : 'password'" class="form-control form-control-lg"
-                      placeholder="Digite sua senha" v-model="password" required />
-                    <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'" class="toggle-password"
-                      @click="toggleShowPassword" title="Mostrar/Ocultar senha"></i>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div class="card border-0 shadow-sm overflow-hidden">
+          <div class="row g-0">
 
-                  </div>
+            <div class="col-lg-6 d-none d-lg-block bg-light">
+              <img src="../assets/img/Login.jpg" alt="login" class="w-100 h-100 object-fit-cover" />
+            </div>
+
+
+            <div class="col-lg-6">
+              <div class="card-body p-4 p-lg-5">
+                <div class="text-center mb-4">
+                  <h2 class="h3 fw-bold mb-2">Bem-vindo de volta</h2>
+                  <p class="text-muted">Faça login na sua conta</p>
                 </div>
-                <CustomButton @click="login" class="button">
-                  <span>Entrar</span>
-                </CustomButton>
-                <p v-if="errMsg" class="text-danger text-center">{{ errMsg }}</p>
-                <p class="mb-3 mt-3 pb-lg-2 no-account">Não possui uma conta? <RouterLink to="/registerUser">Cadastre-se
-                    aqui.</RouterLink>
-                </p>
-                <a class="small text-muted">Termos de uso </a>
-                <a class="small text-muted">Política de Privacidade</a>
-              </form>
+
+                <form @submit.prevent="login">
+
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" v-model="email" placeholder="seu@email.com" required />
+                  </div>
+
+
+                  <div class="mb-4">
+                    <label class="form-label">Senha</label>
+                    <div class="input-group">
+                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="password"
+                        placeholder="Digite sua senha" required />
+                      <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
+                        <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                      </button>
+                    </div>
+                  </div>
+
+
+                  <div v-if="errMsg" class="alert alert-danger text-center mb-3">
+                    {{ errMsg }}
+                  </div>
+
+
+                  <div class="d-grid mb-3">
+                    <CustomButton class="button btn-lg">Entrar</CustomButton>
+                  </div>
+
+                  <p class="text-center mb-3">
+                    Não possui uma conta?
+                    <RouterLink to="/registerUser" class="text-decoration-none">Cadastre-se aqui</RouterLink>
+                  </p>
+
+                  <div class="text-center">
+                    <a href="/terms" class="small text-muted me-2">Termos de uso</a>
+                    <a href="/privacy" class="small text-muted">Política de Privacidade</a>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
-.container {
-  margin-top: 50px;
-  padding: 20px;
+.card {
+  border-radius: 1rem;
 }
 
-.login-card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  max-width: 1000px;
-}
-
-.login-image {
-  width: 100%;
-  height: 100%;
+.object-fit-cover {
   object-fit: cover;
 }
 
-.login-header {
-  letter-spacing: 1px;
-  color: #333;
-}
-
 a {
-  color: #E74C3C;
-  text-decoration: none;
+  color: #0d6efd;
 }
 
 a:hover {
-  color: #1e90ff;
-  text-decoration: underline;
+  color: #0a58ca;
 }
 
-.button {
-  width: 100%;
+.form-control {
+  padding: 0.75rem 1rem;
 }
 
-button:hover {
-  transform: scale(1.01);
+.input-group .btn {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-.toggle-password {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #aaa;
-}
-
-.toggle-password:hover {
-  color: #000;
+@media (max-width: 991.98px) {
+  .card-body {
+    padding: 2rem !important;
+  }
 }
 </style>

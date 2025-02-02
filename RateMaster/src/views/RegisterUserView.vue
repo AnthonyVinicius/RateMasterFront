@@ -18,222 +18,192 @@ const showPassword = ref(false);
 const userType = ref("individual");
 
 const trimInputs = () => {
-    email.value = email.value.trim();
-    password.value = password.value.trim();
-    confirmPassword.value = confirmPassword.value.trim();
-    name.value = name.value.trim();
+  email.value = email.value.trim();
+  password.value = password.value.trim();
+  confirmPassword.value = confirmPassword.value.trim();
+  name.value = name.value.trim();
 };
 
 const register = async () => {
-    trimInputs();
+  trimInputs();
 
-    if (password.value !== confirmPassword.value) {
-        alert("As senhas não coincidem. Por favor, verifique.");
-        return;
-    }
+  if (password.value !== confirmPassword.value) {
+    alert("As senhas não coincidem. Por favor, verifique.");
+    return;
+  }
 
-    if (!email.value || !password.value || !confirmPassword.value) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        return;
-    }
+  if (!email.value || !password.value || !confirmPassword.value) {
+    alert("Por favor, preencha todos os campos obrigatórios.");
+    return;
+  }
 
-    if (userType.value === "individual" && !name.value) {
-        alert("Por favor, preencha o nome para Pessoa Física.");
-        return;
-    }
+  if (userType.value === "individual" && !name.value) {
+    alert("Por favor, preencha o nome para Pessoa Física.");
+    return;
+  }
 
-    if (userType.value === "business" && !name.value) {
-        alert("Por favor, preencha o nome da empresa para Pessoa Jurídica.");
-        return;
-    }
-    
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-        const { uid, email: createdEmail } = userCredential.user;
+  if (userType.value === "business" && !name.value) {
+    alert("Por favor, preencha o nome da empresa para Pessoa Jurídica.");
+    return;
+  }
 
-        const dao = userType.value === "individual" ? daoUser : daoShop;
-        const additionalData = userType.value === "individual" ? { name: name.value } : { name: name.value };
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    const { uid, email: createdEmail } = userCredential.user;
 
-        await dao.insert({
-            uid,
-            email: createdEmail,
-            userType: userType.value,
-            ...additionalData,
-        });
+    const dao = userType.value === "individual" ? daoUser : daoShop;
+    const additionalData = userType.value === "individual" ? { name: name.value } : { name: name.value };
 
-        alert("Cadastro realizado com sucesso!");
-        router.push('/');
-    } catch (error) {
-        console.error(error);
-        alert(error.message);
-    }
+    await dao.insert({
+      uid,
+      email: createdEmail,
+      userType: userType.value,
+      ...additionalData,
+    });
+
+    alert("Cadastro realizado com sucesso!");
+    router.push('/');
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
 };
 
 const toggleShowPassword = () => {
-    showPassword.value = !showPassword.value;
+  showPassword.value = !showPassword.value;
 };
 </script>
 
 <template>
-    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 mt-5 mb-5">
-      <div class="card register-card w-100">
-        <div class="row g-0">
-          <div class="col-lg-6 d-flex">
-            <div class="card-body p-4">
-              <form @submit.prevent="register">
-                <h1 class="h1 fw-bold register-title text-center">RateMaster</h1>
-                <h5 class="fw-normal pb-3 register-header text-center">Criar uma nova conta</h5>
-  
-                <div class="mb-3">
-                  <label class="form-label">Tipo de Conta</label>
-                  <select v-model="userType" class="form-select">
-                    <option value="individual">Pessoa Física</option>
-                    <option value="business">Pessoa Jurídica</option>
-                  </select>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div class="card border-0 shadow-sm overflow-hidden">
+          <div class="row g-0">
+
+            <div class="col-lg-6">
+              <div class="card-body p-4 p-lg-5">
+                <div class="text-center mb-4">
+                  <h2 class="h3 fw-bold mb-2">Criar Conta</h2>
+                  <p class="text-muted">Junte-se ao RateMaster hoje</p>
                 </div>
-  
-                <div class="form-outline mb-3">
-                  <input
-                    type="email"
-                    class="form-control form-control-lg"
-                    placeholder="Digite seu email"
-                    v-model="email"
-                    required
-                  />
-                </div>
-                <div class="form-outline mb-3 position-relative">
-                  <input
-                    :type="showPassword ? 'text' : 'password'"
-                    class="form-control form-control-lg"
-                    placeholder="Digite sua senha"
-                    v-model="password"
-                    required
-                  />
-                  <i
-                    :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
-                    class="toggle-password"
-                    @click="toggleShowPassword"
-                  ></i>
-                </div>
-                <div class="form-outline mb-3 position-relative">
-                  <input
-                    :type="showPassword ? 'text' : 'password'"
-                    class="form-control form-control-lg"
-                    placeholder="Confirme sua senha"
-                    v-model="confirmPassword"
-                    required
-                  />
-                  <i
-                    :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
-                    class="toggle-password"
-                    @click="toggleShowPassword"
-                  ></i>
-                </div>
-  
-                <div v-if="userType === 'individual'">
-                  <div class="form-outline mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      placeholder="Digite seu nome"
-                      v-model="name"
-                      required
-                    />
+
+                <form @submit.prevent="register">
+
+                  <div class="mb-3">
+                    <label class="form-label">Tipo de Conta</label>
+                    <select v-model="userType" class="form-select">
+                      <option value="individual">Pessoa Física</option>
+                      <option value="business">Pessoa Jurídica</option>
+                    </select>
                   </div>
-                </div>
-  
-                <div v-if="userType === 'business'">
-                  <div class="form-outline mb-3">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      placeholder="Nome da Empresa"
-                      v-model="name"
-                      required
-                    />
+
+
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" v-model="email" placeholder="seu@email.com" required />
                   </div>
-                </div>
-  
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="termsCheck" required />
-                  <label class="form-check-label" for="termsCheck">
-                    Eu concordo com o <a to="/terms">Termos de uso</a> e
-                    <a to="/privacy">Política de privacidade</a>.
-                  </label>
-                </div>
-  
-                <CustomButton class="button">Cadastrar-se</CustomButton>
-                <p class="mt-3 text-center">
-                  Já possui uma conta?
-                  <RouterLink to="/login">Entrar</RouterLink>
-                </p>
-              </form>
+
+
+                  <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <div class="input-group">
+                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="password"
+                        placeholder="Digite sua senha" required />
+                      <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
+                        <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                      </button>
+                    </div>
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label class="form-label">Confirmar Senha</label>
+                    <div class="input-group">
+                      <input :type="showPassword ? 'text' : 'password'" class="form-control" v-model="confirmPassword"
+                        placeholder="Confirme sua senha" required />
+                      <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
+                        <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                      </button>
+                    </div>
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label class="form-label">
+                      {{ userType === 'individual' ? 'Nome Completo' : 'Nome da Empresa' }}
+                    </label>
+                    <input type="text" class="form-control" v-model="name"
+                      :placeholder="userType === 'individual' ? 'Seu nome completo' : 'Nome da empresa'" required />
+                  </div>
+
+
+                  <div class="mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="termsCheck" required />
+                      <label class="form-check-label" for="termsCheck">
+                        Eu concordo com os <a href="/terms">Termos de uso</a> e a
+                        <a href="/privacy">Política de privacidade</a>
+                      </label>
+                    </div>
+                  </div>
+
+
+                  <div class="d-grid mb-3">
+                    <CustomButton class="button btn-lg">Criar Conta</CustomButton>
+                  </div>
+
+
+                  <p class="text-center mb-0">
+                    Já possui uma conta?
+                    <RouterLink to="/login" class="text-decoration-none">Entrar</RouterLink>
+                  </p>
+                </form>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-6 d-none d-lg-block">
-            <img
-              src="../assets/img/evaluation-feedback-customer-smiley-response.jpg"
-              alt="register form"
-              class="img-fluid register-image rounded-end"
-            />
+
+
+            <div class="col-lg-6 d-none d-lg-block bg-light">
+              <img src="../assets/img/evaluation-feedback-customer-smiley-response.jpg" alt="Register"
+                class="w-100 h-100 object-fit-cover" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  <style scoped>
-  .container-fluid {
-    padding: 20px;
+  </div>
+</template>
+
+<style scoped>
+.card {
+  border-radius: 1rem;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+a {
+  color: #0d6efd;
+}
+
+a:hover {
+  color: #0a58ca;
+}
+
+.form-control,
+.form-select {
+  padding: 0.75rem 1rem;
+}
+
+.input-group .btn {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .card-body {
+    padding: 2rem !important;
   }
-  
-  .register-card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    max-width: 1000px;
-  }
-  
-  .register-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .register-header {
-    letter-spacing: 1px;
-    color: #333;
-  }
-  
-  a {
-    color: #E74C3C;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    color: #1e90ff;
-    text-decoration: underline;
-  }
-  
-  .button {
-    width: 100%;
-  }
-  
-  button:hover {
-    transform: scale(1.01);
-  }
-  
-  .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #aaa;
-  }
-  
-  .toggle-password:hover {
-    color: #000;
-  }
-  </style>
-  
+}
+</style>

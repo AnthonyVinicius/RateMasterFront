@@ -1,6 +1,6 @@
 <template>
     <footer class="container-fluid pt-5 pb-5 footer-container">
-        <div class="d-flex flex-column align-items-center text-white">
+        <div class="d-flex flex-column align-items-center text-white gap-4">
             <div class="d-flex flex-row gap-2 ">
                 <img class="logo" src="/src/assets/img/Icon.png" alt="Logo da Empresa">
                 <h1 class="fw-bold">RateMaster</h1>
@@ -41,6 +41,6 @@
 
 .social-links a:hover {
     transform: scale(1.2);
-    color: #1ABC9C;
+    color: #1AA7BD;
 }
 </style>

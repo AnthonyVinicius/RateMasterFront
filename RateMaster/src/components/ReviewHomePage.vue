@@ -19,7 +19,7 @@
 
 .icon-box {
   display: inline-block;
-  color: #16A085;
+  color: #1AA7BD;
   padding-top: 20px;
   font-size: 50px;
 }

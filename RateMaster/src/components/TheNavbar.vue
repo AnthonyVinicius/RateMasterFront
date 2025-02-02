@@ -114,7 +114,7 @@ const handleSignOut = async () => {
 }
 
 .nav-link:hover {
-  background-color: #1ABC9C;
+  background-color: #1AA7BD;
   color: white;
   transform: scale(1.1);
 }
@@ -130,7 +130,7 @@ const handleSignOut = async () => {
 }
 
 .profile-icon:hover {
-  color: #1ABC9C;
+  color: #1AA7BD;
   transform: scale(1.1);
 }
 
@@ -144,7 +144,7 @@ const handleSignOut = async () => {
   background-color: #f1f1f1;
 }
 .bg-menu{
-  background-color: #1ABC9C;
+  background-color: #1AA7BD;
   
 }
 </style>

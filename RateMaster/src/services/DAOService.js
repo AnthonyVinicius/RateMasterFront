@@ -1,5 +1,5 @@
 import { firestore } from '../firebase';
-import { collection, addDoc, updateDoc, deleteDoc, getDocs, getDoc, doc, query, where } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, getDocs, getDoc, doc, query, where, arrayUnion } from 'firebase/firestore';
 
 class DAOService {
   constructor(collectionPath) {
@@ -85,6 +85,18 @@ class DAOService {
     } catch (error) {
       console.error('Error searching documents: ', error);
       throw new Error('Error searching documents');
+    }
+  }
+
+  async addResponse(reviewId, response) {
+    try {
+      const reviewRef = doc(firestore, this.collectionRef.path, reviewId);
+      await updateDoc(reviewRef, {
+        responses: arrayUnion(response),
+      });
+    } catch (error) {
+      console.error('Erro ao enviar resposta:', error);
+      throw new Error('Erro ao enviar resposta');
     }
   }
 }

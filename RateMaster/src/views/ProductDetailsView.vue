@@ -18,6 +18,7 @@ const userData = inject('userData');
 const product = ref(null);
 const reviews = ref([]);
 const newReview = ref({ rating: "", comment: "" });
+const newResponse = ref({ comment: "" });
 
 const fetchProductDetails = async () => {
   try {
@@ -93,6 +94,36 @@ const submitReview = async () => {
     console.log(userData.value);
     console.error("Erro ao enviar avaliação:", error);
     alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
+  }
+};
+
+const submitResponse = async (review) => {
+  const currentUser = auth.currentUser;
+
+  if (!currentUser) {
+    alert("Você precisa estar logado para responder a uma avaliação.");
+    return;
+  }
+
+  if (userData.value.userType !== 'business') {
+    alert("Apenas empresas podem responder a avaliações.");
+    return;
+  }
+
+  try {
+    const response = {
+      userId: userData.value.id,
+      userName: userData.value.name,
+      comment: newResponse.value.comment,
+    };
+
+    await daoReviews.addResponse(review.id, response);
+    review.responses.push(response);
+    newResponse.value.comment = ""; 
+    alert("Resposta enviada com sucesso!");
+  } catch (error) {
+    console.error("Erro ao enviar resposta:", error);
+    alert("Ocorreu um erro ao enviar sua resposta. Tente novamente.");
   }
 };
 
@@ -181,6 +212,21 @@ onMounted(() => {
               <div class="ms-auto description">{{ review.userName }}</div>
             </div>
             <p class="review-comment">{{ review.comment }}</p>
+
+            <div v-if="review.responses && review.responses.length > 0" class="responses mt-3">
+              <h5 class="fw-bold">Respostas:</h5>
+              <div v-for="(response, index) in review.responses" :key="index" class="response">
+                <div class="response-user-name">{{ response.userName }}:</div>
+                <p class="response-comment">{{ response.comment }}</p>
+              </div>
+            </div>
+
+            <div v-if="userData.userType === 'business'" class="response-form mt-4">
+              <form @submit.prevent="submitResponse(review)">
+                <textarea v-model="newResponse.comment" placeholder="Digite sua resposta..."></textarea>
+                <button type="submit">Enviar Resposta</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+// src/services/AuthService.js
 import { auth } from '@/firebase.js';
 import DAOService from "@/services/DAOService";
 import { onAuthStateChanged } from 'firebase/auth';
@@ -12,11 +13,11 @@ const fetchUserData = async (uid) => {
     try {
         const user = await daoUser.search('uid', uid);
         if (user && user.length > 0) {
-            return { ...user[0], userType: 'individual' };  // Explicitly set userType for individuals
+            return { ...user[0] };
         }
         const shop = await daoShop.search('uid', uid);
         if (shop && shop.length > 0) {
-            return { ...shop[0], userType: 'shop' };  // Explicitly set userType for shops
+            return { ...shop[0] };
         }
         console.warn("Nenhum dado encontrado nas coleções user ou shop.");
         return null;
@@ -31,7 +32,7 @@ const initAuth = () => {
         if (user) {
             try {
                 const userInfo = await fetchUserData(user.uid);
-                userData.value = userInfo;
+                userData.value = userInfo || null;
             } catch (error) {
                 console.error("Erro ao processar autenticação:", error);
                 userData.value = null;
@@ -42,18 +43,4 @@ const initAuth = () => {
     });
 };
 
-const isAuthenticated = () => {
-    return new Promise((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            unsubscribe();
-            resolve(!!user);
-        });
-    });
-};
-
-const hasAccess = (allowedTypes) => {
-    if (!userData.value || !userData.value.userType) return false;
-    return allowedTypes.includes(userData.value.userType);
-};
-
-export { userData, initAuth, isAuthenticated, hasAccess };
+export { userData, initAuth };

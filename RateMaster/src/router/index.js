@@ -1,6 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/HomePageView.vue';
-import { isAuthenticated, hasAccess } from "@/services/AuthService";
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/HomePageView.vue'
+import { userData, initAuth } from "@/services/AuthService";
+
+await initAuth();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,76 +11,37 @@ const router = createRouter({
     { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
     { path: '/reviews', name: 'reviews', component: () => import('../views/ProductReviewsView.vue') },
     { path: '/registerUser', name: 'registerUser', component: () => import('../views/RegisterUserView.vue') },
-    { 
-      path: '/registerProduct', 
-      name: 'registerProduct', 
-      meta: { requireAuth: true, restrictedTo: ['shop'] }, 
-      component: () => import('../views/RegisterProductView.vue') 
-    },
-    { 
-      path: '/brand', 
-      name: 'brands', 
-      meta: { requireAuth: true, restrictedTo: ['shop'] }, 
-      component: () => import('../views/BrandView.vue') 
-    },
-    { 
-      path: '/updateProducts/:id', 
-      name: 'updateProducts', 
-      meta: { requireAuth: true, restrictedTo: ['shop'] }, 
-      component: () => import('../views/UpdateProductsView.vue') 
-    },
-    { 
-      path: '/product/:id', 
-      name: 'productDetail', 
-      meta: { requireAuth: true }, 
-      component: () => import('../views/ProductDetailsView.vue') 
-    },
-    { 
-      path: '/myProfile', 
-      name: 'myProfile', 
-      meta: { requireAuth: true }, 
-      component: () => import('../views/MyProfileView.vue') 
-    },
-    { 
-      path: '/unauthorized', 
-      name: 'unauthorized', 
-      component: () => import('../views/UnauthorizedView.vue') 
-    },
+
+    { path: '/registerProduct', name: 'registerProduct', meta: { requireAuth: true, requireShop: true }, component: () => import('../views/RegisterProductView.vue') },
+    { path: '/brand', name: 'brands', meta: { requireAuth: true, requireShop: true }, component: () => import('../views/BrandView.vue') },
+    { path: '/updateProducts/:id', name: 'updateProducts', meta: { requireAuth: true, requireShop: true }, component: () => import('../views/UpdateProductsView.vue') },
+
+    { path: '/product/:id', name: 'productDetail', meta: { requireAuth: true }, component: () => import('../views/ProductDetailsView.vue') },
+    { path: '/myProfile', name: 'myProfile', meta: { requireAuth: true }, component: () => import('../views/MyProfileView.vue') },
+    { path: '/unauthorized', name: 'Unauthorized', meta: { requireAuth: true }, component: () => import('../views/UnauthorizedView.vue') },
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
 
+router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requireAuth);
+  const requiresShop = to.matched.some(record => record.meta.requireShop);
 
-  const restrictedTo = to.matched.some(record => record.meta.restrictedTo)
-    ? to.matched.find(record => record.meta.restrictedTo)?.meta.restrictedTo
-    : null;
+  console.log(userData.value);
 
-
-  if (!requiresAuth) {
-    next();
-    return;
-  }
-
-
-  const authenticated = await isAuthenticated();
-  if (!authenticated) {
-    next('/login');
-    return;
-  }
-
- 
-  if (restrictedTo) {
-    const hasPermission = hasAccess(restrictedTo);
-    if (!hasPermission) {
-      next('/unauthorized');
-      return;
+  if (requiresAuth) {
+    if (userData.value) {
+      if (!requiresShop || (requiresShop && userData.value.userType === "business")) {
+        next();
+      } else {
+        next('/unauthorized');
+      }
+    } else {
+      next("/login");
     }
+  } else {
+    next();
   }
-
-
-  next();
 });
 
 export default router;

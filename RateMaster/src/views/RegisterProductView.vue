@@ -1,6 +1,7 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
 import DAOService from '@/services/DAOService';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import { ref, onMounted, inject,} from 'vue';
 import { useRouter } from "vue-router";
 
@@ -101,16 +102,47 @@ const formatPrice = (event) => {
           <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
               <h5 class="card-title mb-4">Registrar Produto</h5>
-              <form @submit.prevent="submit">
+              <Form @submit="submit">
                 <div class="form-floating mb-3">
-                  <input v-model="product.name" type="text" class="form-control" id="productName"
-                    placeholder="Enter product name" required />
+                  <Field
+                  id="productName"
+                  name="productName"
+                  type="text"
+                  rules="required|min:5|max:100"
+                  v-slot="{field, errors, meta}">
+                    <input
+                      v-model="product.name" 
+                      v-bind="field"
+                      :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && errors.length,
+                        'is-invalid':meta.touched && errors.length
+                      }"
+                      placeholder="Enter product name" />
+                  </Field>
+                  <ErrorMessage name="productName" class="errorMessage"/>
                   <label for="productName">Nome do Produto</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                  <textarea v-model="product.description" class="form-control" id="description"
-                    placeholder="Enter product description" style="height: 100px" required></textarea>
+                  <Field
+                  id="description"
+                  name="description"
+                  type="text"
+                  rules="required|min:5|max:300"
+                  v-slot="{field, errors, meta}">
+                    <textarea 
+                    v-model="product.description"
+                    v-bind="field" 
+                    :class="{
+                        'form-control': true,
+                        'is-valid': meta.touched && errors.length,
+                        'is-invalid':meta.touched && errors.length
+                      }"
+                    placeholder="Enter product description" style="height: 100px">
+                    </textarea>
+                  </Field>
+                  <ErrorMessage name="description" class="errorMessage" />
                   <label for="description">Descrição</label>
                 </div>
 
@@ -121,12 +153,26 @@ const formatPrice = (event) => {
 
                   <div class="col-md-6">
                     <div class="form-floating">
-                      <select v-model="product.type" class="form-select" id="type" required>
-                        <option value="">Selecione o tipo</option>
-                        <option value="Product">Produto</option>
-                        <option value="Service">Serviço</option>
-                      </select>
-                      <label for="type">Tipo</label>
+                      <Field
+                        v-model="product.type"
+                        name="type"
+                        id="type"
+                        rules="required"
+                        v-slot="{ field, errors, meta }">
+                        <select
+                          v-bind="field"
+                          :class="{
+                            'form-control': true,
+                            'is-valid': meta.touched && !errors.length,
+                            'is-invalid': meta.touched && errors.length
+                          }">
+                          <option value="">Selecione o tipo</option>
+                          <option value="Product">Produto</option>
+                          <option value="Service">Serviço</option>
+                        </select>
+                        <label for="type">Tipo</label>
+                      </Field>
+                      <ErrorMessage name="type" class="errorMessage" />
                     </div>
                   </div>
                 </div>
@@ -134,12 +180,26 @@ const formatPrice = (event) => {
                 <div class="mb-4">
                   <div class="d-flex gap-2">
                     <div class="form-floating flex-grow-1">
-                      <select v-model="product.brand" class="form-select" id="brand" required>
+                      <Field
+                      v-model="product.brand"
+                      name="brand"
+                      id="brand"
+                      rules="required"
+                      v-slot="{field, errors, meta}">
+                      <select
+                      v-bind="field"
+                          :class="{
+                            'form-control': true,
+                            'is-valid': meta.touched && !errors.length,
+                            'is-invalid': meta.touched && errors.length
+                          }">
                         <option value="">Selecione a marca</option>
                         <option v-for="brand in brands" :key="brand.id" :value="brand.id">
                           {{ brand.name }}
                         </option>
                       </select>
+                    </Field>
+                    <ErrorMessage name="brand" class="errorMessage" />
                       <label for="brand">Marca</label>
                     </div>
                     <RouterLink to="/brand" class="d-flex align-items-center">
@@ -153,7 +213,7 @@ const formatPrice = (event) => {
                 <CustomButton class="button container-fluid py-3">
                   Registrar Produto
                 </CustomButton>
-              </form>
+              </Form>
             </div>
           </div>
         </div>

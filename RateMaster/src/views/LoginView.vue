@@ -1,41 +1,25 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
-import { auth } from '@/firebase.js';
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import LoginService from '@/services/LoginService'
 
 const router = useRouter();
 const email = ref("");
 const password = ref("");
-const errMsg = ref("");
 const showPassword = ref(false);
 
-const login = async () => {
-  errMsg.value = "";
+const loginService = new LoginService();
 
-  try {
-    const userFromDB = await signInWithEmailAndPassword(auth, email.value, password.value);
-    console.log(userFromDB)
 
-    if (userFromDB) {
-      router.push('/');
-    }
-  } catch (error) {
-    switch (error.code) {
-      case "auth/invalid-email":
-        errMsg.value = "E-mail inválido.";
-        break;
-      case "auth/user-not-found":
-        errMsg.value = "Nenhuma conta com este e-mail foi encontrada.";
-        break;
-      case "auth/wrong-password":
-        errMsg.value = "Senha inválida.";
-        break;
-      default:
-        errMsg.value = "Erro ao tentar login. Tente novamente.";
-    }
-  }
+const handleLogin = () => {
+  loginService.login(email.value, password.value)
+  .then(result => {
+    alert('Login Realizado com Sucesso')
+    router.push('/')
+  }).catch(error => {
+    alert('Email e/ou senha invalido(s)')
+  });
 };
 
 const toggleShowPassword = () => {
@@ -62,7 +46,7 @@ const toggleShowPassword = () => {
                   <p class="text-muted">Faça login na sua conta</p>
                 </div>
 
-                <form @submit.prevent="login">
+                <form @submit.prevent="handleLogin">
 
                   <div class="mb-3">
                     <label class="form-label">Email</label>

@@ -102,6 +102,10 @@ const goToUpdate = (productId) => {
   router.push({ name: 'updateProducts', params: { id: productId } });
 };
 
+const goToDetails = (productId) => {
+    router.push({ name: 'productDetail', params: { id: productId } });
+};
+
 
 onMounted(() => {
   showAll();
@@ -157,10 +161,10 @@ onMounted(() => {
 
     <div class="container-fluid mt-5 mb-5 col-md-11" v-if="viewType === 'columns'">
       <div class="row row-cols-1 row-cols-md-6 g-4">
-        <div class="product-card" v-for="product in products" :key="product.id">
+        <div class="product-card" v-for="product in products" :key="product.id" >
           <div class="card rounded-3 h-100 text-truncate">
-            <div class="content-card">
-              <div class="d-flex justify-content-center align-items-center img-container">
+            <div class="content-card" @click="goToDetails(product.id)">
+              <div class="d-flex justify-content-center align-items-center img-container" >
                 <img class="img-fluid product-img" :src="product.image" :alt="product.name">
               </div>
               <div class="card-body">

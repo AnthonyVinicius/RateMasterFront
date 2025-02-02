@@ -50,5 +50,9 @@ const isAuthenticated = () => {
         });
     });
 };
+const hasAccess = (allowedTypes) => {
+    if (!userData.value) return false;
+    return allowedTypes.includes(userData.value.userType);
+};
 
-export { userData, initAuth, isAuthenticated };
+export { userData, initAuth, isAuthenticated, hasAccess };

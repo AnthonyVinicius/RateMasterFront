@@ -3,7 +3,6 @@ import { ref, onMounted, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import DAOService from "@/services/DAOService";
 import CustomButton from "@/components/CustomButton.vue";
-import { auth } from "@/firebase.js";
 import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const router = useRouter();
@@ -15,21 +14,43 @@ const daoReviews = new DAOService("reviews");
 const daoShops = new DAOService('shop');
 const userData = inject('userData');
 
-
 const product = ref(null);
 const reviews = ref([]);
 const newReview = ref({ rating: "", comment: "" });
-const newResponse = ref({ comment: "" });
+const responseStates = ref({});
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+const triggerAlert = (message, type = 'success') => {
+  alertMessage.value = message;
+  alertType.value = type;
+  showAlert.value = true;
+  setTimeout(() => (showAlert.value = false), 3000);
+};
+
+const alertMessage = ref(null);
+const alertType = ref('success');
+const showAlert = ref(false);
 
 const fetchProductDetails = async () => {
   try {
     const productId = route.params.id;
     product.value = await daoProducts.get(productId);
 
-    // buscar as avaliações do produto
     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
-    // calcular a média de avaliação
+    reviews.value.forEach(review => {
+      responseStates.value[review.id] = { comment: "" };
+    });
+
     if (reviews.value.length > 0) {
       averageRating.value = (
         reviews.value.reduce((sum, review) => sum + review.rating, 0) /
@@ -39,7 +60,6 @@ const fetchProductDetails = async () => {
       averageRating.value = 0;
     }
 
-    // buscar o nome da empresa
     const company = await daoShops.get(product.value.idShop);
     product.value.companyName = company ? company.name : 'Empresa desconhecida';
 
@@ -49,36 +69,18 @@ const fetchProductDetails = async () => {
 };
 
 const submitReview = async () => {
-  const currentUser = auth.currentUser;
-
-  if (!currentUser) {
-    alert("Você precisa estar logado para enviar uma avaliação.");
-    return;
-  }
-
-  if (userData.value.userType === 'business') {
-    alert("Seu tipo de usuário não permite essa ação");
-    return;
-  }
-
-  if (!userData.value) {
-    console.log(userData[0])
-    alert("Dados do usuário não estão disponíveis.");
-    return;
-  }
-
   const review = {
     productId: product.value.id,
     userId: userData.value.id,
     userName: userData.value.name,
     rating: Number(newReview.value.rating),
     comment: newReview.value.comment,
+    createdAt: new Date().toISOString()
   };
 
   try {
     await daoReviews.insert(review);
 
-    // atualiza localmente a lista de avaliações
     reviews.value.unshift(review);
 
     averageRating.value = (
@@ -89,46 +91,36 @@ const submitReview = async () => {
     newReview.value.comment = "";
     newReview.value.rating = "";
 
-    alert("Avaliação enviada com sucesso!");
+    triggerAlert('Avaliação enviada com sucesso!', 'success');
     console.log("id", userData.value.id);
   } catch (error) {
     console.log(userData.value);
     console.error("Erro ao enviar avaliação:", error);
-    alert("Ocorreu um erro ao enviar sua avaliação. Tente novamente.");
+    triggerAlert('Ocorreu um erro ao enviar sua avaliação. Tente novamente.', 'danger');
   }
 };
 
-const submitResponse = async (review) => {
-  const currentUser = auth.currentUser;
-
-  if (!currentUser) {
-    alert("Você precisa estar logado para responder a uma avaliação.");
-    return;
-  }
-
-  if (userData.value.userType !== 'business') {
-    alert("Apenas empresas podem responder a avaliações.");
-    return;
-  }
-
+const submitResponse = async (review, values, { resetForm }) => {
   try {
     const response = {
       userId: userData.value.id,
       userName: userData.value.name,
-      comment: newResponse.value.comment,
+      comment: responseStates.value[review.id].comment,
+      createdAt: new Date().toISOString()
     };
 
-    console.log("Enviando resposta:", response); // verificacao antes de enviar
+    console.log("Enviando resposta:", response);
     await daoReviews.addResponse(review.id, response);
     console.log("Resposta enviada com sucesso");
 
+    review.responses = review.responses || [];
     review.responses.push(response);
-    newResponse.value.comment = "";
-    alert("Resposta enviada com sucesso!");
+    responseStates.value[review.id].comment = "";
+    triggerAlert('Resposta enviada com sucesso!', 'success');
+    resetForm();
 
   } catch (error) {
     console.error("Erro ao enviar resposta:", error);
-    alert("Ocorreu um erro ao enviar sua resposta. Tente novamente.");
   }
 };
 
@@ -138,115 +130,131 @@ onMounted(() => {
 </script>
 
 <template>
+  <div v-if="showAlert" :class="`alert alert-${alertType} alert-dismissible fade show custom-alert fixed-bottom m-3`" role="alert">
+    <i v-if="alertType === 'success'" class="bi bi-check-circle-fill"></i>
+    <i v-if="alertType === 'warning'" class="bi bi-exclamation-triangle-fill"></i>
+    <i v-if="alertType === 'danger'" class="bi bi-x-circle-fill"></i>
+    {{ alertMessage }}
+    <button type="button" class="btn-close" @click="showAlert = false"></button>
+  </div>
   <div class="container pt-5">
     <button type="button" class="btn pb-3 back-button" @click="router.push('/reviews')">
       ← Voltar para os produtos
     </button>
 
-    <div class="review-form container p-0 text-truncate rounded-4" v-if="product">
-      <div class="row">
-
-        <div class="img-container col container-fluid d-flex justify-content-center p-5 rounded-start-3">
-          <img :src="product.image" class="rounded-4 product-img " :alt="product.name">
+    <div class="card p-0 rounded-4 shadow-sm" v-if="product">
+      <div class="row g-0">
+        <div class="col bg-light d-flex justify-content-center align-items-center p-5 rounded-start-3">
+          <img :src="product.image" class="img-fluid rounded-4" :alt="product.name" style="max-width: 400px;">
         </div>
 
-        <div class="product-detail col container-fluid bg-white rounded-end-4 p-4">
-          <div class="text-detail vstack gap-3">
-            <div class="hstack">
-              <h1 class="text-modified text-truncate">{{ product.name }}</h1>
-              <div class="ms-auto me-3 rating">
-                <div class="rating-badge fw-bold p-2 rounded-4">
+        <div class="col bg-white rounded-end-4 p-4">
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center">
+              <h1 class="h2 text-truncate mb-0">{{ product.name }}</h1>
+              <div class="ms-auto me-3">
+                <div class="badge bg-warning bg-opacity-25 text-warning p-2 rounded-4">
                   <i class="bi bi-star-fill me-1"></i>
-                  <span>{{ averageRating }}/5</span>
+                  <span>{{ averageRating }}</span>
                 </div>
               </div>
             </div>
-            <p class="description text-truncate">{{ product.description }}</p>
-            <p class="description text-truncate"><i class="bi bi-shop me-1"></i>{{ product.companyName }}</p>
+            <p class="text-secondary text-truncate mb-0">{{ product.description }}</p>
+            <p class="text-secondary text-truncate mb-0"><i class="bi bi-shop me-1"></i>{{ product.companyName }}</p>
+            <p class="fs-4 fw-bold text-success mb-0">{{ product.price }}</p>
           </div>
         </div>
       </div>
     </div>
 
-
-    <div v-if="userData.userType === 'individual'">
-
-      <Form @submit="submitReview" class="p-5 mt-5 mb-5 rounded-4 bg-white review-form">
-        <h3 class="fw-bold mb-3 text-modified">Deixe sua avaliação</h3>
-        <div class="form-group">
-          <label class="mt-2 mb-2" for="rating">Sua nota:</label>
-          <br>
+    <div v-if="userData.userType === 'individual'" class="mt-5">
+      <Form @submit="submitReview" class="card p-5 shadow-sm">
+        <h3 class="fw-bold mb-3">Deixe sua avaliação</h3>
+        <div class="mb-3">
+          <label class="form-label" for="rating">Sua nota:</label>
           <div class="mb-4 star-rating">
             <input type="radio" id="sr-5" name="star-rating" value="5" v-model="newReview.rating" />
             <label for="sr-5"><i class="bi bi-star-fill"></i></label>
-
             <input type="radio" id="sr-4" name="star-rating" value="4" v-model="newReview.rating" />
             <label for="sr-4"><i class="bi bi-star-fill"></i></label>
-
             <input type="radio" id="sr-3" name="star-rating" value="3" v-model="newReview.rating" />
             <label for="sr-3"><i class="bi bi-star-fill"></i></label>
-
             <input type="radio" id="sr-2" name="star-rating" value="2" v-model="newReview.rating" />
             <label for="sr-2"><i class="bi bi-star-fill"></i></label>
-
             <input type="radio" id="sr-1" name="star-rating" value="1" v-model="newReview.rating" />
             <label for="sr-1"><i class="bi bi-star-fill"></i></label>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="mb-2" for="comment">Seu comentário:</label>
-          <Field
-          v-model="newReview.comment"
-          name="comment"
-          id="comment"
-          rules="required|min:5|max:200"
-          v-slot="{field, errors, meta}">
-            <textarea
-            v-bind="field"
-            :class="{
-                'form-control': true,
-                'is-valid': meta.touched && errors.length,
-                'is-invalid':meta.touched && errors.length
-            }"
-            class="container-fluid rounded-2 p-1" 
-            rows="4" 
-            placeholder="Compartilhe sua experiência com o produto..."></textarea>
+          <label class="form-label" for="comment">Seu comentário:</label>
+          <Field v-model="newReview.comment" name="comment" id="comment" rules="required|min:5|max:200"
+            v-slot="{ field, errors, meta }">
+            <textarea v-bind="field" :class="{
+              'form-control': true,
+              'is-valid': meta.touched && !errors.length,
+              'is-invalid': meta.touched && errors.length
+            }" rows="4" placeholder="Compartilhe sua experiência com o produto..."></textarea>
           </Field>
-          <ErrorMessage name="comment" class="errorMessage" />
+          <ErrorMessage name="comment" class="invalid-feedback" />
         </div>
-        <div class="d-flex">
-          <CustomButton class="shadow-sm">Enviar Avaliação</CustomButton>
+        <div>
+          <CustomButton class="btn btn-primary shadow-sm">Enviar Avaliação</CustomButton>
         </div>
       </Form>
     </div>
-    <div class="reviews-list mt-5">
-      <h2 class="mb-4 text-modified">Avaliações dos Clientes</h2>
+
+    <div class="mt-5">
+      <h2 class="mb-4 fw-bold">Avaliações dos Clientes</h2>
       <div v-if="reviews.length === 0" class="mb-5">
         Ainda não há avaliações para este produto.
       </div>
-      <div v-else class="row gap-4">
-        <div v-for="review in reviews" :key="review.id" class="col bg-white rounded-3 pb-4 pt-4 pe-4 ps-4 mb-5 review-form">
-          <div class="vstack gap-4 fs-6">
-            <div class="hstack gap-1">
-              <i class="bi bi-star-fill star" v-for="n in review.rating" :key="n"></i>
-              <div class="ms-auto description">{{ review.userName }}</div>
-            </div>
-            <p class="review-comment">{{ review.comment }}</p>
+      <div v-else class="row g-4">
+        <div v-for="review in reviews" :key="review.id" class="col-12">
+          <div class="card shadow-sm p-4">
+            <div class="d-flex flex-column gap-4">
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-items-center gap-1">
+                  <div class="text-warning">
+                    <i class="bi bi-star-fill" v-for="n in review.rating" :key="n"></i>
+                  </div>
 
-            <div v-if="review.responses && review.responses.length > 0" class="responses mt-3">
-              <h5 class="fw-bold">Respostas:</h5>
-              <div v-for="(response, index) in review.responses" :key="index" class="response">
-                <div class="response-user-name">{{ response.userName }}:</div>
-                <p class="response-comment">{{ response.comment }}</p>
+                  <div class="ms-auto text-secondary">{{ review.userName }}</div>
+                </div>
+                <div class="text-muted small">
+                  <i class="bi bi-clock me-1"></i>
+                  {{ review.createdAt ? formatDate(review.createdAt) : 'Data não disponível' }}
+                </div>
               </div>
-            </div>
+              <p class="mb-0">{{ review.comment }}</p>
 
-            <div v-if="userData.userType === 'business' && review.productId && product.idShop === userData.id" class="response-form mt-4">
-              <Form @submit.prevent="submitResponse(review)">
-                <textarea v-model="newResponse.comment" placeholder="Digite sua resposta..."></textarea>
-                <button type="submit">Enviar Resposta</button>
-              </Form>
+              <div v-if="review.responses && review.responses.length > 0" class="bg-light rounded-3 p-4 mt-3">
+                <h5 class="fw-bold mb-4">Respostas da Loja</h5>
+                <div v-for="(response, index) in review.responses" :key="index"
+                  class="bg-white rounded-3 p-3 mb-3 shadow-sm">
+                  <div class="mb-3">
+                    <div class="fw-semibold">
+                      <i class="bi bi-shop me-2"></i>{{ response.userName }}
+                    </div>
+                    <div class="text-muted small mt-1">
+                      <i class="bi bi-clock me-1"></i>
+                      {{ response.createdAt ? formatDate(response.createdAt) : 'Data não disponível' }}
+                    </div>
+                  </div>
+                  <p class="mb-0 text-secondary">{{ response.comment }}</p>
+                </div>
+              </div>
+
+              <div v-if="userData.userType === 'business' && review.productId && product.idShop === userData.id"
+                class="bg-light rounded-3 p-4 mt-3">
+                <Form v-slot="{ resetForm }" @submit="values => submitResponse(review, values, { resetForm })">
+                  <textarea v-model="responseStates[review.id].comment" class="form-control mb-3" rows="4"
+                    placeholder="Digite sua resposta como loja..."></textarea>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-reply me-2"></i>Responder como Loja
+                  </button>
+                </Form>
+              </div>
             </div>
           </div>
         </div>
@@ -256,47 +264,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.review-form {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.img-container {
-  background: #f8f9fa;
-}
-
-.product-img {
-  width: auto;
-  height: auto;
-  max-width: 400px;
-}
-
-.rating-badge {
-  background: #fff8e5;
-  color: #eab308;
-}
-
-.text-detail {
-  font-size: 14pt;
-}
-
-.back-button:hover {
-  color: #333;
-}
-
-.star {
-  color: #eab308;
-}
-
-.description, label {
-  color: #666;
-}
-
-.text-modified {
-  color: #2c3e50;
-  font-weight: 600;
-}
-
 .back-button {
   background: none;
   border: none;
@@ -306,19 +273,8 @@ onMounted(() => {
   transition: color 0.3s ease;
 }
 
-textarea {
-  width: 100%;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  resize: vertical;
-  font-family: inherit;
-  transition: border-color 0.2s ease;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #4f46e5;
+.back-button:hover {
+  color: #333;
 }
 
 .star-rating {
@@ -334,19 +290,13 @@ textarea:focus {
 .star-rating label {
   cursor: pointer;
   font-size: 1.5rem;
-  color: #ddd;
+  color: #dee2e6;
   transition: color 0.2s ease;
 }
 
 .star-rating label:hover,
 .star-rating label:hover~label,
 .star-rating input:checked~label {
-  color: #eab308;
-}
-
-.review-form:hover,
-.product-details-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  color: #ffc107;
 }
 </style>

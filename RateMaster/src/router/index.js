@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/HomePageView.vue'
 import { userData, initAuth } from "@/services/AuthService";
 
-await initAuth();
+initAuth();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -55,11 +55,6 @@ const handleSignOut = async () => {
               <i class="bi bi-star-fill p-2"></i>Avaliações
             </RouterLink>
           </li>
-          <li class="nav-item" v-if="!isLogged">
-            <RouterLink class="nav-link text-white" to="/login">
-              <i class="bi bi-box-arrow-in-right p-2"></i>Login
-            </RouterLink>
-          </li>
           <li class="nav-item" v-if="isLogged && userData?.userType !== 'individual'">
             <RouterLink class="nav-link text-white" to="/registerProduct">
               <i class="bi bi-plus-square-fill p-2"></i>Registrar Produto

@@ -12,6 +12,9 @@ const daoUser = new DAOService('user');
 const daoShop = new DAOService('shop');
 const products = ref([]);
 const brandMap = ref({});
+const alertMessage = ref(null);
+const alertType = ref('success');
+const showAlert = ref(false);
 
 const userData = inject('userData');
 
@@ -36,7 +39,12 @@ const cancelEditUserName = () => {
   on_off.value = false;
   newUserName.value = null;
 };
-
+const triggerAlert = (message, type = 'success') => {
+    alertMessage.value = message;
+    alertType.value = type;
+    showAlert.value = true;
+    setTimeout(() => (showAlert.value = false), 3000);
+};
 
 const updateUserName = async () => {
   editedUserName.value = newUserName.value.trim();
@@ -90,10 +98,10 @@ const deleteProduct = async (id) => {
     try {
       await daoProducts.delete(id);
       products.value = products.value.filter(product => product.id !== id);
-      alert('Produto removido com sucesso!');
+      triggerAlert('Produto removido com sucesso!', 'success');
     } catch (error) {
       console.error(error);
-      alert("Erro ao remover o produto");
+      triggerAlert('Erro ao remover produto.', 'danger');
     }
   }
 };
@@ -103,7 +111,7 @@ const goToUpdate = (productId) => {
 };
 
 const goToDetails = (productId) => {
-    router.push({ name: 'productDetail', params: { id: productId } });
+  router.push({ name: 'productDetail', params: { id: productId } });
 };
 
 
@@ -141,6 +149,13 @@ onMounted(() => {
 
     </div>
   </div>
+  <div v-if="showAlert" :class="`alert alert-${alertType} alert-dismissible fade show custom-alert m-3`" role="alert">
+    <i v-if="alertType === 'success'" class="bi bi-check-circle-fill"></i>
+    <i v-if="alertType === 'warning'" class="bi bi-exclamation-triangle-fill"></i>
+    <i v-if="alertType === 'danger'" class="bi bi-x-circle-fill"></i>
+    {{ alertMessage }}
+    <button type="button" class="btn-close" @click="showAlert = false"></button>
+  </div>
 
   <div class="container-fluid pb-3 bg-white" v-if="userData?.userType !== 'individual'">
     <div class="container-fluid d-flex">
@@ -161,10 +176,10 @@ onMounted(() => {
 
     <div class="container-fluid mt-5 mb-5 col-md-11" v-if="viewType === 'columns'">
       <div class="row row-cols-1 row-cols-md-6 g-4">
-        <div class="product-card" v-for="product in products" :key="product.id" >
+        <div class="product-card" v-for="product in products" :key="product.id">
           <div class="card rounded-3 h-100 text-truncate">
             <div class="content-card" @click="goToDetails(product.id)">
-              <div class="d-flex justify-content-center align-items-center img-container" >
+              <div class="d-flex justify-content-center align-items-center img-container">
                 <img class="img-fluid product-img" :src="product.image" :alt="product.name">
               </div>
               <div class="card-body">
@@ -243,7 +258,7 @@ onMounted(() => {
   font-weight: 600;
 }
 
-.form-control{
+.form-control {
   margin-top: 100px;
 }
 
@@ -288,7 +303,7 @@ onMounted(() => {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
- 
+
 .rating {
   color: #f39c12;
 }

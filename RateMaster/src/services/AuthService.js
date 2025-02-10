@@ -1,4 +1,3 @@
-// src/services/AuthService.js
 import { auth } from '@/firebase.js';
 import DAOService from "@/services/DAOService";
 import { onAuthStateChanged } from 'firebase/auth';

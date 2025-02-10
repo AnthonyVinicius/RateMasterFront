@@ -27,8 +27,6 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requireAuth);
   const requiresShop = to.matched.some(record => record.meta.requireShop);
 
-  console.log(userData.value);
-
   if (requiresAuth) {
     if (userData.value) {
       if (!requiresShop || (requiresShop && userData.value.userType === "business")) {

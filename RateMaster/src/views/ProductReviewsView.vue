@@ -45,11 +45,8 @@ const fetchProducts = async () => {
 
 const normalizePrice = (price) => {
     if (!price) return 0;
-
-    // Remove tudo que não for número ou vírgula
     let cleanPrice = price.replace(/[^\d,]/g, '').replace(',', '.');
-
-    return parseFloat(cleanPrice) || 0; // Retorna 0 se a conversão falhar
+    return parseFloat(cleanPrice) || 0;
 };
 
 
@@ -62,12 +59,11 @@ const filterProducts = computed(() => {
 
         const price = normalizePrice(product.price);
 
-        // Correção na lógica de comparação dos preços
         const equalPrice = filters.value.price.length === 0 || filters.value.price.some(priceRange => {
             if (priceRange === "0-50") return price >= 0 && price <= 50;
             if (priceRange === "51-100") return price >= 51 && price <= 100;
             if (priceRange === "101+") return price >= 101;
-            return false; // Evita casos não tratados
+            return false;
         });
 
         const equalRating = filters.value.rating.length === 0 || filters.value.rating.some(rating => {

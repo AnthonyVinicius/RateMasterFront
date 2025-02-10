@@ -6,7 +6,6 @@ import { userData, initAuth } from '@/services/AuthService.js';
 import { configure, defineRule } from 'vee-validate';
 import { required, max, between, min } from '@vee-validate/rules';
 
-//definir regras do vee
 defineRule('required', required);
 defineRule('max', max);
 defineRule('min', min);

@@ -92,7 +92,6 @@ const submitReview = async () => {
     newReview.value.rating = "";
 
     triggerAlert('Avaliação enviada com sucesso!', 'success');
-    console.log("id", userData.value.id);
   } catch (error) {
     console.log(userData.value);
     console.error("Erro ao enviar avaliação:", error);

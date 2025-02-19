@@ -88,7 +88,7 @@ onMounted(() => {
 <template>
     <div class="container-fluid pe-5 ps-5">
         <div class="d-flex flex-column  mt-4 mb-4">
-                <h1 class="header ms-auto me-auto align-items-center ">Descrubra nossos Produtos</h1>
+                <h1 class="header ms-auto me-auto align-items-center ">Descubra nossos Produtos</h1>
                 <div class="form-floating search-bar container search-container">
                     <input type="search" v-model="searchQuery" class="form-control" id="floatingInput" placeholder="Procurar produto..." />
                     <label class="ms-3" for="floatingInput"><i class="bi bi-search"></i> Procurar produto...</label>
@@ -113,7 +113,7 @@ onMounted(() => {
 
                     <div class="filter-section">
                         <div class="vstack">
-                            <h3 class="filter-text">Rating</h3>
+                            <h3 class="filter-text">Nota</h3>
                             <label class="mb-2" v-for="n in 5" :key="n">
                                 <input class="checkbox" type="checkbox" v-model="filters.rating" :value="6 - n">
                                 <span class="star">

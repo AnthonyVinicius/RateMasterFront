@@ -33,7 +33,6 @@ const addBrand = async () => {
         triggerAlert('Por favor, insira um nome válido para a marca.', 'warning');
         return;
     }
-
     try {
         await daoBrands.insert({ name: trimmedBrand });
         await showAllBrands();

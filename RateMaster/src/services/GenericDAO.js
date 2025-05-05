@@ -16,16 +16,16 @@ class GenericDAO {
     return await apiRequest('get', `/${this.resourcePath}/${id}`);
   }
 
-  async create(data) {
-    return await apiRequest('post', `/${this.resourcePath}`, data);
+  async insert(object) {
+    return await apiRequest('post', `/${this.resourcePath}/register`, object);
   }
 
-  async update(id, data) {
-    return await apiRequest('put', `/${this.resourcePath}/${id}`, data);
+  async update(id, object) {
+    return await apiRequest('put', `/${this.resourcePath}/update/${id}`, object);
   }
 
   async delete(id) {
-    return await apiRequest('delete', `/${this.resourcePath}/${id}`);
+    return await apiRequest('delete', `/${this.resourcePath}/delete/${id}`);
   }
 }
 

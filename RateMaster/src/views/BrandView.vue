@@ -1,12 +1,10 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
-import DAOService from '@/services/DAOService';
 import { ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
+import GenericDAO from '@/services/GenericDAO';
 
-
-const daoBrands = new DAOService('brands');
-
+const daoBrands = new GenericDAO('brand');
 const router = useRouter();
 const brands = ref([]);
 const newBrand = ref('');
@@ -16,19 +14,17 @@ const alertMessage = ref(null);
 const alertType = ref('success');
 const showAlert = ref(false);
 
-onMounted(() => {
-    showAllBrands();
-});
-
-const showAllBrands = async () => {
-    brands.value = await daoBrands.getAll();
-};
 
 const triggerAlert = (message, type = 'success') => {
     alertMessage.value = message;
     alertType.value = type;
     showAlert.value = true;
     setTimeout(() => (showAlert.value = false), 3000);
+};
+
+
+const showAllBrands = async () => {
+    brands.value = await daoBrands.getAll();
 };
 
 const addBrand = async () => {
@@ -94,7 +90,11 @@ const updateBrand = async () => {
         console.error(error);
         triggerAlert('Erro ao atualizar a marca.', 'danger');
     }
+
 };
+onMounted(async () => {
+    showAllBrands();
+});
 </script>
 
 <template>
@@ -143,8 +143,7 @@ const updateBrand = async () => {
                             </CustomButton>
                         </div>
                         <div v-else>
-                            <CustomButton @click="() => editBrand(brand)" type="button"
-                                class="btn ms-2 me-2">
+                            <CustomButton @click="() => editBrand(brand)" type="button" class="btn ms-2 me-2">
                                 <i class="bi bi-pencil-square"></i>
                             </CustomButton>
                             <CustomButton @click="deleteBrand(brand.id)" type="button" class="btn ms-2 me-2">

@@ -4,6 +4,7 @@ import DAOService from '@/services/DAOService';
 import { ref, onMounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
+
 const router = useRouter();
 
 const daoProducts = new DAOService('products');

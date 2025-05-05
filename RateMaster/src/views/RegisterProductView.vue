@@ -1,13 +1,13 @@
 <script setup>
 import CustomButton from '@/components/CustomButton.vue';
-import DAOService from '@/services/DAOService';
+import GenericDAO from '@/services/GenericDAO';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { ref, onMounted, inject, } from 'vue';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const daoProducts = new DAOService('products');
-const daoBrands = new DAOService('brands');
+const daoProducts = new GenericDAO('product');
+const daoBrands = new GenericDAO('brand');
 const userData = inject('userData');
 
 const product = ref({

@@ -1,17 +1,17 @@
 <script setup>
 import { ref, onMounted, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import DAOService from "@/services/DAOService";
 import CustomButton from "@/components/CustomButton.vue";
 import { Form, Field, ErrorMessage } from 'vee-validate';
+import GenericDAO from "@/services/GenericDAO";
 
 const router = useRouter();
 const route = useRoute();
 const averageRating = ref(0);
 
-const daoProducts = new DAOService("products");
-const daoReviews = new DAOService("reviews");
-const daoShops = new DAOService('shop');
+const daoProducts = new GenericDAO("product");
+const daoReviews = new GenericDAO("review");
+const daoShops = new GenericDAO('shop');
 const userData = inject('userData');
 
 const product = ref(null);
@@ -43,8 +43,9 @@ const showAlert = ref(false);
 const fetchProductDetails = async () => {
   try {
     const productId = route.params.id;
-    product.value = await daoProducts.get(productId);
+    product.value = await daoProducts.getById(productId);
 
+    //mudar essa logica
     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
     reviews.value.forEach(review => {

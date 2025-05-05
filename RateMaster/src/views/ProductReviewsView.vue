@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import DAOService from '@/services/DAOService';
 import { useRouter } from 'vue-router';
+import GenericDAO from '@/services/GenericDAO';
 
-const daoProducts = new DAOService('products');
-const daoReviews = new DAOService('reviews');
-const daoShops = new DAOService('shop');
+const daoProducts = new GenericDAO('product');
+const daoReviews = new GenericDAO('review');
+const daoShops = new GenericDAO('shop');
 const router = useRouter();
 
 const products = ref([]);
@@ -43,21 +43,13 @@ const fetchProducts = async () => {
     }
 };
 
-const normalizePrice = (price) => {
-    if (!price) return 0;
-    let cleanPrice = price.replace(/[^\d,]/g, '').replace(',', '.');
-    return parseFloat(cleanPrice) || 0;
-};
-
-
-
 const filterProducts = computed(() => {
     return products.value.filter(product => {
         const matchSearch = !searchQuery.value ||
             product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
             product.companyName.toLowerCase().includes(searchQuery.value.toLowerCase());
 
-        const price = normalizePrice(product.price);
+        const price = product.price;
 
         const equalPrice = filters.value.price.length === 0 || filters.value.price.some(priceRange => {
             if (priceRange === "0-50") return price >= 0 && price <= 50;

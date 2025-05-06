@@ -2,92 +2,96 @@
 import CustomButton from '@/components/CustomButton.vue';
 import GenericDAO from '@/services/GenericDAO';
 import { Form, Field, ErrorMessage } from 'vee-validate';
-import { ref, onMounted, inject, } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const daoProducts = new GenericDAO('product');
 const daoBrands = new GenericDAO('brand');
+const daoCategories = new GenericDAO('category');
 const userData = inject('userData');
 
 const product = ref({
-  idShop: '',
   name: '',
   description: '',
-  brand: '',
   price: '',
-  type: '',
-  image: ''
+  brandModel: '',
+  shopModel: '',
+  categoryModel: '',
 });
 
 const brands = ref([]);
+const categories = ref([]);
 const alertMessage = ref(null);
 const alertType = ref('success');
 const showAlert = ref(false);
 
 const triggerAlert = (message, type = 'success') => {
-    alertMessage.value = message;
-    alertType.value = type;
-    showAlert.value = true;
-    setTimeout(() => (showAlert.value = false), 3000);
+  alertMessage.value = message;
+  alertType.value = type;
+  showAlert.value = true;
+  setTimeout(() => (showAlert.value = false), 3000);
 };
 
 const loadBrands = async () => {
   brands.value = await daoBrands.getAll();
 };
 
+const loadCategories = async () => {
+  categories.value = await daoCategories.getAll();
+};
+
 onMounted(() => {
   loadBrands();
+  loadCategories();
 });
 
 const submit = async () => {
-  product.value.idShop = userData.value.id;
+  product.value.shopModel = Number(userData.value.id);
   product.value.name = product.value.name.trim();
   product.value.description = product.value.description.trim();
-  product.value.price = product.value.price.trim();
-  product.value.brand = product.value.brand.trim();
-  product.value.type = product.value.type.trim();
+  product.value.price = parseFloat(product.value.price)
+  product.value.brandModel = typeof product.value.brandModel === 'string' ? product.value.brand.trim() : '';
+  product.value.categoryModel = typeof product.value.categoryModel === 'string' ? product.value.category.trim() : '';
 
   await daoProducts.insert(product.value);
   triggerAlert('Produto registrado com sucesso!', 'success');
 
   product.value = {
-    idShop: '',
     name: '',
     description: '',
-    brand: '',
     price: '',
-    type: '',
-    image: ''
+    brandModel: '',
+    shopModel: '',
+    categoryModel: '',
   };
 };
 
 const formatPrice = (event) => {
-  let value = event.target.value.replace(/\D/g, '');
-  const numericValue = Number(value) / 100;
-  product.value.price = numericValue
-    ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(numericValue)
-    : '';
-};
+  let value = event.target.value.replace(/[^\d]/g, '');  // Remove tudo que não for número
+  const numericValue = Number(value) / 100;  // Converte para valor numérico (centavos)
 
+  // Atualiza o valor de price com o formato correto
+  product.value.price = numericValue || '';
+};
 </script>
 
 <template>
   <div class="bg-light min-vh-100 py-5">
     <div class="container">
       <div v-if="showAlert" :class="`alert alert-${alertType} alert-dismissible fade show custom-alert`" role="alert">
-            <i v-if="alertType === 'success'" class="bi bi-check-circle-fill"></i>
-            <i v-if="alertType === 'warning'" class="bi bi-exclamation-triangle-fill"></i>
-            <i v-if="alertType === 'danger'" class="bi bi-x-circle-fill"></i>
-            {{ alertMessage }}
-            <button type="button" class="btn-close" @click="showAlert = false"></button>
-        </div>
+        <i v-if="alertType === 'success'" class="bi bi-check-circle-fill"></i>
+        <i v-if="alertType === 'warning'" class="bi bi-exclamation-triangle-fill"></i>
+        <i v-if="alertType === 'danger'" class="bi bi-x-circle-fill"></i>
+        {{ alertMessage }}
+        <button type="button" class="btn-close" @click="showAlert = false"></button>
+      </div>
+
       <button type="button" class="btn pb-3 back-button" @click="router.push('/myProfile')">
         ← Voltar para os produtos
       </button>
 
       <div class="row g-4">
-
         <div class="col-12 col-lg-5">
           <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
@@ -109,7 +113,7 @@ const formatPrice = (event) => {
           </div>
         </div>
 
-
+        <!-- Formulário de Registro do Produto -->
         <div class="col-12 col-lg-7">
           <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
@@ -135,8 +139,7 @@ const formatPrice = (event) => {
                       'form-control': true,
                       'is-valid': meta.touched && !errors.length,
                       'is-invalid': meta.touched && errors.length
-                    }" placeholder="Enter product description" style="height: 100px">
-                  </textarea>
+                    }" placeholder="Enter product description" style="height: 100px"></textarea>
                   </Field>
                   <ErrorMessage name="description" class="errorMessage" />
                   <label for="description">Descrição</label>
@@ -171,7 +174,7 @@ const formatPrice = (event) => {
                 <div class="mb-4">
                   <div class="d-flex gap-2">
                     <div class="form-floating flex-grow-1">
-                      <Field v-model="product.brand" name="brand" id="brand" rules="required"
+                      <Field v-model="product.brandModel" name="brand" id="brand" rules="required"
                         v-slot="{ field, errors, meta }">
                         <select v-bind="field" :class="{
                           'form-control': true,
@@ -188,6 +191,33 @@ const formatPrice = (event) => {
                       <label for="brand">Marca</label>
                     </div>
                     <RouterLink to="/brand" class="d-flex align-items-center">
+                      <CustomButton>
+                        <i class="bi bi-plus-lg"></i>
+                      </CustomButton>
+                    </RouterLink>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div class="d-flex gap-2">
+                    <div class="form-floating flex-grow-1">
+                      <Field v-model="product.categoryModel" name="category" id="category" rules="required"
+                        v-slot="{ field, errors, meta }">
+                        <select v-bind="field" :class="{
+                          'form-control': true,
+                          'is-valid': meta.touched && !errors.length,
+                          'is-invalid': meta.touched && errors.length
+                        }">
+                          <option value="">Selecione a categoria</option>
+                          <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                          </option>
+                        </select>
+                      </Field>
+                      <ErrorMessage name="category" class="errorMessage" />
+                      <label for="category">Categoria</label>
+                    </div>
+                    <RouterLink to="/category" class="d-flex align-items-center">
                       <CustomButton>
                         <i class="bi bi-plus-lg"></i>
                       </CustomButton>

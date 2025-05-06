@@ -28,7 +28,7 @@ const fetchProducts = async () => {
 
             const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
 
-            const company = companies.value.find(company => company.id === product.idShop);
+            const company = companies.value.find(company => company.id === product.shopModel.id);
             product.companyName = company ? company.name : 'Empresa desconhecida';
 
             if (productReviews.length > 0) {

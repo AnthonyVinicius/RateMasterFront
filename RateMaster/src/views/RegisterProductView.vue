@@ -41,6 +41,7 @@ onMounted(() => {
 });
 
 const submit = async () => {
+  console.log(product.value.brand)
   product.value.idShop = userData.value.id;
   product.value.name = product.value.name.trim();
   product.value.description = product.value.description.trim();

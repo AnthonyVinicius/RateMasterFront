@@ -2,13 +2,13 @@
 import CustomButton from '@/components/CustomButton.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import LoginService from '@/services/LoginService';
 import { Form, Field, ErrorMessage } from 'vee-validate';
+import GenericDAO from '@/services/GenericDAO';
 
-
-const loginService = new LoginService();
+const daoShop = new GenericDAO('shop');
+const daoUser = new GenericDAO('user');
 const router = useRouter();
-
+const user = ref("{}");
 const name = ref("");
 const email = ref("");
 const password = ref("");
@@ -16,28 +16,26 @@ const confirmPassword = ref("");
 const showPassword = ref(false);
 const userType = ref("individual");
 
-const trimInputs = () => {
-  email.value = email.value.trim();
-  password.value = password.value.trim();
-  confirmPassword.value = confirmPassword.value.trim();
-  name.value = name.value.trim();
-};
-
-
-const createUser = () =>{
-  trimInputs();
+const createUser = () => {
+  user.value = {
+    name: name.value.trim(),
+    email: email.value.trim(),
+    password: password.value.trim(),
+    userType: userType.value.trim()
+  };
   if (password.value !== confirmPassword.value) {
     alert("As senhas não coincidem. Por favor, verifique.");
     return;
   }
-  
-  if (!email.value || !password.value || !confirmPassword.value || !name.value) {
-    alert("Por favor, preencha todos os campos obrigatórios.");
-    return;
-  }
-  
-  try {    
-    loginService.createUser(name.value, userType.value, email.value, password.value)
+  try {
+
+    if (userType.value === "individual") {
+      daoUser.insert(user.value);
+
+    } else {
+      daoShop.insert(user.value);
+
+    };
     alert("Cadastro realizado com sucesso!");
     router.push('/');
 
@@ -75,98 +73,67 @@ const toggleShowPassword = () => {
 
                   <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <Field
-                    v-model="email"
-                    name="email"
-                    id="email"
-                    type="email"
-                    rules="required|email"
-                    v-slot="{field, errors, meta}">
-                      <input
-                      v-bind="field"
-                      :class="{
+                    <Field v-model="email" name="email" id="email" type="email" rules="required|email"
+                      v-slot="{ field, errors, meta }">
+                      <input v-bind="field" :class="{
                         'form-control': true,
                         'is-valid': meta.touched && errors.length,
-                        'is-invalid':meta.touched && errors.length
-                      }"  
-                      placeholder="seu@email.com"/>
-                  </Field>
-                  <ErrorMessage name="email" class="errorMessage"/>
+                        'is-invalid': meta.touched && errors.length
+                      }" placeholder="seu@email.com" />
+                    </Field>
+                    <ErrorMessage name="email" class="errorMessage" />
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">Senha</label>
                     <div class="input-group">
-                      <Field
-                      v-model="password"
-                      name="password"
-                      id="password"
-                      rules="required"
-                      v-slot="{field, errors, meta}">
-                      <input
-                      v-bind="field"
-                      :class="{
-                        'form-control': true,
-                        'is-valid': meta.touched && !errors.length,
-                        'is-invalid': meta.touched && errors.length
-                      }" 
-                      :type="showPassword ? 'text' : 'password'" 
-                      placeholder="Digite sua senha" />
+                      <Field v-model="password" name="password" id="password" rules="required"
+                        v-slot="{ field, errors, meta }">
+                        <input v-bind="field" :class="{
+                          'form-control': true,
+                          'is-valid': meta.touched && !errors.length,
+                          'is-invalid': meta.touched && errors.length
+                        }" :type="showPassword ? 'text' : 'password'" placeholder="Digite sua senha" />
                       </Field>
 
                       <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                       </button>
                     </div>
-                    <ErrorMessage name="password" class="errorMessage"/>
+                    <ErrorMessage name="password" class="errorMessage" />
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">Confirmar Senha</label>
                     <div class="input-group">
-                      <Field
-                      v-model="confirmPassword"
-                      name="confirmPassword"
-                      id="confirmPassword"
-                      rules="required"
-                      v-slot="{field, errors, meta}">
-                      <input
-                      v-bind="field"
-                      :class="{
-                        'form-control': true,
-                        'is-valid': meta.touched && !errors.length,
-                        'is-invalid': meta.touched && errors.length
-                      }" 
-                      :type="showPassword ? 'text' : 'password'" 
-                      placeholder="Confirme sua senha" />
+                      <Field v-model="confirmPassword" name="confirmPassword" id="confirmPassword" rules="required"
+                        v-slot="{ field, errors, meta }">
+                        <input v-bind="field" :class="{
+                          'form-control': true,
+                          'is-valid': meta.touched && !errors.length,
+                          'is-invalid': meta.touched && errors.length
+                        }" :type="showPassword ? 'text' : 'password'" placeholder="Confirme sua senha" />
                       </Field>
                       <button class="btn btn-outline-secondary" type="button" @click="toggleShowPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                       </button>
                     </div>
-                    <ErrorMessage name="confirmPassword" class="errorMessage"/>
+                    <ErrorMessage name="confirmPassword" class="errorMessage" />
                   </div>
 
                   <div class="mb-3">
                     <label class="form-label">
                       {{ userType === 'individual' ? 'Nome Completo' : 'Nome da Empresa' }}
                     </label>
-                    <Field
-                    v-model="name"
-                    name="name"
-                    id="name"
-                    rules="required|min:5|max:100"
-                    v-slot="{field, errors, meta}">
-                      <input
-                      v-bind="field" 
-                      :class="{
+                    <Field v-model="name" name="name" id="name" rules="required|min:5|max:100"
+                      v-slot="{ field, errors, meta }">
+                      <input v-bind="field" :class="{
                         'form-control': true,
                         'is-valid': meta.touched && !errors.length,
                         'is-invalid': meta.touched && errors.length
-                      }"
-                      :placeholder="userType === 'individual' ? 'Seu nome completo' : 'Nome da empresa'" />
+                      }" :placeholder="userType === 'individual' ? 'Seu nome completo' : 'Nome da empresa'" />
                     </Field>
-                    <ErrorMessage name="name" class="errorMessage"/>
+                    <ErrorMessage name="name" class="errorMessage" />
                   </div>
 
                   <div class="form-check mb-4">
@@ -190,7 +157,8 @@ const toggleShowPassword = () => {
             </div>
 
             <div class="col-lg-6 d-none d-lg-block bg-light">
-              <img src="../assets/img/evaluation-feedback-customer-smiley-response.jpg" alt="Register" class="w-100 h-100 object-fit-cover" />
+              <img src="../assets/img/evaluation-feedback-customer-smiley-response.jpg" alt="Register"
+                class="w-100 h-100 object-fit-cover" />
             </div>
           </div>
         </div>
@@ -224,6 +192,7 @@ a:hover {
 .errorMessage {
   color: red;
 }
+
 .input-group .btn {
   padding-left: 1rem;
   padding-right: 1rem;

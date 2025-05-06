@@ -46,7 +46,7 @@ const fetchProductDetails = async () => {
     product.value = await daoProducts.getById(productId);
 
     //mudar essa logica
-    reviews.value = (await daoReviews.search("productId", productId)) || [];
+/*     reviews.value = (await daoReviews.search("productId", productId)) || [];
 
     reviews.value.forEach(review => {
       responseStates.value[review.id] = { comment: "" };
@@ -58,10 +58,10 @@ const fetchProductDetails = async () => {
         reviews.value.length
       ).toFixed(1);
     } else {
-      averageRating.value = 0;
-    }
+      averageRating.value = 0; */
+   /*  } */
 
-    const company = await daoShops.get(product.value.idShop);
+    const company = await daoShops.getById(product.value.shopModel.id);
     product.value.companyName = company ? company.name : 'Empresa desconhecida';
 
   } catch (error) {
